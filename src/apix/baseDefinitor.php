@@ -37,7 +37,7 @@ class BaseDefinitor  {
 
     protected function getPreLoaderClasses(){
         $this->getStaticProvider();
-        return $this->getFileClassRequire(root.'/lib/appClassAlias.php');
+        return $this->getFileClassRequire(root.'/vendor/apixphp/restapixlib/src/apix/appClassAlias.php');
 
     }
 
@@ -426,7 +426,7 @@ class BaseDefinitor  {
 
         $prodDumpStatus=false;
         if(is_callable($callback)){
-            $tokenhandle=$token->handle(\lib\environment::get());
+            $tokenhandle=$token->handle(\Apix\environment::get());
         }
         else{
             $tokenhandle=$token->handle("production");
@@ -550,7 +550,7 @@ class BaseDefinitor  {
      */
 
     protected function getFixLog($data){
-        $fixLog=$this->getFileClassRequire(root.'/lib/fixlogparams.php');
+        $fixLog=$this->getFileClassRequire(root.'/vendor/apixphp/restapixlib/src/apix/fixlogparams.php');
         return $fixLog[$data];
     }
 
@@ -582,7 +582,7 @@ class BaseDefinitor  {
      */
 
     protected function bootServiceLoader($serviceMethod){
-        $appBootLoader=new appBootLoader();
+        $appBootLoader=new \Apix\appBootLoader();
         return $appBootLoader->boot($serviceMethod);
     }
 

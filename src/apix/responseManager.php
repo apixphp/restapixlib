@@ -9,6 +9,7 @@ namespace apix;
 use Apix\Utils;
 use Apix\StaticPathModel;
 use Spatie\ArrayToXml\ArrayToXml;
+use Apix\ObjectLoader;
 
 class responseManager {
 
