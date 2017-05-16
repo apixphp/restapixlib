@@ -11,11 +11,5 @@
             "email": "galiant781@gmail.com"
         }
     ],
-
-    "autoload": {
-        "psr-4": {
-            "Apix\\": "src/apix/"
-        }
-    },
     "require": {}
 }
