@@ -1,5 +1,5 @@
 {
-    "name": "apix/restapixlib",
+    "name": "apixphp/restapixlib",
     "type": "library",
     "description": "apix restfull library",
     "keywords": ["php","restapi"],
@@ -11,5 +11,11 @@
             "email": "galiant781@gmail.com"
         }
     ],
+
+    "autoload": {
+        "psr-4": {
+            "Apix\\": "src/apix/"
+        }
+    },
     "require": {}
 }
