@@ -1,6 +1,10 @@
 {
     "name": "apix/restapixlib",
+    "type": "library",
     "description": "apix restfull library",
+    "keywords": ["php","restapi"],
+    "homepage": "https://github.com/apixphp/restapixlib",
+    "license": "MIT",
     "authors": [
         {
             "name": "aligurbuz",
