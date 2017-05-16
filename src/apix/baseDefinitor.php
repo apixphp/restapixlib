@@ -422,7 +422,7 @@ class BaseDefinitor  {
     protected function token($callback){
         //get token
         $token=staticPathModel::$apiTokenNamespace;
-        $token=$this->resolve->resolve($token);
+        $token=utils::resolve($token);
 
         $prodDumpStatus=false;
         if(is_callable($callback)){
@@ -508,7 +508,7 @@ class BaseDefinitor  {
     protected function provision($callback){
 
         $provision=staticPathModel::$apiProvisionNamespace;
-        $provision=$this->resolve->resolve($provision);
+        $provision=utils::resolve($provision);
         $provisionMethod=''.request.'Provision';
         $provisionMethodExcept=''.request.'Except';
 
@@ -521,7 +521,7 @@ class BaseDefinitor  {
                 return $this->responseOut([],"project or versioning is not valid");
             }
             $serviceprovision="\\src\\app\\".app."\\".version."\\optional\\provisions\\index";
-            $serviceprovision=$this->resolve->resolve($serviceprovision);
+            $serviceprovision=utils::resolve($serviceprovision);
             $serviceprovisionMethod=''.request.'Provision';
             $serviceprovisionExcept=''.request.'Except';
             $spl=$serviceprovision->$serviceprovisionMethod();
