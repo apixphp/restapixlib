@@ -10,6 +10,7 @@ use Symfony\Component\Yaml\Yaml;
 use Apix\Utils;
 use Apix\StaticPathModel;
 use Apix\RateLimitQuery;
+use Apix\ServiceDumpObjects;
 
 
 /**
