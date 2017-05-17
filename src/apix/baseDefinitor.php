@@ -421,7 +421,7 @@ class BaseDefinitor  {
 
     protected function token($callback){
         //get token
-        $token=staticPathModel::$apiTokenNamespace;
+        $token="".staticPathModel::$appNamespace."\\".app."\\".version."\\serviceTokenController";
         $token=utils::resolve($token);
 
         $prodDumpStatus=false;
