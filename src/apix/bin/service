@@ -6,8 +6,8 @@
  * system main skeleton
  * return type string
  */
-if(file_exists('./lib/bin/commands/'.$argv[1].'.php')){
-    $commandFile=require("./lib/bin/commands/".$argv[1].".php");
+if(file_exists('./apix/bin/commands/'.$argv[1].'.php')){
+    $commandFile=require("./apix/bin/commands/".$argv[1].".php");
 
     $commandFile=new $argv[1]();
 

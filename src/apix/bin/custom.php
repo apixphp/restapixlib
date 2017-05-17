@@ -8,10 +8,13 @@
  * app class namespace : \src\app\mobi\v1\__call\stk\app
  */
 
-namespace lib\bin;
+namespace apix\bin;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Apix\Utils;
+use Apix\Console;
+use Apix\StaticPathModel;
 
 /**
  * Represents a getService class.
@@ -20,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * every service extends app class
  * return type array
  */
-class custom {
+class custom extends console {
 
     public $request;
     public $forbidden=false;
@@ -41,15 +44,11 @@ class custom {
         $application=new Application();
         $command='\\src\\store\\commands\\'.$data[1];
         if($data[1]=="migration"){
-            $command='\\lib\\bin\\'.$data[1];
+            $command='\\Apix\\bin\\'.$data[1];
         }
 
         if($data[1]=="curl"){
-            $command='\\lib\\bin\\'.$data[1];
-        }
-
-        if($data[1]=="apidoc"){
-            $command='\\lib\\bin\\'.$data[1];
+            $command='\\Apix\\bin\\'.$data[1];
         }
 
         $app=\Apix\Utils::resolve($command);

@@ -4,9 +4,12 @@
  * doctrine class
  */
 
-namespace lib\bin;
+namespace apix\bin;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Apix\Console;
+use Apix\StaticPathModel;
+use Apix\Utils;
 
 /**
  * Represents a doctrine class.

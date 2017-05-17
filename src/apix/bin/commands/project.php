@@ -1,6 +1,7 @@
 <?php namespace apix\bin\commands;
 use Apix\Console;
 use Apix\StaticPathModel;
+use Apix\Utils;
 /**
  * Command write.
  * type array

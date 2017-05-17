@@ -8,8 +8,10 @@
  * app class namespace : \src\app\mobi\v1\__call\stk\app
  */
 
-namespace lib\bin;
-use Lib\Console;
+namespace apix\bin;
+use Apix\Console;
+use Apix\StaticPathModel;
+use Apix\Utils;
 
 /**
  * Represents a getService class.
@@ -28,7 +30,7 @@ class apixlist extends console  {
      */
     public function __construct(){
         parent::__construct();
-        require("./lib/bin/commands/lib/getenv.php");
+        require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
     }
 
     /**

@@ -9,7 +9,7 @@ namespace src\store\commands;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Src\Store\Services\FileProcess as File;
-use Lib\Console;
+use Apix\Console;
 
 /**
  * Represents a console command example class.

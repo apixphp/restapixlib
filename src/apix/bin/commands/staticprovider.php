@@ -1,4 +1,6 @@
-<?php namespace lib\bin\commands;
+<?php namespace apix\bin\commands;
+use Apix\Console;
+use Apix\StaticPathModel;
 use Apix\Utils;
 /**
  * Command write.
@@ -13,7 +15,7 @@ class staticprovider {
 
     public function __construct(){
         $this->fileprocess=$this->fileprocess();
-        require("./lib/bin/commands/lib/getenv.php");
+        require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
     }
 
 
@@ -81,7 +83,7 @@ class staticprovider {
     public  function fileprocess(){
 
         //file process new instance
-        $libconf=require("./lib/bin/commands/lib/conf.php");
+        $libconf=require("".staticPathModel::$binCommandsPath."/lib/conf.php");
         $file=$libconf['libFile'];
         return new $file();
 

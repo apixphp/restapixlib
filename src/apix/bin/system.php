@@ -4,12 +4,12 @@
  * system class
  */
 
-namespace lib\bin;
+namespace apix\bin;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use Lib\Utils;
-use Lib\StaticPathModel;
-use Lib\Console;
+use Apix\Console;
+use Apix\StaticPathModel;
+use Apix\Utils;
 
 /**
  * Represents a system class.

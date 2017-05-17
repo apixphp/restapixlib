@@ -135,23 +135,23 @@ class utils {
     public static function getBaseConsoleStaticProperties($argv){
         //get connection
         if($argv[1]=="doctrine"){
-            $consoleCommandApplication=new \lib\bin\doctrine();
+            $consoleCommandApplication=new \Apix\bin\doctrine();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
         }
         elseif($argv[1]=="system"){
-            $consoleCommandApplication=new \lib\bin\system();
+            $consoleCommandApplication=new \Apix\bin\system();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
         }
         elseif($argv[1]=="git"){
-            $consoleCommandApplication=new \lib\bin\git();
+            $consoleCommandApplication=new \Apix\bin\git();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
         }
         elseif($argv[1]=="list"){
-            $consoleCommandApplication=new \lib\bin\apixlist();
+            $consoleCommandApplication=new \Apix\bin\apixlist();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
         }
         else{
-            $consoleCommandApplication=new \lib\bin\custom();
+            $consoleCommandApplication=new \Apix\bin\custom();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
         }
 

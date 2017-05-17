@@ -5,9 +5,12 @@
  * test
  */
 
-namespace lib\bin;
+namespace apix\bin;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Apix\Utils;
+use Apix\Console;
+use Apix\StaticPathModel;
 
 /**
  * Represents a console command example class.
@@ -15,7 +18,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
  * every method that on this command is called with console method as string on console
  * return type string
  */
-class migration {
+class migration extends console {
 
     /**
      * The name and signature of the console command.

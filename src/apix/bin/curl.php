@@ -5,10 +5,13 @@
  * test
  */
 
-namespace lib\bin;
+namespace apix\bin;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use src\store\services\guzzle;
+use Apix\Console;
+use Apix\StaticPathModel;
+use Apix\Utils;
 
 /**
  * Represents a console command example class.
