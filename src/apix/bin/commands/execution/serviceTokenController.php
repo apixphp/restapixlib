@@ -25,7 +25,7 @@ class serviceTokenController {
     /**
      * status variable
      */
-    protected $status;
+    public $status;
 
     /**
      * Represents a token provision construct class.
