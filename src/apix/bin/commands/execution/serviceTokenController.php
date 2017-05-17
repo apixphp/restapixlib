@@ -23,12 +23,23 @@ use src\store\Services\Httprequest as Request;
 class serviceTokenController {
 
     /**
+     * status variable
+     */
+    protected $status;
+
+    /**
      * Represents a token provision construct class.
      *
      * $data main variables
      * return type string
      */
-    public function __construct(){}
+    public function __construct(){
+
+        //get status value
+        $this->status['local']=false;
+        $this->status['production']=false;
+
+    }
 
     /**
      * token provision for get method.
@@ -37,13 +48,9 @@ class serviceTokenController {
      */
     public function handle($environment=null){
 
-        //status check
-        //false status : access without token
-        //tru status : access with token
-        $status=($environment=="local") ? false : false;
-
         //token status false|true
-        $token['status']=$status;
+        /** @var TYPE_NAME $environment */
+        $token['status']=$this->status[$environment];
 
         //service tokens
         $token['tokens'][]='apix';
@@ -73,6 +80,5 @@ class serviceTokenController {
 
         return $except;
     }
-
 
 }
