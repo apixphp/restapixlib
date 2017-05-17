@@ -109,6 +109,20 @@ class staticPathModel {
      * it is namespace for api commands service
      * for service path run
      */
+    public static $apixVendorPath='./vendor/apixphp/restapixlib/src/apix';
+
+    /**
+     * @var param api lib bin commands
+     * it is namespace for api commands service
+     * for service path run
+     */
+    public static $apixClassAliasPath='./vendor/apixphp/restapixlib/src/apix/appClassAlias.php';
+
+    /**
+     * @var param api lib bin commands
+     * it is namespace for api commands service
+     * for service path run
+     */
     public static $binCommandsNameSpace='\\Apix\\Bin\\Commands\\';
 
 
