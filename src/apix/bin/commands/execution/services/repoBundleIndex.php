@@ -21,8 +21,7 @@ use Collection;
  * return type array
  */
 
-class index implements __bundleName__Interface
-{
+class index implements __bundleName__Interface {
 
 
     /**
@@ -30,9 +29,7 @@ class index implements __bundleName__Interface
      *
      * @param type dependency injection and function
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
 
     /**
@@ -47,4 +44,5 @@ class index implements __bundleName__Interface
         //return source
         return "__projectName__ repository __bundleName__";
     }
+
 }

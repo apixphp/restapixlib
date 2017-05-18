@@ -14,6 +14,7 @@ use Src\Store\Services\Httprequest as Request;
 use Repo;
 use src\app\__projectName__\__version__\__call\__serviceName__\app;
 use Collection;
+use Response;
 
 /**
  * Represents a bundle index class.

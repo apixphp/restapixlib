@@ -44,9 +44,11 @@ class repo {
                 if(array_key_exists(2,$this->getParams($data)) && array_key_exists("src",$this->getParams($data)[2])){
 
                     $srcBundle=explode("/",$this->getParams($data)[2]['src']);
-                    if(!file_exists('./src/app/'.$project.'/'.$version.'/repository/'.$this->getParams($data)[1]['repo'].'/src/'.$srcBundle[0].'/index.php')){
-                        $list[]=$this->mkdir($project.'/'.$version.'/repository/'.$this->getParams($data)[1]['repo'].'/src/'.$srcBundle[0]);
+
+                    if(!file_exists(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src/'.$srcBundle[0].'')){
+                        $list[]=$this->mkdir_path(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src/'.$srcBundle[0]);
                     }
+
 
                     if(array_key_exists(1,$srcBundle)){
 
@@ -55,37 +57,40 @@ class repo {
                         $bundleParamsIndexSrc['params']['bundleName']=$this->getParams($data)[1]['repo'];
                         $bundleParamsIndexSrc['params']['srcName']=$srcBundle[0];
                         $bundleParamsIndexSrc['params']['className']=$srcBundle[1];
-                        $list[]=$this->touch($project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src/'.$srcBundle[0].'/'.$srcBundle[1].'.php',$bundleParamsIndexSrc);
+                        $list[]=$this->touch_path(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src/'.$srcBundle[0].'/'.$srcBundle[1].'.php',$bundleParamsIndexSrc);
 
+                        $requestBundleFile=root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/index.php';
+                        $this->fileprocess->changeClass($requestBundleFile,['use Collection;'=>'use Collection;'.PHP_EOL.'use src\app\\'.$project.'\\'.$version.'\\optional\repository\\'.$this->getParams($data)[1]['repo'].'\\src\\'.$srcBundle[0].'\\'.$srcBundle[1].';'
+                        ]);
                     }
                     else{
+
                         $bundleParamsIndexSrc['execution']='services/repoBundleSrcIndex';
                         $bundleParamsIndexSrc['params']['projectName']=$project;
                         $bundleParamsIndexSrc['params']['bundleName']=$this->getParams($data)[1]['repo'];
                         $bundleParamsIndexSrc['params']['srcName']=$srcBundle[0];
                         $bundleParamsIndexSrc['params']['className']='index';
-                        $list[]=$this->touch($project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src/'.$srcBundle[0].'/index.php',$bundleParamsIndexSrc);
+                        $list[]=$this->touch_path(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src/'.$srcBundle[0].'/index.php',$bundleParamsIndexSrc);
                     }
                 }
                 else{
-                    $list[]=$this->mkdir($project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'');
-                    $list[]=$this->touch($project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/index.html',null);
+                    $list[]=$this->mkdir_path(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'');
+                    $list[]=$this->touch_path(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/index.html',null);
 
-                    $list[]=$this->mkdir($project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src');
-                    $list[]=$this->touch($project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src/index.html',null);
+                    $list[]=$this->mkdir_path(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src');
+                    $list[]=$this->touch_path(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/src/index.html',null);
 
                     $bundleParamsIndex['execution']='services/repoBundleIndex';
                     $bundleParamsIndex['params']['projectName']=$project;
                     $bundleParamsIndex['params']['bundleName']=$this->getParams($data)[1]['repo'];
-                    $list[]=$this->touch($project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/index.php',$bundleParamsIndex);
+                    $list[]=$this->touch_path(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/index.php',$bundleParamsIndex);
 
                     $bundleParamsInterface['execution']='services/repoBundleInterface';
                     $bundleParamsInterface['params']['projectName']=$project;
                     $bundleParamsInterface['params']['bundleName']=$this->getParams($data)[1]['repo'];
-                    $list[]=$this->touch($project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/'.$this->getParams($data)[1]['repo'].'Interface.php',$bundleParamsInterface);
+                    $list[]=$this->touch_path(root.'/src/app/'.$project.'/'.$version.'/optional/repository/'.$this->getParams($data)[1]['repo'].'/'.$this->getParams($data)[1]['repo'].'Interface.php',$bundleParamsInterface);
 
                 }
-
 
 
                 return $this->fileProcessResult($list,function(){
@@ -112,19 +117,19 @@ class repo {
     }
 
 
-    //set mkdir
-    public function mkdir($data){
+    //set mkdir_path
+    public function mkdir_path($data){
 
-        return $this->fileprocess->mkdir($data);
+        return $this->fileprocess->mkdir_path($data);
     }
 
-    //set mkdir
-    public function touch($data,$param){
+    //set mkdir_path
+    public function touch_path($data,$param){
 
-        return $this->fileprocess->touch($data,$param);
+        return $this->fileprocess->touch_path($data,$param);
     }
 
-    //mkdir process result
+    //mkdir_path process result
     public function fileProcessResult($data,$callback){
 
         if(count($data)==0 OR in_array(false,$data)){
