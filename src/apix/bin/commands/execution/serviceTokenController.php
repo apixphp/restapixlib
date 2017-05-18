@@ -46,7 +46,7 @@ class serviceTokenController {
      *
      * @return array
      */
-    public function handle($environment=null){
+    public function handle($environment='local'){
 
         //token status false|true
         /** @var TYPE_NAME $environment */
