@@ -328,7 +328,7 @@ class BaseDefinitor  {
             return $data;
         }
         else{
-            $responseManager=new \Apix\ResponseManager("json");
+            $responseManager=new \Apix\ResponseManager(staticPathModel::getAppServiceBase()->response);
             return $responseManager->responseManagerBoot($data,$msg);
         }
 

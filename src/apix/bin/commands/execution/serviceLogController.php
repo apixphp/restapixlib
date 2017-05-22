@@ -10,10 +10,11 @@ namespace src\app\__projectName__\v1;
 use Src\Store\Services\Httprequest as Request;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler as StreamHandler;
+use Apix\Utils;
+use Apix\StaticPathModel;
 
 class serviceLogController
 {
-    public $status=false;
     public $logger;
     public $logPath=null;
 
@@ -27,8 +28,8 @@ class serviceLogController
 
         //get log component
         $this->logger=new logger('log');
-        $this->logPath=application.'/storage/logs/access.log';
-        $this->logger->pushHandler(new StreamHandler(application.'/storage/logs/access.log', Logger::INFO));
+        $this->logPath=staticPathModel::getProjectPath(app).'/storage/logs/access.log';
+        $this->logger->pushHandler(new StreamHandler($this->logPath, Logger::INFO));
     }
 
     /**

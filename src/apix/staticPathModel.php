@@ -152,6 +152,12 @@ class staticPathModel {
 
     }
 
+    public static function getAppServiceLog(){
+        $serviceBase='\\src\\app\\'.app.'\\'.version.'\\serviceLogController';
+        return new $serviceBase();
+
+    }
+
 
 
 
