@@ -122,6 +122,8 @@ class connection extends Definitor {
         $serviceMethod=self::$serviceMethod;
         $getVersion=self::$getVersion;
 
+        set_error_handler([$instance,'setErrorHandler']);
+
         return $instance->checkServiceUrlParamArray(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
             //get auto loads from services
@@ -211,6 +213,7 @@ class connection extends Definitor {
                                 else{
 
                                     $requestServiceMethodReal=$apix->$requestServiceMethod();
+
                                 }
 
                                 $instance->serviceDump($requestServiceMethodReal,$requestServiceMethod);
@@ -349,6 +352,41 @@ class connection extends Definitor {
     private static function getInstance(){
         if(self::$_instance==null){ self::$_instance=new self;}
         return self::$_instance;
+
+    }
+
+
+    /**
+     * get instance classes.
+     *
+     * outputs get instance.
+     *
+     * @param string
+     * @return response instance runner
+     */
+    public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, array $errContext){
+
+        //get App Exception Config Class
+        $exception='\\src\\app\\'.app.'\\'.version.'\\config\\exception';
+
+        $appExceptionSuccess=['success'=>false];
+        $appException=$appExceptionSuccess+$exception::handler($errNo,$errStr,$errFile,$errLine,$errContext);
+
+        //set json app exception
+        if(environment()=="local"){
+            echo json_encode($appException);
+            exit();
+        }
+        else{
+            $productionException=[
+                'success'=>false,
+                'message'=>'error occurred'
+            ];
+
+            echo json_encode($productionException);
+            exit();
+        }
+
 
     }
 
