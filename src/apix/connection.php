@@ -122,7 +122,9 @@ class connection extends Definitor {
         $serviceMethod=self::$serviceMethod;
         $getVersion=self::$getVersion;
 
-        set_error_handler([$instance,'setErrorHandler']);
+        if(defined('app')){
+            set_error_handler([$instance,'setErrorHandler']);
+        }
 
         return $instance->checkServiceUrlParamArray(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
@@ -201,7 +203,9 @@ class connection extends Definitor {
                                 }
                                 if($serviceBasePlatformStatus){
                                     $servicePlatform=utils::resolve(staticPathModel::$apiPlatformNamespace);
-                                    $requestServiceMethodReal=$servicePlatform->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$boot){
+                                    $serviceBasePlatformConfig='\\src\\app\\'.app.'\\'.version.'\\optional\platform\config';
+                                    $platformDirectoryCallStaticVariable=utils::resolve($serviceBasePlatformConfig)->handle();
+                                    $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$boot){
                                         $requestServiceMethodReal=$apix->$requestServiceMethod((object)$boot);
                                     });
 
