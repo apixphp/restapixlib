@@ -122,14 +122,14 @@ class connection extends Definitor {
         $serviceMethod=self::$serviceMethod;
         $getVersion=self::$getVersion;
 
-        if(defined('app')){
-            set_error_handler([$instance,'setErrorHandler']);
-        }
-
         return $instance->checkServiceUrlParamArray(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
             //get auto loads from services
             $instance->getAutoLoadsFromServices();
+
+            if(defined('app')){
+                set_error_handler([$instance,'setErrorHandler']);
+            }
 
             $downPath=staticPathModel::getProjectPath(app).'/down.yaml';
             if(file_exists($downPath)){
@@ -211,7 +211,7 @@ class connection extends Definitor {
 
                                     if($platformDirectoryCallStaticVariable!==null){
                                         $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$boot){
-                                            $requestServiceMethodReal=$apix->$requestServiceMethod((object)$boot);
+                                            return $requestServiceMethodReal;
                                         });
 
                                         if($requestServiceMethodReal===null){

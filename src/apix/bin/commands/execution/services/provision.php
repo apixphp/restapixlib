@@ -29,9 +29,9 @@ class index
      * $data main variables
      * return type string
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->request=$request;
+        //get construct
     }
 
     /**
@@ -64,116 +64,4 @@ class index
         ];
     }
 
-
-    /**
-     * provision for put method.
-     *
-     * @return array
-     */
-    public function putProvision()
-    {
-
-        //put result
-        return [
-            'success'=>true,
-            'message'=>'Get Provision Error'
-        ];
-    }
-
-
-    /**
-     * provision for patch method.
-     *
-     * @return array
-     */
-    public function patchProvision()
-    {
-
-        //patch result
-        return [
-            'success'=>true,
-            'message'=>'Get Provision Error'
-        ];
-    }
-
-
-    /**
-     * provision for delete method.
-     *
-     * @return array
-     */
-    public function deleteProvision()
-    {
-
-        //delete result
-        return [
-            'success'=>true,
-            'message'=>'Get Provision Error'
-        ];
-    }
-
-
-    /**
-     * dont run this services.
-     *
-     * @return array
-     */
-    public function getExcept()
-    {
-        return [
-            //app.'/stk'
-        ];
-    }
-
-
-    /**
-     * dont run this services.
-     *
-     * @return array
-     */
-    public function postExcept()
-    {
-        return [
-            //app.'/stk'
-        ];
-    }
-
-
-    /**
-     * dont run this services.
-     *
-     * @return array
-     */
-    public function putExcept()
-    {
-        return [
-            //app.'/stk'
-        ];
-    }
-
-
-    /**
-     * dont run this services.
-     *
-     * @return array
-     */
-    public function patchExcept()
-    {
-        return [
-            //app.'/stk'
-        ];
-    }
-
-
-    /**
-     * dont run this services.
-     *
-     * @return array
-     */
-    public function deleteExcept()
-    {
-        return [
-            //app.'/stk'
-        ];
-    }
 }

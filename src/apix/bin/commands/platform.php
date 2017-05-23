@@ -35,6 +35,14 @@ class platform {
                 foreach ($value as $project=>$service){
                     $version=require ('./src/app/'.$project.'/version.php');
                     $version=(is_array($version) && array_key_exists('version',$version)) ? $version['version'] : 'v1';
+
+                    if(!file_exists(root.'/src/app/'.$project.'/'.$version.'/optional/platform/'.$platformdir.'')){
+                        $this->mkdir_path(root.'/src/app/'.$project.'/'.$version.'/optional/platform/'.$platformdir.'');
+                        if(!file_exists(root.'/src/app/'.$project.'/'.$version.'/optional/platform/'.$platformdir.'/'.$service)){
+                            $this->mkdir_path(root.'/src/app/'.$project.'/'.$version.'/optional/platform/'.$platformdir.'/'.$service);
+                        }
+
+                    }
                     $list=[];
                     $platformServiceGetParams['execution']='services/platform';
                     $platformServiceGetParams['params']['projectName']=$project;
@@ -77,6 +85,12 @@ class platform {
     public function mkdir($data){
 
         return $this->fileprocess->mkdir($data);
+    }
+
+    //set mkdir
+    public function mkdir_path($data){
+
+        return $this->fileprocess->mkdir_path($data);
     }
 
     //set mkdir
