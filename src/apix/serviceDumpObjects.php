@@ -30,10 +30,11 @@ class serviceDumpObjects {
      * @internal param $string
      */
     public function __construct($requestServiceMethodReal,$requestServiceMethod,$other){
-        error_reporting(0);
         $this->requestServiceMethodReal=$requestServiceMethodReal;
         $this->requestServiceMethod=$requestServiceMethod;
         $this->other=$other;
+
+        $this->serviceYamlFile='./'.src.'/'.app.'/'.version.'/__call/'.service.'/yaml/expected/'.service.'_'.strtolower(request).'_'.method.'.yaml';
 
         $file=new file();
         if(!file_exists('./'.src.'/'.app.'/'.version.'/__call/'.service.'/yaml')){
@@ -42,7 +43,8 @@ class serviceDumpObjects {
             $file->mkdir('./'.src.'/'.app.'/'.version.'/__call/'.service.'','yaml/expected');
             $file->touch('./'.src.'/'.app.'/'.version.'/__call/'.service.'/yaml/expected/index.html');
         }
-        $this->serviceYamlFile='./'.src.'/'.app.'/'.version.'/__call/'.service.'/yaml/expected/'.service.'_'.strtolower(request).'_'.method.'.yaml';
+
+
         $this->request=new request();
         $basePath=api.'serviceBaseController';
         $base=new $basePath();
@@ -144,12 +146,21 @@ class serviceDumpObjects {
      * @return response yamlProcess runner
      */
     private function yamlProcess($status=false){
-        $value = Yaml::parse(file_get_contents($this->serviceYamlFile));
+
+        $value=[];
+        if(file_exists($this->serviceYamlFile)){
+            $value = Yaml::parse(file_get_contents($this->serviceYamlFile));
+        }
+
+
         if(!$status){
             //values
             $session=new httpSession();
             if(!file_exists($this->serviceYamlFile)){
-                $session->remove('standardDumpList');
+                if($session->has('standardDumpList')){
+                    $session->remove('standardDumpList');
+                }
+
                 $getHistory=root.'/src/app/'.app.'/declaration/history/'.service.'_'.request.'_'.method.'.yaml';
                 if(file_exists($getHistory)){
                     $yamlFile=Yaml::parse(file_get_contents($getHistory));
@@ -158,9 +169,11 @@ class serviceDumpObjects {
             }
 
 
+
+
             $yaml = Yaml::dump(['http'=>strtolower(request),
                     'servicePath'=>''.app.'/'.service.'/'.method.'',
-                    'data'=>$this->namedDataDumpList($session,$this->yObjects,$querydata),
+                    'data'=>$this->namedDataDumpList($session,$this->yObjects,null),
                     'headers'=>$this->getClientHeaders($session,null)
                 ]+$this->requestGetProcess($session) + $this->requestPostProcess($session) +['info'=>$this->yInfo+$this->yInfoExtra]
             );
@@ -341,10 +354,12 @@ class serviceDumpObjects {
         }
 
 
-        $this->setInfoExtra($session);
+
+
 
         if(count($list)){
             $session->set("standardDumpList",$list);
+            $this->setInfoExtra($session);
             return $list;
         }
         else{
