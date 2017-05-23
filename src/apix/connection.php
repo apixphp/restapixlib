@@ -201,24 +201,27 @@ class connection extends Definitor {
                                 if($serviceBase->boot){
                                     $boot=$instance->bootServiceLoader($requestServiceMethod);
                                 }
+
+                                $requestServiceMethodReal=$apix->$requestServiceMethod();
+
                                 if($serviceBasePlatformStatus){
                                     $servicePlatform=utils::resolve(staticPathModel::$apiPlatformNamespace);
                                     $serviceBasePlatformConfig='\\src\\app\\'.app.'\\'.version.'\\optional\platform\config';
                                     $platformDirectoryCallStaticVariable=utils::resolve($serviceBasePlatformConfig)->handle();
-                                    $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$boot){
-                                        $requestServiceMethodReal=$apix->$requestServiceMethod((object)$boot);
-                                    });
 
-                                    if($requestServiceMethodReal===null){
-                                        $requestServiceMethodReal=$apix->$requestServiceMethod((object)$boot);
+                                    if($platformDirectoryCallStaticVariable!==null){
+                                        $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$boot){
+                                            $requestServiceMethodReal=$apix->$requestServiceMethod((object)$boot);
+                                        });
+
+                                        if($requestServiceMethodReal===null){
+                                            $requestServiceMethodReal=$apix->$requestServiceMethod((object)$boot);
+                                        }
                                     }
 
-                                }
-                                else{
-
-                                    $requestServiceMethodReal=$apix->$requestServiceMethod();
 
                                 }
+
 
                                 $instance->serviceDump($requestServiceMethodReal,$requestServiceMethod);
                                 if($serviceBase->log){

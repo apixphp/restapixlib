@@ -42,6 +42,6 @@ class config
     {
 
         //return source
-        return true;
+        return null;
     }
 }
