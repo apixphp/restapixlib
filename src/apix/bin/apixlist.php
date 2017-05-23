@@ -87,6 +87,7 @@ class apixlist extends console  {
         echo PHP_EOL;
 
         echo $this->success('SERVİCE PUBLISH : ');
+        echo $this->bluePrint('service dump [projectName]:[serviceName] dump true|false   => "open or close for dump the identified service"');
         echo $this->bluePrint('service publish [projectName]:[serviceName] names:serviceNameMethod http:httpMethod   => "publish the identified service"');
         echo $this->bluePrint('service publish [projectName]:[serviceName] names:serviceNameMethod1/serviceNameMethod2 http:httpMethod   => "publish the identified service"');
 

@@ -156,6 +156,8 @@ class service extends console {
                 foreach($value as $project=>$service){
                     $versionPath='./src/app/'.$project.'/version.php';
 
+
+
                     if(!file_exists('./src/app/'.$project.'/declaration')){
                         $this->fileprocess->mkdir_path('./src/app/'.$project.'/declaration');
                         $this->fileprocess->touch_path('./src/app/'.$project.'/declaration/index.html');
@@ -169,6 +171,8 @@ class service extends console {
                     else{
                         $versionNumber='v1';
                     }
+
+
 
                     $servicePath='\\\\src\\\\app\\\\'.$project.'\\\\'.$versionNumber.'\\\\__call\\\\'.$service.'\\\\'.$this->getParams($data)[2]['http'].'Service';
                     //$names=explode("/",$this->getParams($data)[1]['names']);
@@ -226,6 +230,10 @@ $content=str_replace("//publishes","//publishes
                         fwrite($dt, $content);
                         fclose($dt);
 
+                        $this->fileprocess->changeClass(root.'/src/app/'.$project.'/'.$versionNumber.'/__call/'.$service.'/serviceConf.php',[
+                            "'dataDump'=>true"=>"'dataDump'=>false"
+                        ]);
+
                         return 'service publish ok';
                     }
                     else{
@@ -238,6 +246,43 @@ $content=str_replace("//publishes","//publishes
                 }
             }
         }
+    }
+
+
+    public function dump($data){
+        foreach ($this->getParams($data) as $key=>$value) {
+            if ($key == 0) {
+
+                foreach ($value as $project => $service) {
+                    $versionPath = './src/app/' . $project . '/version.php';
+
+                    $version = require($versionPath);
+                    if (is_array($version) && array_key_exists("version", $version)) {
+                        $versionNumber = $version['version'];
+                    } else {
+                        $versionNumber = 'v1';
+                    }
+
+                    if(end($data)){
+                        $this->fileprocess->changeClass(root.'/src/app/'.$project.'/'.$versionNumber.'/__call/'.$service.'/serviceConf.php',[
+                            "'dataDump'=>false"=>"'dataDump'=>".end($data).""
+                        ]);
+                    }
+                    else{
+                        $this->fileprocess->changeClass(root.'/src/app/'.$project.'/'.$versionNumber.'/__call/'.$service.'/serviceConf.php',[
+                            "'dataDump'=>true"=>"'dataDump'=>".end($data).""
+                        ]);
+                    }
+
+
+
+                }
+
+            }
+
+
+        }
+
     }
 
     //get bin params
