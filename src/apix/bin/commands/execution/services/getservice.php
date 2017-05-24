@@ -49,7 +49,7 @@ class getService extends app
      * produced json output as result
      * @return array @method
      */
-    public function index()
+    public function indexAction()
     {
 
         //result

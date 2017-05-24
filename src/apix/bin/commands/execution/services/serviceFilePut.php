@@ -51,7 +51,7 @@ class __method__Service extends app
      * produced json output as result
      * @return array @method
      */
-    public function index()
+    public function indexAction()
     {
 
         //return index

@@ -4,6 +4,7 @@ use Apix\Console;
 use Apix\StaticPathModel;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\HttpFoundation\Request;
 /**
  * Command write.
  * type array
@@ -15,10 +16,12 @@ use Symfony\Component\Yaml\Exception\ParseException;
 class service extends console {
 
     public $fileprocess;
+    public $request;
 
     public function __construct(){
         parent::__construct();
         $this->fileprocess=$this->fileprocess();
+        $this->request=Request::createFromGlobals();
         require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
     }
 
@@ -44,6 +47,8 @@ class service extends console {
                                 $touchServicePostParams['params']['method']=$data['file'];
 
                                 $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'Service.php',$touchServicePostParams);
+
+                               $this->setServiceRouteList($project,$service,$version,$data['file']);
 
                                return $this->fileProcessResult($list,function() use($service,$project,$data) {
                                    echo $this->info('-------------------------------------------------------------------------------------------------');
@@ -127,6 +132,9 @@ class service extends console {
                        $list[]=$this->mkdir($project.'/v1/__call/'.$service.'/source/bundle');
                        $list[]=$this->touch($project.'/v1/__call/'.$service.'/source/bundle/index.html',null);*/
 
+
+
+                       $this->setServiceRouteList($project,$service,$version,'get');
 
                        return $this->fileProcessResult($list,function() use($service,$project) {
                            echo $this->info('-------------------------------------------------------------------------------------------------');
@@ -340,6 +348,35 @@ $content=str_replace("//publishes","//publishes
         $libconf=require("".staticPathModel::$binCommandsPath."/lib/conf.php");
         $file=$libconf['libFile'];
         return new $file();
+
+    }
+
+
+    //set service route list
+    public function setServiceRouteList($project,$service,$version,$method){
+        $serviceRouteListPath=staticPathModel::getProjectPath($project).'/serviceRouteList.yaml';
+
+        $routeList=[];
+        if(file_exists($serviceRouteListPath)){
+            $routeList=\apix\utils::getYaml($serviceRouteListPath);
+        }
+
+        $serviceNamespace=staticPathModel::getAppServiceNamespace($project,$version,$service,$method);
+
+        define('app',$project);
+        define('version',$version);
+
+        $class_methods = get_class_methods(\apix\utils::resolve($serviceNamespace));
+
+
+        foreach ($class_methods as $methodName){
+            if($methodName!=='__construct' && preg_match('@Action@is',$methodName)){
+                $routeList[$service][$version][$method]['methods'][]=str_replace('Action','',$methodName);
+            }
+
+        }
+
+        return \apix\utils::dumpYaml($routeList,$serviceRouteListPath);
 
     }
 

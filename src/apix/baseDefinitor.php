@@ -198,7 +198,7 @@ class BaseDefinitor  {
      */
     protected function getPureMethodNameFromService(){
         $service=$this->getServiceNameAndMethodFromRequestUri();
-        return preg_replace('@\?(.*)@is','',end($service));
+        return preg_replace('@\?(.*)@is','',end($service)).'Action';
     }
 
 

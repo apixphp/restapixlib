@@ -157,6 +157,11 @@ class staticPathModel {
 
     }
 
+    public static function getAppServiceNamespace($project,$version,$service,$method){
+
+        return '\\src\\app\\'.$project.'\\'.$version.'\__call\\'.$service.'\\'.$method.'Service';
+    }
+
     public static function getAppServiceLog(){
         $serviceBase='\\src\\app\\'.app.'\\'.version.'\\serviceLogController';
         return new $serviceBase();
