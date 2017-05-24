@@ -127,6 +127,7 @@ class connection extends Definitor {
             //get auto loads from services
             $instance->getAutoLoadsFromServices();
 
+
             if(defined('app')){
                 set_error_handler([$instance,'setErrorHandler']);
             }
@@ -180,6 +181,8 @@ class connection extends Definitor {
 
                         //apix resolve
                         $apix=utils::resolve("\\src\\app\\".$service[0]."\\".$getVersion."\\__call\\".$service[1]."\\".request."Service");
+
+                        $instance->refreshRouterList($apix);
 
                         $requestServiceMethod=$serviceMethod;
                         if(method_exists($apix,$requestServiceMethod)){

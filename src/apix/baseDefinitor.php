@@ -6,7 +6,6 @@
  */
 
 namespace apix;
-use Symfony\Component\Yaml\Yaml;
 use Apix\Utils;
 use Apix\StaticPathModel;
 use Apix\RateLimitQuery;
@@ -53,6 +52,23 @@ class BaseDefinitor  {
     protected function getClassDependencyResolver(){
         $resolve=$this->getFileClassRequire(root.'/lib/resolver.php');
         return new \classresolver();
+
+    }
+
+    /**
+     * get router list classes.
+     *
+     * outputs class resolver.
+     *
+     * @param string
+     * @return response router lis runner
+     */
+
+    protected function refreshRouterList($apix){
+        if(environment()=="local"){
+            return utils::refreshServiceRouteList(app,service,version,strtolower(request),$apix);
+        }
+
 
     }
 

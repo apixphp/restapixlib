@@ -3,6 +3,10 @@
 namespace apix;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Apix\StaticPathModel;
 
 class utils {
 
@@ -146,6 +150,12 @@ class utils {
             $consoleCommandApplication=new \Apix\bin\git();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
         }
+
+        elseif($argv[1]=="d"){
+            $consoleCommandApplication=new \Apix\bin\commands\doc();
+            echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
+        }
+
         elseif($argv[1]=="list"){
             $consoleCommandApplication=new \Apix\bin\apixlist();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
@@ -167,10 +177,13 @@ class utils {
             $routeList=\apix\utils::getYaml($serviceRouteListPath);
         }
 
+        dd($routeList);
+
         $serviceNamespace=staticPathModel::getAppServiceNamespace($project,$version,$service,$method);
 
         define('app',$project);
         define('version',$version);
+
 
         $class_methods = get_class_methods(\apix\utils::resolve($serviceNamespace));
 
@@ -184,5 +197,56 @@ class utils {
 
         return \apix\utils::dumpYaml($routeList,$serviceRouteListPath);
 
+    }
+
+
+    //set service route list
+    public static function refreshServiceRouteList($project,$service,$version,$method,$class){
+
+        $serviceRouteListPath=staticPathModel::getProjectPath($project).'/router.yaml';
+
+        $routeList=[];
+        if(file_exists($serviceRouteListPath)){
+            $routeList=self::getYaml($serviceRouteListPath);
+        }
+
+
+        $class_methods = get_class_methods($class);
+
+        foreach ($class_methods as $methodName){
+            if($methodName!=='__construct' && preg_match('@Action@is',$methodName)){
+
+                $methodName=str_replace('Action','',$methodName);
+
+
+                if(count($routeList) && !in_array($methodName,$routeList[$service][$version][$method]['methods'])){
+                    $routeList[$service][$version][$method]['methods'][]=$methodName;
+                }
+
+                if(count($routeList)===0){
+                    $routeList[$service][$version][$method]['methods'][]=$methodName;
+                }
+
+            }
+
+        }
+
+        return self::dumpYaml($routeList,$serviceRouteListPath);
+
+    }
+
+
+    public static function symfonyProcess($command=null){
+        if($command!==null){
+            $process = new Process($command);
+            $process->run();
+
+            // executes after the command finishes
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+
+            echo $process->getOutput();
+        }
     }
 }
