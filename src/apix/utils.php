@@ -156,4 +156,33 @@ class utils {
         }
 
     }
+
+
+    //set service route list
+    public static function setServiceRouteList($project,$service,$version,$method){
+        $serviceRouteListPath=staticPathModel::getProjectPath($project).'/router.yaml';
+
+        $routeList=[];
+        if(file_exists($serviceRouteListPath)){
+            $routeList=\apix\utils::getYaml($serviceRouteListPath);
+        }
+
+        $serviceNamespace=staticPathModel::getAppServiceNamespace($project,$version,$service,$method);
+
+        define('app',$project);
+        define('version',$version);
+
+        $class_methods = get_class_methods(\apix\utils::resolve($serviceNamespace));
+
+
+        foreach ($class_methods as $methodName){
+            if($methodName!=='__construct' && preg_match('@Action@is',$methodName)){
+                $routeList[$service][$version][$method]['methods'][]=str_replace('Action','',$methodName);
+            }
+
+        }
+
+        return \apix\utils::dumpYaml($routeList,$serviceRouteListPath);
+
+    }
 }
