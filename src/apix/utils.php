@@ -158,6 +158,11 @@ class utils {
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
         }
 
+        elseif($argv[1]=="route"){
+            $consoleCommandApplication=new \Apix\bin\route();
+            echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
+        }
+
         elseif($argv[1]=="list"){
             $consoleCommandApplication=new \Apix\bin\apixlist();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
@@ -221,13 +226,14 @@ class utils {
                 $methodName=str_replace('Action','',$methodName);
 
 
-                if(count($routeList) && !in_array($methodName,$routeList[$service][$version][$method]['methods'])){
+                if(count($routeList) && array_key_exists($service,$routeList) && !in_array($methodName,$routeList[$service][$version][$method]['methods'])){
                     $routeList[$service][$version][$method]['methods'][]=$methodName;
                 }
 
-                if(count($routeList)===0){
+                if(count($routeList)===0 OR !array_key_exists($service,$routeList)){
                     $routeList[$service][$version][$method]['methods'][]=$methodName;
                 }
+
 
             }
 
@@ -250,5 +256,9 @@ class utils {
 
             echo $process->getOutput();
         }
+    }
+
+    public static function getDeclarationYamlFile($project,$yaml){
+        return staticPathModel::getProjectPath($project).'/declaration/history/'.$yaml.'';
     }
 }
