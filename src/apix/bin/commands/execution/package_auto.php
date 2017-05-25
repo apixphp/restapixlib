@@ -17,7 +17,7 @@ class __packageName__
      *
      * @return array
      */
-    public function index()
+    public function indexAction()
     {
         return ['package'=>'__packageName__'];
     }

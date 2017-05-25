@@ -10,6 +10,8 @@ use Apix\StaticPathModel;
 
 class utils {
 
+    public static $extension='.php';
+
     /**
      * Class resolve.
      * PHP-DI's container is preconfigured for "plug'n'play", i.e. development environment.

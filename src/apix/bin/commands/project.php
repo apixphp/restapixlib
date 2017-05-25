@@ -134,6 +134,15 @@ class project extends console {
             $touchprovisionindex['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->touch($this->getProjectName($data).'/v1/optional/provisions/index.php',$touchprovisionindex);
 
+            $list[]=$this->mkdir($this->getProjectName($data).'/v1/optional/provisions/limitation');
+
+            $touchprovisionlimitationaccess['execution']='services/accessRules';
+            $touchprovisionlimitationaccess['params']['projectName']=$this->getProjectName($data);
+            $list[]=$this->touch($this->getProjectName($data).'/v1/optional/provisions/limitation/accessRules.php',$touchprovisionlimitationaccess);
+
+            $list[]=$this->mkdir($this->getProjectName($data).'/v1/optional/provisions/limitation/yaml');
+            $list[]=$this->touch($this->getProjectName($data).'/v1/optional/provisions/limitation/yaml/index.html',null);
+
             $touchprovisionobjectloader['execution']='services/objectloader';
             $touchprovisionobjectloader['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->touch($this->getProjectName($data).'/v1/optional/provisions/objectloader.php',$touchprovisionobjectloader);

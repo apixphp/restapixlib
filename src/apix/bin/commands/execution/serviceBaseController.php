@@ -41,6 +41,9 @@ class serviceBaseController
     //platform config
     public $platform=false;
 
+    //throttle status
+    public $throttle=false;
+
 
     /**
      * Constructor.

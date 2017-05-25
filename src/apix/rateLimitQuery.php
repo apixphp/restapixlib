@@ -40,32 +40,11 @@ class rateLimitQuery {
      * @param string
      * @return response rateLimitQuery params runner
      */
-    public function handle(){
-        $status=true;
-        if($this->getStatusRule()){
+    public function handle($status){
+        if($status){
             return $this->getAccessRuleProcess();
         }
         return $status;
-
-    }
-
-    /**
-     * get status rule rateLimitQuery params.
-     * rateLimitQuery for service method
-     *
-     * outputs get boot.
-     *
-     * @param string
-     * @return response rateLimitQuery status runner
-     */
-    public function getStatusRule(){
-        if($this->getProjectAccessRuleClass()===null){
-            return rule::$status;
-        }
-        else{
-            $projectClass='\\src\\store\\provisions\\limitation\\'.app.'_accessRules';
-            return $projectClass::$status;
-        }
 
     }
 
@@ -225,31 +204,6 @@ class rateLimitQuery {
         return array_sum($list);
     }
 
-
-
-
-    /**
-     * get file rateLimitQuery params.
-     * check rule exists for service method
-     *
-     * outputs get rateLimitQuery.
-     *
-     * @param string
-     * @return response check rule exists params runner
-     */
-    public function checkRuleExists(){
-
-        if($this->getProjectAccessRuleClass()===null){
-            $rule=rule::handle();
-        }
-        else{
-            $projectClass='\\src\\store\\provisions\\limitation\\'.app.'_accessRules';
-            $rule=$projectClass::handle();
-        }
-        return $rule;
-
-
-    }
 
     /**
      * get file rateLimitQuery params.
@@ -518,6 +472,25 @@ class rateLimitQuery {
         return false;
     }
 
+
+    /**
+     * get file rateLimitQuery params.
+     * check rule exists for service method
+     *
+     * outputs get rateLimitQuery.
+     *
+     * @param string
+     * @return response check rule exists params runner
+     */
+    public function checkRuleExists(){
+
+        $projectClass=staticPathModel::getRateLimitPath(true);
+        $rule=$projectClass::handle();
+        return $rule;
+
+
+    }
+
     /**
      * get file access rule yaml params.
      * access rule yaml for service method
@@ -529,7 +502,7 @@ class rateLimitQuery {
      */
     public function getAccessRuleYaml(){
 
-        return root.'/'.staticPathModel::$accessLimitationYamlPath.'/yaml/'.app.'_accessPointer.yaml';
+        return root.'/'.staticPathModel::getRateLimitPath().'/yaml/'.app.'_accessPointer.yaml';
     }
 
     /**
@@ -543,7 +516,7 @@ class rateLimitQuery {
      */
     public function getProjectAccessRule(){
 
-        return root.'/'.staticPathModel::$accessLimitationYamlPath.'/'.app.'_accessRules.php';
+        return root.'/'.staticPathModel::getRateLimitPath().'/accessRules.php';
     }
 
     /**

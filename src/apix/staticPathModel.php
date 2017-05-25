@@ -168,6 +168,14 @@ class staticPathModel {
 
     }
 
+    public static function getRateLimitPath($namespace=false){
+        if($namespace){
+            return '\\src\\app\\'.app.'\\'.version.'\\optional\provisions\limitation\\accessRules';
+        }
+        return '/src/app/'.app.'/'.version.'/optional/provisions/limitation';
+
+    }
+
 
 
 
