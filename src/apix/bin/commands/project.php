@@ -102,6 +102,10 @@ class project extends console {
             $touchServiceBaseControllerParams['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->touch($this->getProjectName($data).'/v1/serviceBaseController.php',$touchServiceBaseControllerParams);
 
+            $touchServiceAdapterControllerParams['execution']='serviceAdapterController';
+            $touchServiceAdapterControllerParams['params']['projectName']=$this->getProjectName($data);
+            $list[]=$this->touch($this->getProjectName($data).'/v1/serviceAdapterController.php',$touchServiceAdapterControllerParams);
+
             $touchServiceTokenControllerParams['execution']='serviceTokenController';
             $touchServiceTokenControllerParams['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->touch($this->getProjectName($data).'/v1/serviceTokenController.php',$touchServiceTokenControllerParams);

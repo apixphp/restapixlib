@@ -61,7 +61,9 @@ class app
      */
     public static function getAppClassAlias()
     {
-        return [];
+        return [
+            'Adapter'=>'src\app\__projectName__\v1\serviceAdapterController'
+        ];
     }
 
 }
