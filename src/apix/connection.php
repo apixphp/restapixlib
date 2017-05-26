@@ -143,7 +143,10 @@ class connection extends Definitor {
                 //provision run
                 return $instance->provision(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
-                    return $instance->rateLimiterQuery(function() use ($service,$serviceMethod,$getVersion,$instance) {
+                    return $instance->rateLimiterQuery(/**
+                     * @return mixed
+                     */
+                    function() use ($service,$serviceMethod,$getVersion,$instance) {
 
                         if($service[1]=="doc"){
                             header("Content-Type: text/html");
@@ -182,7 +185,6 @@ class connection extends Definitor {
                         //apix resolve
                         $apix=utils::resolve("\\src\\app\\".$service[0]."\\".$getVersion."\\__call\\".$service[1]."\\".request."Service");
 
-                        $instance->refreshRouterList($apix);
 
                         $requestServiceMethod=$serviceMethod;
                         if(method_exists($apix,$requestServiceMethod)){
@@ -205,7 +207,7 @@ class connection extends Definitor {
                                     $boot=$instance->bootServiceLoader($requestServiceMethod);
                                 }
 
-                                $requestServiceMethodReal=$apix->$requestServiceMethod();
+                                $memoryGetUsage = memory_get_usage();
 
                                 if($serviceBasePlatformStatus){
                                     $servicePlatform=utils::resolve(staticPathModel::$apiPlatformNamespace);
@@ -214,16 +216,20 @@ class connection extends Definitor {
 
                                     if($platformDirectoryCallStaticVariable!==null){
                                         $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$boot){
-                                            return $requestServiceMethodReal;
+                                            return $apix->$requestServiceMethod();
                                         });
 
-                                        if($requestServiceMethodReal===null){
-                                            $requestServiceMethodReal=$apix->$requestServiceMethod((object)$boot);
-                                        }
                                     }
 
 
                                 }
+                                else{
+                                    $requestServiceMethodReal=$apix->$requestServiceMethod();
+                                }
+
+                                $ClassMethodMemoryGetUsage = memory_get_usage()-$memoryGetUsage;
+
+                                $instance->refreshRouterList($apix,$ClassMethodMemoryGetUsage);
 
 
                                 $instance->serviceDump($requestServiceMethodReal,$requestServiceMethod);

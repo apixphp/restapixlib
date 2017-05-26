@@ -64,9 +64,9 @@ class BaseDefinitor  {
      * @return response router lis runner
      */
 
-    protected function refreshRouterList($apix){
+    protected function refreshRouterList($apix,$memory){
         if(environment()=="local"){
-            return utils::refreshServiceRouteList(app,service,version,strtolower(request),$apix);
+            return utils::refreshServiceRouteList(app,service,version,strtolower(request),$apix,$memory);
         }
 
 
@@ -344,6 +344,7 @@ class BaseDefinitor  {
             return $data;
         }
         else{
+
             if(staticPathModel::getAppServiceBase()===null){
                 $responseOutType='json';
             }

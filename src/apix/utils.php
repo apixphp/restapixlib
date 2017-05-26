@@ -208,7 +208,8 @@ class utils {
 
 
     //set service route list
-    public static function refreshServiceRouteList($project,$service,$version,$method,$class){
+    public static function refreshServiceRouteList($project,$service,$version,$method,$class,$memory){
+
 
         $serviceRouteListPath=staticPathModel::getProjectPath($project).'/router.yaml';
 
@@ -232,7 +233,10 @@ class utils {
 
                 if(count($routeList)===0 OR !array_key_exists($service,$routeList)){
                     $routeList[$service][$version][$method]['methods'][]=$methodName;
+                    $routeList[$service][$version][$method]['memory'][$methodName]=$memory;
                 }
+
+                $routeList[$service][$version][$method]['memory'][str_replace('Action','',method)]=$memory;
 
 
             }

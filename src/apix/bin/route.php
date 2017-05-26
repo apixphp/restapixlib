@@ -27,7 +27,7 @@ class route {
 
         $tbl = new Console_Table();
         $tbl->setHeaders(
-            array('Project', 'Service','Version','Http','Method','Doc')
+            array('Project', 'Service','Version','Http','Method','Doc','MemoryUsage')
         );
 
 
@@ -35,6 +35,13 @@ class route {
             foreach($routeList[$service] as $version=>$array){
                 foreach($routeList[$service][$version] as $http=>$array){
                     foreach($routeList[$service][$version][$http]['methods'] as $methodName){
+
+                        $memory='no request';
+                        if(array_key_exists('memory',$routeList[$service][$version][$http]) && array_key_exists($methodName,$routeList[$service][$version][$http]['memory'])){
+                            $memory=$routeList[$service][$version][$http]['memory'][$methodName];
+                            $memory=$this->get_memory_usage($memory);
+                        }
+
 
                         $doc=$this->getDocControl($service,$http,$methodName);
 
@@ -49,7 +56,7 @@ class route {
                              */
                             if($field[0]=="doc"){
                                 if($doc==$field[1]){
-                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc));
+                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc,$memory));
                                 }
                             }
 
@@ -61,7 +68,7 @@ class route {
                              */
                             if($field[0]=="service"){
                                 if($service==$field[1]){
-                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc));
+                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc,$memory));
                                 }
                             }
 
@@ -73,7 +80,7 @@ class route {
                              */
                             if($field[0]=="version"){
                                 if($version==$field[1]){
-                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc));
+                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc,$memory));
                                 }
                             }
 
@@ -86,7 +93,7 @@ class route {
                              */
                             if($field[0]=="http"){
                                 if($http==$field[1]){
-                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc));
+                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc,$memory));
                                 }
                             }
 
@@ -99,13 +106,13 @@ class route {
                              */
                             if($field[0]=="method"){
                                 if($methodName==$field[1]){
-                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc));
+                                    $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc,$memory));
                                 }
                             }
 
                         }
                         else{
-                            $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc));
+                            $tbl->addRow(array($this->project, $service,$version,$http,$methodName,$doc,$memory));
                         }
 
                     }
@@ -144,5 +151,16 @@ class route {
             return 'yes';
         }
         return 'no';
+    }
+
+
+    public function get_memory_usage($mem_usage) {
+
+        if ($mem_usage < 1024)
+            return $mem_usage." bytes";
+        elseif ($mem_usage < 1048576)
+            return  round($mem_usage/1024,2)." kilobytes";
+        else
+            return round($mem_usage/1048576,2)." megabytes";
     }
 }
