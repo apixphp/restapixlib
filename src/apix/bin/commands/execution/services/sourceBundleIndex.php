@@ -45,7 +45,7 @@ class index extends app implements __bundleName__Interface
      *
      * @return string|array|object
      */
-    public function get()
+    public function getAction()
     {
 
         //return source

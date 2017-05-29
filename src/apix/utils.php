@@ -265,4 +265,30 @@ class utils {
     public static function getDeclarationYamlFile($project,$yaml){
         return staticPathModel::getProjectPath($project).'/declaration/history/'.$yaml.'';
     }
+
+
+    //file process
+    public static function fileprocess(){
+
+        //file process new instance
+        $libconf=require("".staticPathModel::$binCommandsPath."/lib/conf.php");
+        $file=$libconf['libFile'];
+        return new $file();
+
+    }
+
+
+    //mkdir process result
+    public static function fileProcessResult($data,$callback){
+
+        if(count($data)==0 OR in_array(false,$data)){
+
+            return 'project fail';
+        }
+        else {
+
+            return call_user_func($callback);
+        }
+
+    }
 }

@@ -42,6 +42,10 @@ class socialize
     {
         return [
 
+            'accessToken'=>'xxx',
+            'appId'=>'xxx',
+            'appSecret'=>'xxx',
+            'appVersion'=>'xxx'
         ];
     }
 

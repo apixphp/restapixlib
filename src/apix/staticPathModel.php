@@ -176,6 +176,13 @@ class staticPathModel {
 
     }
 
+    public static function getAppSocializeFacebook(){
+
+        $facebook='\\src\\app\\'.app.'\\'.version.'\\config\\socialize';
+        return $facebook::facebook();
+
+    }
+
 
 
 
