@@ -11,8 +11,9 @@
 namespace src\app\__projectName__\v1\optional\repository\__bundleName__\src\__srcName__;
 
 use Src\Store\Services\Httprequest as Request;
+use Src\Store\Services\appCollection as Collection;
+use Validator;
 use Repo;
-use Collection;
 
 /**
  * Represents a bundle index class.
