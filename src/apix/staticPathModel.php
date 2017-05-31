@@ -184,6 +184,18 @@ class staticPathModel {
     }
 
 
+    public static function storeConfigRunner(){
+
+        $storeConfigRunner=root.'/'.self::$storePath.'/config/runner.php';
+        if(file_exists($storeConfigRunner)){
+            return $storeConfigRunner;
+        }
+        return null;
+
+
+    }
+
+
 
 
 }

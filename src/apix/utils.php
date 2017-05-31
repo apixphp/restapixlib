@@ -163,6 +163,11 @@ class utils {
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
         }
 
+        elseif($argv[1]=="runner"){
+            $consoleCommandApplication=new \Apix\bin\runner();
+            echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
+        }
+
         elseif($argv[1]=="list"){
             $consoleCommandApplication=new \Apix\bin\apixlist();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;

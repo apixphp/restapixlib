@@ -146,4 +146,21 @@ class serviceBaseController
 
         return $node;
     }
+
+
+    /**
+     * The Process component executes commands in sub-processes.
+     * The component takes care of the subtle differences between the different platforms when executing the command.
+     * @access php api runner __projectName__
+     *
+     * @return array
+     */
+    public function commandProcessRunner()
+    {
+        $commandProcessRunner=[
+
+        ];
+
+        return $commandProcessRunner;
+    }
 }

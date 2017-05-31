@@ -114,6 +114,7 @@ class apixlist extends console  {
         echo $this->bluePrint('repo create [projectName] repo:repoName=> "create a new repository"');
         echo $this->bluePrint('staticprovider create [projectName] version:[versionNumber] file:staticClassName=> "create a new static provider class"');
         echo $this->bluePrint('platform create [project_name]:[service_name] [platform_dir]:[http_method] => "create a new static provider class"');
+        echo $this->bluePrint('runner mobi [project_name] => "runner command in server"');
 
     }
 }
