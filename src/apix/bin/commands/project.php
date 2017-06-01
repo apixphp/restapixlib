@@ -186,6 +186,10 @@ class project extends console {
 
                 $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/sudb/builder');
                 $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/sudb/builder/index.html',null);
+
+                $modelVarLoad['execution']='services/modelVarTrait';
+                $modelVarLoad['params']['projectName']=$this->getProjectName($data);
+                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/modelVar.php',$modelVarLoad);
             }
 
 
