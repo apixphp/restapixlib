@@ -296,4 +296,26 @@ class utils {
         }
 
     }
+
+
+    //fopen process
+    public static function changeClass($class,$param=array()){
+
+        $executionPath=$class;
+        $dt = fopen($executionPath, "r");
+        $content = fread($dt, filesize($executionPath));
+        fclose($dt);
+
+
+        foreach ($param as $key=>$value){
+            $content=str_replace($key,$value,$content);
+        }
+
+
+        $dt = fopen($executionPath, "w");
+        fwrite($dt, $content);
+        fclose($dt);
+
+        return true;
+    }
 }

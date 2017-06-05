@@ -44,6 +44,9 @@ class migration extends console {
 
         //make somethings
         $arg=$this->getArg($arguments);
+        if(array_key_exists("move",$arg)){
+            return $this->moveMigration($arg);
+        }
         $migrationPath="\\src\\store\\packages\\providers\\migrations\\manager";
         $migration=new $migrationPath($arg);
         return $migration->handle();
@@ -88,5 +91,36 @@ class migration extends console {
         }
         return $process->getOutput();
     }
+
+
+    /**
+     * Symfony process handle.
+     * new process
+     * return type exec
+     */
+    private function moveMigration($arguments){
+
+        $migrationPathWillBeMoved=staticPathModel::getProjectPath($arguments['move']).'/'.utils::getAppVersion($arguments['move']).'/migrations/schemas/'.$arguments['schema'];
+        $newPath=root.'/'.staticPathModel::$storeMigrationsPath.'/schemas/'.$arguments['schema'];
+
+
+        $migrationPurePath=str_replace(root.'/','',$migrationPathWillBeMoved);
+        $migrationNamespace=str_replace('/','\\',$migrationPurePath);
+        $newMigrationNamespace=str_replace('/','\\',str_replace(root.'/','',$newPath));
+
+
+        if(rename($migrationPathWillBeMoved,$newPath)){
+
+            foreach (glob($newPath."/*.php") as $filename) {
+                utils::changeClass($filename,[
+                    $migrationNamespace=>$newMigrationNamespace
+                ]);
+            }
+
+            echo 'migration named '.$arguments['schema'].' in '.$arguments['move'].' project has been successfully moved';
+
+        }
+    }
+
 
 }

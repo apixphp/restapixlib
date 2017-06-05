@@ -76,6 +76,9 @@ class apixlist extends console  {
         echo $this->bluePrint('migration push:[projectName] => "create the migration push for all changes from existing database in project"');
         echo $this->bluePrint('migration pull:[projectName] --seed => "create seed for all models from existing database in project"');
         echo $this->bluePrint('migration push:[projectName] --seed => "create the migration push and seed for all changes from existing database in project"');
+        echo $this->bluePrint('migration move:[projectName] schema:[tableName] => "create the migration push into src/store/migrations from existing migrations in project"');
+        echo $this->bluePrint('migration move:[projectName] schema:[tableName] --seed => "create the migration push into src/store/migrations from existing migrations in project"');
+
 
         echo PHP_EOL;
 
