@@ -46,7 +46,7 @@ class staticPathModel {
      * it is namespace for api documentation
      * for service path run
      */
-    public static $apiDocNamespace='\\src\\store\\declarations\\src\\index';
+    public static $apiDocNamespace='\\Apix\\declarations\\src\\index';
 
     /**
      * @var param api platform
