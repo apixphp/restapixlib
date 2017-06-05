@@ -27,7 +27,13 @@ class command extends console {
             $file=$key;
         }
 
-        $path=root.'/'.staticPathModel::$storePath.'/commands/'.$file.'.php';
+        $commandDir=root.'/'.staticPathModel::$storePath.'/commands/';
+
+        if(!file_exists($commandDir)){
+            $this->mkdir_path($commandDir);
+        }
+
+        $path=''.$commandDir.''.$file.'.php';
 
         if(!file_exists($path)){
             //usage api command create file:file
@@ -53,6 +59,12 @@ class command extends console {
     public function mkdir($data){
 
         return $this->fileprocess->mkdir($data);
+    }
+
+    //set mkdir
+    public function mkdir_path($data){
+
+        return $this->fileprocess->mkdir_path($data);
     }
 
     //set mkdir

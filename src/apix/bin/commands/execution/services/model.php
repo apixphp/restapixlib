@@ -68,6 +68,16 @@ class __className__ extends Model
 
 
     /**
+     * @var joiner relationship.
+     *
+     * @info joiner table is relationship
+     * @status it is array
+     * @param tableName=>['childRelation'=>'tableNameRelation']
+     */
+    public $joiner=[];
+
+
+    /**
      * @var selectHidden.
      *
      * @info your table columns is hidden

@@ -44,7 +44,7 @@ class __platformfile__ extends \src\app\__projectName__\v1\__call\__serviceName_
      *
      * @return array
      */
-    public function index($data=array())
+    public function indexAction($data=array())
     {
 
         //return source

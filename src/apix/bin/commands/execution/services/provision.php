@@ -64,4 +64,30 @@ class index
         ];
     }
 
+
+    /**
+     * dont run this services.
+     *
+     * @return array
+     */
+    public function getExcept(){
+
+        return [
+            //app.'/stk'
+        ];
+    }
+
+
+    /**
+     * dont run this services.
+     *
+     * @return array
+     */
+    public function postExcept(){
+
+        return [
+            //app.'/stk'
+        ];
+    }
+
 }
