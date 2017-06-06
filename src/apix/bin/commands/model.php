@@ -77,6 +77,16 @@ class model extends console {
                             $list[]=$this->touch($project.'/'.$version.'/model/sudb/'.$this->getParams($data)[1]['file'].'.php',$modelParams);
 
 
+
+                            $modelParamsAdapter['execution']='services/modelAdapter';
+                            $modelParamsAdapter['params']['projectName']=$project;
+                            $modelParamsAdapter['params']['className']=$this->getParams($data)[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
+                            $list[]=$this->touch($project.'/'.$version.'/model/sudb/adapter/'.$this->getParams($data)[1]['file'].'Adapter.php',$modelParamsAdapter);
+
+
+
+
                         }
                         else{
                             return $this->error($this->getParams($data)[1]['file'].' model is already available');

@@ -26,8 +26,14 @@ use Response;
  */
 class __method__Service extends app
 {
-    public $request;
+    /**
+     * Production forbidden.
+     *
+     * @if it is true,you can't access on the production
+     * @restrictions method is comprenhensive on app class
+     */
     public $forbidden=false;
+
 
     /**
      * Constructor.
@@ -38,18 +44,15 @@ class __method__Service extends app
      */
     public function __construct()
     {
-
         //get app extends
         parent::__construct();
     }
 
     /**
-     * index method is main method.
-     * it is default method without needed interface implemantation
+     * index method is main method
      * because method name is called on the url
-     * method can produce ouput as string or array
-     * converted to array everytime as output
-     * produced json output as result
+     * method can produce output with response class
+     * produced json output as result (default)
      * @return array @method
      */
     public function indexAction()

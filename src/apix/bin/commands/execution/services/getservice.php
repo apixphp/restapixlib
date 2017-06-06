@@ -26,13 +26,6 @@ use Response;
  */
 class getService extends app
 {
-    /**
-     * request object.
-     *
-     * Src\Store\Services\Httprequest
-     * @return string or array
-     */
-    public $request;
 
     /**
      * Production forbidden.

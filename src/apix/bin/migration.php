@@ -100,7 +100,6 @@ class migration extends console {
      */
     private function moveMigration($arguments){
 
-
         $migrationPathWillBeMoved=staticPathModel::getProjectPath($arguments['move']).'/'.utils::getAppVersion($arguments['move']).'/migrations/schemas/'.$arguments['schema'];
         $newPath=root.'/'.staticPathModel::$storeMigrationsPath.'/schemas/'.$arguments['schema'];
 
@@ -120,36 +119,7 @@ class migration extends console {
 
             echo 'migration named '.$arguments['schema'].' in '.$arguments['move'].' project has been successfully moved';
 
-
         }
-
-
-        if(array_key_exists('--seed',$arguments)){
-
-            $migrationSeedPathWillBeMoved=staticPathModel::getProjectPath($arguments['move']).'/'.utils::getAppVersion($arguments['move']).'/migrations/seeds/'.$arguments['schema'].'_seed';
-            $newSeedPath=root.'/'.staticPathModel::$storeMigrationsPath.'/seeds/'.$arguments['schema'].'_seed';
-
-
-            $migrationSeedPurePath=str_replace(root.'/','',$migrationSeedPathWillBeMoved);
-            $migrationSeedNamespace=str_replace('/','\\',$migrationSeedPurePath);
-            $migrationSeedNamespace=str_replace('\\'.$arguments['schema'].'_seed','',$migrationSeedNamespace);
-            $newMigrationSeedNamespace=str_replace('/','\\',str_replace(root.'/','',$newSeedPath));
-            $newMigrationSeedNamespace=str_replace('\\'.$arguments['schema'].'_seed','',str_replace(root.'/','',$newMigrationSeedNamespace));
-
-            if(rename($migrationSeedPathWillBeMoved.'.php',$newSeedPath.'.php')){
-
-                utils::changeClass($newSeedPath.'.php',[
-                    $migrationSeedNamespace=>$newMigrationSeedNamespace
-                ]);
-
-                echo PHP_EOL;
-                echo 'migration seed named '.$arguments['schema'].' in '.$arguments['move'].' project has been successfully moved';
-
-
-            }
-        }
-
-
     }
 
 
