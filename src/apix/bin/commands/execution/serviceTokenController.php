@@ -49,7 +49,6 @@ class serviceTokenController {
     public function handle($environment='local'){
 
         //token status false|true
-        /** @var TYPE_NAME $environment */
         $token['status']=$this->status[$environment];
 
         //service tokens

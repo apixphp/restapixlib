@@ -35,14 +35,11 @@ class serviceBaseController
     //default model
     public $model='sudb';
 
-    //model pagination
-    public $pagination=10;
-
     //platform config
     public $platform=false;
 
     //throttle status
-    public $throttle=false;
+    public $throttle;
 
 
     /**
@@ -55,6 +52,7 @@ class serviceBaseController
     public function __construct()
     {
         $this->request=new Request();
+        $this->throttle=$this->throttle();
     }
 
     /**
@@ -87,6 +85,15 @@ class serviceBaseController
     public function getLocalization()
     {
         return $this->lang;
+    }
+
+    /**
+     * service rate limit query,
+     * @return boolean
+     */
+    public function throttle()
+    {
+        return false;
     }
 
 
