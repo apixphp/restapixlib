@@ -138,36 +138,4 @@ class serviceBaseController
         return $events;
     }
 
-    /**
-     * The node side component provides tools that allow your application
-     * components to communicate with each other by dispatching events and listening to them.
-     * @access project/serviceside/key
-     *
-     * @return array
-     */
-    public function nodeServiceSide()
-    {
-        $node=[
-
-        ];
-
-        return $node;
-    }
-
-
-    /**
-     * The Process component executes commands in sub-processes.
-     * The component takes care of the subtle differences between the different platforms when executing the command.
-     * @access php api runner __projectName__
-     *
-     * @return array
-     */
-    public function commandProcessRunner()
-    {
-        $commandProcessRunner=[
-
-        ];
-
-        return $commandProcessRunner;
-    }
 }

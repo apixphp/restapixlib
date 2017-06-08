@@ -157,23 +157,25 @@ class connection extends Definitor {
                         //check package auto service and method
                         if($instance->checkPackageAuto($service)['status']){
                             $packageAuto=utils::resolve($instance->checkPackageAuto($service)['class']);
-                            return $instance->responseOut($packageAuto->$serviceMethod());
+                            return $instance->responseOutRedirect($instance,$packageAuto->$serviceMethod(),true);
+
                         }
 
                         //check package dev service and method
                         if($instance->checkPackageDev($service)['status']){
                             $packageDev=utils::resolve($instance->checkPackageDev($service)['class']);
                             define("devPackage",true);
-                            return $instance->responseOut($packageDev->$serviceMethod($instance->checkPackageDev($service)['definitions']));
+                            return $instance->responseOutRedirect($instance,$packageDev->$serviceMethod($instance->checkPackageDev($service))['definitions'],true);
                         }
 
                         $serviceNo=$instance->getFixLog('serviceNo');
                         if(!file_exists(root . '/'.src.'/'.$service[0].'/'.$getVersion.'/__call/'.$service[1].'')){
-                            return $instance->responseOut([],$serviceNo);
+                            return $instance->responseOutRedirect($instance,$serviceNo,false);
                         }
 
                         if(!file_exists(root . '/'.src.'/'.$service[0].'/'.$getVersion.'/__call/'.$service[1].'/app.php')){
-                            return $instance->responseOut([],$serviceNo);
+                            return $instance->responseOutRedirect($instance,$serviceNo,false);
+
                         }
 
                         //service main file extends this file
@@ -190,7 +192,7 @@ class connection extends Definitor {
                         if(method_exists($apix,$requestServiceMethod)){
                             if(property_exists($apix,"forbidden") && \Apix\environment::get()=="production"){
                                 if($apix->forbidden){
-                                    return $instance->responseOut([],$instance->getFixLog('noaccessright'));
+                                    return $instance->responseOutRedirect($instance,$instance->getFixLog('noaccessright'),false);
                                 }
                             }
                             //call service
@@ -216,7 +218,7 @@ class connection extends Definitor {
 
                                     if($platformDirectoryCallStaticVariable!==null){
                                         $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$boot){
-                                            return $apix->$requestServiceMethod();
+                                            return $instance->responseOutRedirect($instance,$apix->$requestServiceMethod(),true);
                                         });
 
                                     }
@@ -235,21 +237,23 @@ class connection extends Definitor {
                                 $instance->serviceDump($requestServiceMethodReal,$requestServiceMethod);
                                 if($serviceBase->log){
                                     return $instance->logging($requestServiceMethodReal,function() use ($instance,$requestServiceMethodReal){
-                                        return $instance->responseOut($requestServiceMethodReal);
+                                        return $instance->responseOutRedirect($instance,$requestServiceMethodReal,true);
                                     });
                                 }
                                 else{
 
-                                    return $instance->responseOut($requestServiceMethodReal);
+                                    return $instance->responseOutRedirect($instance,$requestServiceMethodReal,true);
+
                                 }
 
                             }
 
-                            return $instance->responseOut([],$instance->getFixLog('serviceRestrictions'));
+                            return $instance->responseOutRedirect($instance,$instance->getFixLog('serviceRestrictions'),false);
 
                         }
                         else{
-                            return $instance->responseOut([],$instance->getFixLog('invalidservice'));
+
+                            return $instance->responseOutRedirect($instance,$instance->getFixLog('invalidservice'),false);
                         }
 
                     });
@@ -403,6 +407,17 @@ class connection extends Definitor {
             exit();
         }
 
+
+    }
+
+
+    public function responseOutRedirect($instance,$requestServiceMethodReal,$type=true){
+        header('Content-Type: application/'.utils::responseOutType());
+
+        if($type){
+            return $instance->responseOut($requestServiceMethodReal);
+        }
+        return $instance->responseOut([],$requestServiceMethodReal);
 
     }
 

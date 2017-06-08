@@ -43,7 +43,25 @@ class project extends console {
 
 
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/index.html',null);
+
+
+            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel');
+
+            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/middleware');
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/middleware/index.html',null);
+
+            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/loc');
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/loc/index.html',null);
+
+            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/stubs');
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/stubs/index.html',null);
+
+            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/bootstrap');
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/bootstrap/index.html',null);
+
+            $touchKernel['execution']='kernel';
+            $touchKernel['params']['projectName']=$this->getProjectName($data);
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/kernel.php',$touchKernel);
 
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/lang');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/lang/index.html',null);

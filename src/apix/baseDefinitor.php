@@ -345,13 +345,17 @@ class BaseDefinitor  {
         }
         else{
 
-            if(staticPathModel::getAppServiceBase()===null){
-                $responseOutType='json';
+            if(defined('app')){
+                $kernelResponseManager=staticPathModel::getKernelPath(app)->serviceLocContainer;
+                $responseManager=$kernelResponseManager['\Apix\ResponseManager'];
+                $responseManager=new $responseManager();
             }
             else{
-                $responseOutType=staticPathModel::getAppServiceBase()->response;
+                $responseManager='\Apix\ResponseManager';
+                $responseManager=new $responseManager('json');
             }
-            $responseManager=new \Apix\ResponseManager($responseOutType);
+
+
             return $responseManager->responseManagerBoot($data,$msg);
         }
 

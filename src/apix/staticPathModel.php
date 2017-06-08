@@ -202,6 +202,14 @@ class staticPathModel {
 
     }
 
+    public static function getKernelPath($project){
+
+        $kernelPath='\\src\\app\\'.$project.'\\kernel\kernel';
+        return utils::resolve($kernelPath);
+
+
+    }
+
 
 
 

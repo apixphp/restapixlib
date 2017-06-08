@@ -69,7 +69,7 @@ class runner {
     }
 
     public function  getCommandProcessRunner(){
-        return staticPathModel::getAppServiceBase()->commandProcessRunner();
+        return staticPathModel::getKernelPath($this->project)->commandProcessRunner;
     }
 
     public function  generalProcessRunner(){

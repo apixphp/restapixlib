@@ -28,7 +28,7 @@ class responseManager {
             $responseOutType=staticPathModel::getAppServiceBase()->response;
         }
         $this->definitor=$responseOutType;
-        header('Content-Type: application/'.$responseOutType);
+        //header('Content-Type: application/'.$responseOutType);
 
     }
 

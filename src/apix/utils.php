@@ -318,4 +318,15 @@ class utils {
 
         return true;
     }
+
+    //get response type
+    public static function responseOutType(){
+        if(staticPathModel::getAppServiceBase()===null){
+            $responseOutType='json';
+        }
+        else{
+            $responseOutType=staticPathModel::getAppServiceBase()->response;
+        }
+        return $responseOutType;
+    }
 }
