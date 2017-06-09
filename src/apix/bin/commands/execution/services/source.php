@@ -11,8 +11,7 @@
 namespace src\app\__projectName__\v1\__call\__serviceName__\branches\source\__methodName__;
 
 use Src\Store\Services\Httprequest as Request;
-use Repo;
-use Collection;
+use Src\Store\Services\appCollection as Collection;
 
 /**
  * Represents a index class.

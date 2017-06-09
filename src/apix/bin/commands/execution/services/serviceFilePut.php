@@ -12,9 +12,6 @@ namespace src\app\__projectName__\v1\__call\__serviceName__;
 
 use Src\Store\Services\Httprequest as Request;
 use Src\Store\Services\appCollection as Collection;
-use Validator;
-use Repo;
-use Response;
 
 /**
  * Represents a __method__Service class.
