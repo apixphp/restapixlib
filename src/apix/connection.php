@@ -355,7 +355,7 @@ class connection extends Definitor {
             return $this->responseOut([],$this->getFixLog('projectPathError'));
         }
         if(!file_exists(root . '/'.src.'/'.self::$service[0].'')){
-            return $this->responseOut([],$this->getFixLog('projectNo'));
+            return $this->responseOutRedirect($this,$this->getFixLog('projectNo'),false);
         }
         return call_user_func($callback);
     }
