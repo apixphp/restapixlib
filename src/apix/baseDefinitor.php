@@ -230,7 +230,7 @@ class BaseDefinitor  {
     protected function getQueryParamsFromRoute(){
 
         $service=$this->getServiceNameAndMethodFromRequestUri();
-        $params=preg_replace('@'.$this->getPureMethodNameFromService().'\?@is','',end($service));
+        $params=preg_replace('@'.str_replace("Action","",$this->getPureMethodNameFromService()).'\?@is','',end($service));
         if($params==$this->getPureMethodNameFromService()) {
             return [];
         }
@@ -476,6 +476,7 @@ class BaseDefinitor  {
 
         }
         $queryParams=$this->getQueryParamsFromRoute();
+
 
         //token provision
         if(array_key_exists("_token",$queryParams)){
