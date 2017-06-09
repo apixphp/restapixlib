@@ -232,18 +232,17 @@ class utils {
                 $methodName=str_replace('Action','',$methodName);
 
 
-                if(count($routeList) && array_key_exists($service,$routeList) && !in_array($methodName,$routeList[$service][$version][$method]['methods'])){
-                    $routeList[$service][$version][$method]['methods'][]=$methodName;
-                }
-
-                if(count($routeList)===0 OR !array_key_exists($service,$routeList)){
+                if(count($routeList) && array_key_exists($service,$routeList) &&
+                    array_key_exists($version,$routeList[$service]) &&
+                    array_key_exists($method,$routeList[$service][$version]) && !in_array($methodName,$routeList[$service][$version][$method]['methods'])){
                     $routeList[$service][$version][$method]['methods'][]=$methodName;
                     $routeList[$service][$version][$method]['memory'][$methodName]=$memory;
                 }
 
-                $routeList[$service][$version][$method]['memory'][str_replace('Action','',method)]=$memory;
-
-
+                if(count($routeList)===0 OR !array_key_exists($service,$routeList) OR !array_key_exists($version,$routeList[$service]) OR !array_key_exists($method,$routeList[$service][$version])){
+                    $routeList[$service][$version][$method]['methods'][]=$methodName;
+                    $routeList[$service][$version][$method]['memory'][$methodName]=$memory;
+                }
             }
 
         }

@@ -185,7 +185,7 @@ class connection extends Definitor {
                         $serviceBase=utils::resolve(api."serviceBaseController");
 
                         //apix resolve
-                        $apix=utils::resolve("\\src\\app\\".$service[0]."\\".$getVersion."\\__call\\".$service[1]."\\".request."Service");
+                        $apix=utils::resolve("\\src\\app\\".$service[0]."\\".$getVersion."\\__call\\".$service[1]."\\".strtolower(request)."Service");
 
 
                         $requestServiceMethod=$serviceMethod;
