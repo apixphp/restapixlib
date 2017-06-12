@@ -64,14 +64,6 @@ class staticPathModel {
 
 
     /**
-     * @var param api middleware
-     * it is namespace for api middleware
-     * for service path run
-     */
-    public static $apiMiddlewareNamespace='\\src\\store\\middleware';
-
-
-    /**
      * @var param api packages auto
      * it is path for api auto service
      * for service path run
@@ -207,6 +199,13 @@ class staticPathModel {
         $kernelPath='\\src\\app\\'.$project.'\\kernel\kernel';
         return utils::resolve($kernelPath);
 
+
+    }
+
+
+    public static function getMiddlewarePath($project){
+
+        return root.'/src/app/'.$project.'/kernel/middleware';
 
     }
 

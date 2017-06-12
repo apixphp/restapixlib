@@ -204,10 +204,6 @@ class connection extends Definitor {
                             if($restrictionsStatus){
                                 $serviceBasePlatformStatus=$serviceBase->platform;
 
-                                $boot=[];
-                                if($serviceBase->boot){
-                                    $boot=$instance->bootServiceLoader($requestServiceMethod);
-                                }
 
                                 $memoryGetUsage = memory_get_usage();
 
@@ -217,7 +213,7 @@ class connection extends Definitor {
                                     $platformDirectoryCallStaticVariable=utils::resolve($serviceBasePlatformConfig)->handle();
 
                                     if($platformDirectoryCallStaticVariable!==null){
-                                        $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$boot){
+                                        $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$instance){
                                             return $instance->responseOutRedirect($instance,$apix->$requestServiceMethod(),true);
                                         });
 

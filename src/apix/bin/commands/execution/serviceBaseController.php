@@ -17,9 +17,6 @@ class serviceBaseController
     //default lang name
     public $lang='tr';
 
-    //default boot name
-    public $boot=false;
-
     //data log
     public $log=false;
 
@@ -55,25 +52,6 @@ class serviceBaseController
         $this->throttle=$this->throttle();
     }
 
-    /**
-     * webserviceBoot is to use guzzle method for http.
-     * it is related method for every service
-     * method can produce output as string or array or object
-     * @param service array or service data array
-     * @return array
-     */
-    public function webServiceBoot()
-    {
-        return [
-            /*
-            'stk'=>[
-                //optional
-                'all'=>['boot1'=>'bootOne'],
-                //optional
-                'index'=>['boot2'=>'bootTwo']
-            ]*/
-        ];
-    }
 
     /**
      * localization features provide a convenient way to retrieve strings in various languages,
