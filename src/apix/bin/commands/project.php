@@ -127,6 +127,10 @@ class project extends console {
             $servicePackageDevController['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/servicePackageDevController.php',$servicePackageDevController);
 
+            $serviceMiddleController['execution']='serviceMiddlewareController';
+            $serviceMiddleController['params']['projectName']=$this->getProjectName($data);
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/serviceMiddlewareController.php',$serviceMiddleController);
+
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/staticProvider');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/staticProvider/index.html',null);
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/__call');
