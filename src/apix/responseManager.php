@@ -54,17 +54,10 @@ class responseManager {
             }
 
             return $this->getStatusDataEmpty($data,$msg,$developInfo,function() use($data,$msg,$developInfo){
-                $serviceBase=utils::resolve(api."serviceBaseController");
-                if($serviceBase->objectLoader){
-                    $objectData=(new objectLoader())->boot();
-                }
-                else{
-                    $objectData=[];
-                }
 
                 $data=['success'=>(bool)true,'statusCode'=>200,
                         'responseTime'=>microtime(true)-time_start,
-                        'requestDate'=>date("Y-m-d H:i:s")]+['data'=>$data+$objectData,'development'=>$developInfo];
+                        'requestDate'=>date("Y-m-d H:i:s")]+['data'=>$data,'development'=>$developInfo];
 
                 return $this->responseDefinitor($data);
             });

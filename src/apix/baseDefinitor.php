@@ -322,26 +322,6 @@ class BaseDefinitor  {
     }
 
 
-    /**
-     * get preloader classes.
-     *
-     * outputs class_alias.
-     *
-     * @param string
-     * @return response class_alias runner
-     */
-
-    protected function middleware($prefix){
-
-        $Middleware="".staticPathModel::$apiMiddlewareNamespace."\\".$prefix."Middleware";
-        $Middleware=new $Middleware([]);
-
-        $app=''.app.'/'.service.'/'.method;
-        if(!in_array($app,$Middleware->except())){
-            return $Middleware->handle();
-        }
-    }
-
 
     /**
      * response out.
@@ -373,20 +353,6 @@ class BaseDefinitor  {
             return $responseManager->responseManagerBoot($data,$msg);
         }
 
-    }
-
-    /**
-     * get object loader classes.
-     *
-     * outputs class_alias.
-     *
-     * @param string
-     * @return response class_alias runner
-     */
-
-    protected function objectLoaderMethodCall(){
-        $objectLoader=new objectLoader();
-        return $objectLoader->boot();
     }
 
 
@@ -549,33 +515,19 @@ class BaseDefinitor  {
 
     protected function provision($callback){
 
-        $provision=staticPathModel::$apiProvisionNamespace;
-        $provision=utils::resolve($provision);
-        $provisionMethod=''.request.'Provision';
-        $provisionMethodExcept=''.request.'Except';
-
-        $apl=$provision->$provisionMethod();
-
-
-        if($apl['success'] OR in_array(app.'/'.service.'',$provision->$provisionMethodExcept())){
-
-            if(!file_exists("./src/app/".app."/".version."/optional/provisions/index.php")){
-                return $this->responseOut([],"project or versioning is not valid");
-            }
-            $serviceprovision="\\src\\app\\".app."\\".version."\\optional\\provisions\\index";
-            $serviceprovision=utils::resolve($serviceprovision);
-            $serviceprovisionMethod=''.request.'Provision';
-            $serviceprovisionExcept=''.request.'Except';
-            $spl=$serviceprovision->$serviceprovisionMethod();
-            if($spl['success'] OR in_array(service,$serviceprovision->$serviceprovisionExcept())){
-                return call_user_func($callback);
-            }
-            else{
-                $message=$spl['message'];
-            }
+        if(!file_exists("./src/app/".app."/".version."/optional/provisions/index.php")){
+            return $this->responseOut([],"project or versioning is not valid");
+        }
+        $serviceprovision="\\src\\app\\".app."\\".version."\\optional\\provisions\\index";
+        $serviceprovision=utils::resolve($serviceprovision);
+        $serviceprovisionMethod=''.request.'Provision';
+        $serviceprovisionExcept=''.request.'Except';
+        $spl=$serviceprovision->$serviceprovisionMethod();
+        if($spl['success'] OR in_array(service,$serviceprovision->$serviceprovisionExcept())){
+            return call_user_func($callback);
         }
         else{
-            $message=$apl['message'];
+            $message=$spl['message'];
         }
 
         return $this->responseOut([],$message);
