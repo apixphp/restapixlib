@@ -328,4 +328,12 @@ class utils {
         }
         return $responseOutType;
     }
+
+    //get response type
+    public static function cleanActionMethod($method=null){
+        if($method!==null){
+            return str_replace('Action','',$method);
+        }
+        return null;
+    }
 }

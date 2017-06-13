@@ -209,6 +209,14 @@ class staticPathModel {
 
     }
 
+    public static function serviceMiddleware(){
+
+        $serviceMiddleware=root.'/src/app/'.app.'/'.version.'/serviceMiddlewareController.php';
+        $list=require_once($serviceMiddleware);
+        return $list;
+
+    }
+
 
 
 

@@ -154,6 +154,8 @@ class connection extends Definitor {
                             return utils::resolve($apiDoc)->index();
                         }
 
+                        $instance->serviceMiddlewareRun();
+
                         //check package auto service and method
                         if($instance->checkPackageAuto($service)['status']){
                             $packageAuto=utils::resolve($instance->checkPackageAuto($service)['class']);
