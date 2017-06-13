@@ -161,9 +161,9 @@ class staticPathModel {
         return '\\src\\app\\'.$project.'\\'.$version.'\__call\\'.$service.'\\'.$method.'Service';
     }
 
-    public static function getAppServiceLog(){
+    public static function getAppServiceLog($type='access'){
         $serviceBase='\\src\\app\\'.app.'\\'.version.'\\serviceLogController';
-        return new $serviceBase();
+        return new $serviceBase($type);
 
     }
 

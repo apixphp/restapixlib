@@ -391,6 +391,9 @@ class connection extends Definitor {
         $appExceptionSuccess=['success'=>false];
         $appException=$appExceptionSuccess+$exception::handler($errNo,$errStr,$errFile,$errLine,$errContext);
 
+            staticPathModel::getAppServiceLog('error')->handle($appException);
+            $this->responseOutRedirect($this,$appException,false);
+
         //set json app exception
         if(environment()=="local"){
             echo $this->responseOutRedirect($this,$appException,false);
