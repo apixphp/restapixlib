@@ -130,6 +130,7 @@ class connection extends Definitor {
 
             if(defined('app')){
                 set_error_handler([$instance,'setErrorHandler']);
+                register_shutdown_function([$instance,'fatalErrorShutdownHandler']);
             }
 
             $downPath=staticPathModel::getProjectPath(app).'/down.yaml';
@@ -392,7 +393,7 @@ class connection extends Definitor {
 
         //set json app exception
         if(environment()=="local"){
-            echo json_encode($appException);
+            echo $this->responseOutRedirect($this,$appException,false);
             exit();
         }
         else{
@@ -401,11 +402,29 @@ class connection extends Definitor {
                 'message'=>'error occurred'
             ];
 
-            echo json_encode($productionException);
+            echo $this->responseOutRedirect($this,$productionException,false);
             exit();
         }
 
 
+    }
+
+
+    /**
+     * get instance classes.
+     *
+     * outputs get instance.
+     *
+     * @param string
+     * @return response instance runner
+     */
+    public function fatalErrorShutdownHandler(){
+
+        $last_error = error_get_last();
+        if ($last_error['type'] === E_ERROR) {
+            // fatal error
+            $this->setErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'],[]);
+        }
     }
 
 
