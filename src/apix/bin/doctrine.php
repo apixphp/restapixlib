@@ -28,7 +28,7 @@ class doctrine {
      */
     public function execute($data){
 
-        $process = new Process('php vendor/bin/doctrine orm:convert-mapping --from-database php '.root.'/src/app/'.$data[2].'/'.$data[3].'/model/doctrine --force');
+        $process = new Process('php vendor/bin/doctrine orm:convert-mapping --namespace="src\\app\\mobi\\v1\\model\doctrine\\" --force  --from-database annotation ./');
         $process->run();
 
         // executes after the command finishes
