@@ -44,6 +44,13 @@ class model extends console {
                             //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
                             $list[]=$this->touch($project.'/'.$version.'/model/eloquent/builder/'.$this->getParams($data)[1]['file'].'Builder.php',$modelParamsBuilder);
 
+                            $modelParamsAdapter['execution']='services/modelAdapter';
+                            $modelParamsAdapter['params']['projectName']=$project;
+                            $modelParamsAdapter['params']['orm']='eloquent';
+                            $modelParamsAdapter['params']['className']=$this->getParams($data)[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
+                            $list[]=$this->touch($project.'/'.$version.'/model/eloquent/adapter/'.$this->getParams($data)[1]['file'].'Adapter.php',$modelParamsAdapter);
+
                             $modelParams['execution']='services/eloquentmodel';
                             $modelParams['params']['projectName']=$project;
                             $modelParams['params']['className']=$this->getParams($data)[1]['file'];
@@ -79,6 +86,7 @@ class model extends console {
 
 
                             $modelParamsAdapter['execution']='services/modelAdapter';
+                            $modelParamsAdapter['params']['orm']='sudb';
                             $modelParamsAdapter['params']['projectName']=$project;
                             $modelParamsAdapter['params']['className']=$this->getParams($data)[1]['file'];
                             //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];

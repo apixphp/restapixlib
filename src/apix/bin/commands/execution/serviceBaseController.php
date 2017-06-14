@@ -30,7 +30,7 @@ class serviceBaseController
     public $search='elasticSearch';
 
     //default model
-    public $model='sudb';
+    public $model='__orm__';
 
     //platform config
     public $platform=false;

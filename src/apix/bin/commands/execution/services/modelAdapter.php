@@ -1,8 +1,8 @@
 <?php
-namespace src\app\__projectName__\v1\model\sudb\adapter;
+namespace src\app\__projectName__\v1\model\__orm__\adapter;
 
-use src\app\__projectName__\v1\model\sudb\builder\__className__Builder;
-use src\app\__projectName__\v1\model\sudb\__className__;
+use src\app\__projectName__\v1\model\__orm__\builder\__className__Builder;
+use src\app\__projectName__\v1\model\__orm__\__className__;
 
 class __className__Adapter
 {

@@ -107,6 +107,7 @@ class project extends console {
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/jobs/index.html',null);
 
             $touchServiceBaseControllerParams['execution']='serviceBaseController';
+            $touchServiceBaseControllerParams['params']['orm']=$orm;
             $touchServiceBaseControllerParams['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/serviceBaseController.php',$touchServiceBaseControllerParams);
 
