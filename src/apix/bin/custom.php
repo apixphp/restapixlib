@@ -42,7 +42,20 @@ class custom extends console {
 
         //result
         $application=new Application();
-        $command='\\src\\store\\commands\\'.$data[1];
+        $dataExplode=explode(":",$data[1]);
+
+        $appCommandPath=null;
+        if(count($dataExplode)===2){
+            $appCommandPath=staticPathModel::getKernelCommand($dataExplode[0]).'/'.$dataExplode[1].'.php';
+        }
+
+        if(file_exists($appCommandPath)){
+            $command=''.staticPathModel::getKernelCommand($dataExplode[0],true).'\\'.$dataExplode[1];
+        }
+        else{
+            $command='\\src\\store\\commands\\'.$data[1];
+        }
+
         if($data[1]=="migration"){
             $command='\\Apix\\bin\\'.$data[1];
         }
@@ -65,6 +78,7 @@ class custom extends console {
                 }
 
             }
+
         }
 
         if(method_exists($app,'appNameSpace')){
@@ -78,6 +92,7 @@ class custom extends console {
             define('app',$appDef['app']);
             define('version',$appDef['version']);
         }
+
 
         return $app->handle((object)$list);
         $application->run();

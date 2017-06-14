@@ -14,7 +14,7 @@ class command extends console {
     public $fileprocess;
 
     public function __construct(){
-        $this->fileprocess=$this->fileprocess();
+        $this->fileprocess=utils::fileprocess();
         require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
     }
 
@@ -22,15 +22,22 @@ class command extends console {
     //project create command
     public function create ($data){
 
-
         foreach ($data as $key=>$value){
             $file=$key;
+            break;
         }
 
-        $commandDir=root.'/'.staticPathModel::$storePath.'/commands/';
+        if(count($data)===2){
+            $commandDir=staticPathModel::getKernelCommand(end($data)).'/';
+        }
+        else{
+            $commandDir=root.'/'.staticPathModel::$storePath.'/commands/';
+        }
+
+
 
         if(!file_exists($commandDir)){
-            $this->mkdir_path($commandDir);
+            $this->fileprocess->mkdir_path($commandDir);
         }
 
         $path=''.$commandDir.''.$file.'.php';
@@ -38,12 +45,13 @@ class command extends console {
         if(!file_exists($path)){
             //usage api command create file:file
             $list=[];
-            $touchServiceCommandMe['execution']='command';
+            $touchServiceCommandMe['execution']=(count($data)===2) ? 'appCommand' : 'command';
+            $touchServiceCommandMe['params']['projectName']=end($data);
             $touchServiceCommandMe['params']['class']=$file;
-            $list[]=$this->touch(''.$file.'.php',$touchServiceCommandMe);
+            $list[]=$this->fileprocess->touch_path($path,$touchServiceCommandMe);
 
 
-            return $this->fileProcessResult($list,function(){
+            return utils::fileProcessResult($list,function(){
                 return 'command has been created';
             });
         }
@@ -51,58 +59,6 @@ class command extends console {
             return 'command fail';
         }
 
-
-    }
-
-
-    //set mkdir
-    public function mkdir($data){
-
-        return $this->fileprocess->mkdir($data);
-    }
-
-    //set mkdir
-    public function mkdir_path($data){
-
-        return $this->fileprocess->mkdir_path($data);
-    }
-
-    //set mkdir
-    public function touch($data,$param){
-
-        return $this->fileprocess->command($data,$param);
-    }
-
-    //mkdir process result
-    public function fileProcessResult($data,$callback){
-
-        if(count($data)==0 OR in_array(false,$data)){
-
-            return 'project fail';
-        }
-        else {
-
-            return call_user_func($callback);
-        }
-
-    }
-
-    //get project name
-    public function getProjectName($data){
-
-        //get project name
-        foreach ($data as $key=>$value){
-            return $key;
-        }
-    }
-
-    //file process
-    public  function fileprocess(){
-
-        //file process new instance
-        $libconf=require("".staticPathModel::$binCommandsPath."/lib/conf.php");
-        $file=$libconf['libFile'];
-        return new $file();
 
     }
 }

@@ -202,6 +202,19 @@ class staticPathModel {
 
     }
 
+    public static function getKernelCommand($project,$namespace=false){
+
+        $kernelCommandNamespace='\\src\\app\\'.$project.'\\kernel\commands';
+        $kernelCommandPath=utils::convertPathFromNamespace($kernelCommandNamespace);
+        if($namespace===false){
+            return $kernelCommandPath;
+        }
+        return $kernelCommandNamespace;
+
+
+
+    }
+
 
     public static function getMiddlewarePath($project){
 

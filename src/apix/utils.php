@@ -336,4 +336,9 @@ class utils {
         }
         return null;
     }
+
+    //get response type
+    public static function convertPathFromNamespace($data){
+        return root.''.str_replace('\\','/',$data);
+    }
 }
