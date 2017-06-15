@@ -15,11 +15,8 @@ use Src\Store\Services\appCollection as Collection;
 
 
 /**
- * Represents a getService class.
- * http method : get
- * every method that on this service is called with get method as http method on browser
- * every service extends app class
- * return type array
+ * Class getService
+ * @package src\app\__projectName__\v1\__call\__serviceName__
  */
 class getService extends app
 {
@@ -32,11 +29,9 @@ class getService extends app
      */
     public $forbidden=false;
 
+
     /**
-     * Constructor.
-     *
-     * @param type dependency injection and __serviceName__ class
-     * main loader as construct method
+     * Construct Load
      */
     public function __construct()
     {
@@ -45,11 +40,7 @@ class getService extends app
     }
 
     /**
-     * index method is main method
-     * because method name is called on the url
-     * method can produce output with response class
-     * produced json output as result (default)
-     * @return array @method
+     * @return array
      */
     public function indexAction()
     {

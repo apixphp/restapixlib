@@ -1,6 +1,9 @@
 <?php namespace apix\bin\commands;
+use Apix\Utils;
 use Apix\Console;
 use Apix\StaticPathModel;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 /**
  * Command write.
  * type array
@@ -91,6 +94,50 @@ class model extends console {
                             $modelParamsAdapter['params']['className']=$this->getParams($data)[1]['file'];
                             //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
                             $list[]=$this->touch($project.'/'.$version.'/model/sudb/adapter/'.$this->getParams($data)[1]['file'].'Adapter.php',$modelParamsAdapter);
+
+
+
+
+                        }
+                        else{
+                            return $this->error($this->getParams($data)[1]['file'].' model is already available');
+                        }
+
+                    }
+
+
+                    if(file_exists('./src/app/'.$project.'/'.$version.'/model/doctrine')){
+
+                        $modelControlPath='./src/app/'.$project.'/'.$version.'/model/doctrine/'.$this->getParams($data)[1]['file'].'.php';
+
+                        if(!file_exists($modelControlPath)){
+
+                            $process = new Process('php api doctrine mobi '.$this->getParams($data)[2]['table']);
+                            $process->run();
+
+                            rename(root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.ucfirst($this->getParams($data)[2]['table']).'.php',
+                                root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.$this->getParams($data)[1]['file'].'.php');
+
+                            utils::changeClass(root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.$this->getParams($data)[1]['file'].'.php',[
+                               'class '.ucfirst($this->getParams($data)[2]['table']).''=>'class '.ucfirst($this->getParams($data)[1]['file']),
+                                'private'=>'public'
+                            ]);
+
+
+
+
+                            $modelParamsBuilder['execution']='services/doctrineModelBuilder';
+                            $modelParamsBuilder['params']['projectName']=$project;
+                            $modelParamsBuilder['params']['className']=$this->getParams($data)[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
+                            $list[]=$this->touch($project.'/'.$version.'/model/doctrine/builder/'.$this->getParams($data)[1]['file'].'Builder.php',$modelParamsBuilder);
+
+                            $modelParamsAdapter['execution']='services/doctrineModelAdapter';
+                            $modelParamsAdapter['params']['orm']='doctrine';
+                            $modelParamsAdapter['params']['projectName']=$project;
+                            $modelParamsAdapter['params']['className']=$this->getParams($data)[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
+                            $list[]=$this->touch($project.'/'.$version.'/model/doctrine/adapter/'.$this->getParams($data)[1]['file'].'Adapter.php',$modelParamsAdapter);
 
 
 

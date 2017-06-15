@@ -28,13 +28,9 @@ class doctrine {
      */
     public function execute($data){
 
-        $process = new Process('php vendor/bin/doctrine orm:convert-mapping --namespace="src\\app\\mobi\\v1\\model\doctrine\\" --force  --from-database annotation ./');
+        $process = new Process('php vendor/bin/doctrine orm:convert-mapping --filter="'.ucfirst($data[3]).'" --namespace="src\\\\app\\\\'.$data[2].'\\\\'.utils::getAppVersion($data[2]).'\\\\model\\\\doctrine\\\\" --force  --from-database annotation ./');
         $process->run();
 
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
 
         echo $process->getOutput();
     }

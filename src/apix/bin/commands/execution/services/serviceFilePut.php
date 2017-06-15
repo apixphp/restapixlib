@@ -13,13 +13,10 @@ namespace src\app\__projectName__\v1\__call\__serviceName__;
 use Src\Store\Services\Httprequest as Request;
 use Src\Store\Services\appCollection as Collection;
 
+
 /**
- * Represents a __method__Service class.
- * http method : __method__
- * every method that on this service is called with __method__ method as http method on browser
- * every service extends app class
- * attention:provision condition can be needed for __method__ method
- * return type array
+ * Class __method__Service
+ * @package src\app\__projectName__\v1\__call\__serviceName__
  */
 class __method__Service extends app
 {
@@ -33,11 +30,7 @@ class __method__Service extends app
 
 
     /**
-     * Constructor.
-     *
-     * @param type dependency injection and __serviceName__ class
-     * request method : symfony component
-     * main loader as construct method
+     * Construct load
      */
     public function __construct()
     {
@@ -46,16 +39,11 @@ class __method__Service extends app
     }
 
     /**
-     * index method is main method
-     * because method name is called on the url
-     * method can produce output with response class
-     * produced json output as result (default)
-     * @return array @method
+     * @return array
      */
     public function indexAction()
     {
-
-        //return index
+        //return __method__ index
         return ['__method__'=>true];
     }
 }
