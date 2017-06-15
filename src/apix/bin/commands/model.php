@@ -112,7 +112,27 @@ class model extends console {
 
                         if(!file_exists($modelControlPath)){
 
-                            $process = new Process('php api doctrine mobi '.$this->getParams($data)[2]['table']);
+                            $config="\\src\\app\\".$project."\\".$version."\\config\\database";
+                            $configdb=$config::dbsettings();
+
+                            if(!file_exists(root.'/src/store/packages/providers/database/doctrine/bootstrap.php')){
+
+                                copy(root.'/src/store/packages/providers/database/doctrine/bootstrap.dist.php',root.'/src/store/packages/providers/database/doctrine/bootstrap.php');
+
+                                utils::changeClass(root.'/src/store/packages/providers/database/doctrine/bootstrap.php',[
+
+                                    "'driver'=>'driver'"=>"'driver'=>'pdo_".$configdb['driver']."'",
+                                    "'user'=>'user'"=>"'user'=>'".$configdb['user']."'",
+                                    "'host'=>'host'"=>"'host'=>'".$configdb['host']."'",
+                                    "'dbname'=>'dbname'"=>"'dbname'=>'".$configdb['database']."'",
+                                    "'password'=>'password'"=>"'password'=>'".$configdb['password']."'",
+
+                                ]);
+                            }
+
+
+
+                            $process = new Process('php api doctrine '.$project.' '.$this->getParams($data)[2]['table']);
                             $process->run();
 
                             rename(root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.ucfirst($this->getParams($data)[2]['table']).'.php',
