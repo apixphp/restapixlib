@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * This file is main class of the  service named __serviceName__ on  __projectName__ project .
  * METHOD : GET
  * every service is called with index method as default
@@ -15,8 +15,8 @@ use Src\Store\Services\appCollection as Collection;
 
 
 /**
- * Class getService
- * @package src\app\__projectName__\v1\__call\__serviceName__
+ * @doc getService
+ * @package Src_App_Mobi_V1_Call_Stk
  */
 class getService extends app
 {

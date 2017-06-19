@@ -11,7 +11,7 @@ class __className__Builder extends DoctrineEntityManager
     /**
      * @var \Doctrine\ORM\EntityRepository
      */
-    protected $doctrine;
+    public $doctrine;
 
     /**
      * Construct load

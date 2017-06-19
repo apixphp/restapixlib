@@ -20,6 +20,9 @@ class serviceBaseController
     //data log
     public $log=false;
 
+    //cache Adapter
+    public $cacheAdapter='file';
+
     //data object Loader
     public $objectLoader=false;
 
