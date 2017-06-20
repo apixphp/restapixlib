@@ -191,6 +191,10 @@ class project extends console {
             $database['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/rabbitMQ.php',$database);
 
+            $redis['execution']='services/redis';
+            $redis['params']['projectName']=$this->getProjectName($data);
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/redis.php',$redis);
+
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/migrations');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/migrations/index.html',null);
 

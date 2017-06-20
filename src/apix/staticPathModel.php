@@ -230,6 +230,17 @@ class staticPathModel {
 
     }
 
+    public static function getConfigStaticApp($className=null){
+
+        if($className!==null){
+            $config='\\src\\app\\'.app.'\\'.version.'\\config\\'.$className;
+            return $config;
+        }
+        return null;
+
+
+    }
+
 
 
 
