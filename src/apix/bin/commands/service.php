@@ -1,5 +1,6 @@
 <?php namespace apix\bin\commands;
 use Illuminate\Database\Connectors\Connector;
+use Apix\Utils;
 use Apix\Console;
 use Apix\StaticPathModel;
 use Symfony\Component\Yaml\Yaml;
@@ -20,7 +21,7 @@ class service extends console {
 
     public function __construct(){
         parent::__construct();
-        $this->fileprocess=$this->fileprocess();
+        $this->fileprocess=utils::fileprocess();
         $this->request=Request::createFromGlobals();
         require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
     }
@@ -46,10 +47,10 @@ class service extends console {
                                 $touchServicePostParams['params']['serviceName']=$service;
                                 $touchServicePostParams['params']['method']=$data['file'];
 
-                                $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'Service.php',$touchServicePostParams);
+                                $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'Service.php',$touchServicePostParams);
 
 
-                               return $this->fileProcessResult($list,function() use($service,$project,$data) {
+                               return utils::fileProcessResult($list,function() use($service,$project,$data) {
                                    echo $this->info('-------------------------------------------------------------------------------------------------');
                                    echo $this->classical('CONGRATULATİONS! YOU HAVE CREATED A SERVICE FILE NAMED '.$data['file'].'Service FOR '.$service.' IN THE '.$project.' PROJECT ');
                                    echo $this->info('-------------------------------------------------------------------------------------------------');
@@ -61,79 +62,79 @@ class service extends console {
 
                    }
 
-                   if($this->mkdir(''.$project.'/'.$version.'/__call/'.$service)){
+                   if($this->fileprocess->mkdir(''.$project.'/'.$version.'/__call/'.$service)){
 
 
                        /*$touchReadmeParams['execution']='project_readme';
                        $touchReadmeParams['params']['projectName']=$project;
-                       $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/README.md',$touchReadmeParams);*/
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/README.md',$touchReadmeParams);*/
 
                        $touchServiceGetParams['execution']='services/getservice';
                        $touchServiceGetParams['params']['projectName']=$project;
                        $touchServiceGetParams['params']['serviceName']=$service;
-                       $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/getService.php',$touchServiceGetParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/getService.php',$touchServiceGetParams);
 
                        /*$touchServicePostParams['execution']='services/postservice';
                        $touchServicePostParams['params']['projectName']=$project;
                        $touchServicePostParams['params']['serviceName']=$service;
-                       $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/postService.php',$touchServicePostParams);*/
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/postService.php',$touchServicePostParams);*/
 
                        /*$touchServicePutParams['execution']='services/putservice';
                        $touchServicePutParams['params']['projectName']=$project;
                        $touchServicePutParams['params']['serviceName']=$service;
-                       $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/putService.php',$touchServicePutParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/putService.php',$touchServicePutParams);
 
                        $touchServicePatchParams['execution']='services/patchservice';
                        $touchServicePatchParams['params']['projectName']=$project;
                        $touchServicePatchParams['params']['serviceName']=$service;
-                       $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/patchService.php',$touchServicePatchParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/patchService.php',$touchServicePatchParams);
 
                        $touchServiceDeleteParams['execution']='services/deleteservice';
                        $touchServiceDeleteParams['params']['projectName']=$project;
                        $touchServiceDeleteParams['params']['serviceName']=$service;
-                       $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/deleteService.php',$touchServiceDeleteParams);*/
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/deleteService.php',$touchServiceDeleteParams);*/
 
 
                        $touchdeveloperParams['execution']='services/developer';
                        $touchdeveloperParams['params']['projectName']=$project;
                        $touchdeveloperParams['params']['serviceName']=$service;
-                       $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/developer.php',$touchdeveloperParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/developer.php',$touchdeveloperParams);
 
 
                        $touchappParams['execution']='services/app';
                        $touchappParams['params']['projectName']=$project;
                        $touchappParams['params']['serviceName']=$service;
-                       $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/app.php',$touchappParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/app.php',$touchappParams);
 
 
                        $touchServiceConfParams['execution']='services/serviceConf';
                        $touchServiceConfParams['params']['projectName']=$project;
                        $touchServiceConfParams['params']['serviceName']=$service;
-                       $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/serviceConf.php',$touchServiceConfParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/serviceConf.php',$touchServiceConfParams);
 
 
-                       //$list[]=$this->mkdir($project.'/v1/__call/'.$service.'/branches');
-                       //$list[]=$this->touch($project.'/v1/__call/'.$service.'/branches/index.html',null);
+                       //$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/branches');
+                       //$list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/branches/index.html',null);
 
-                       /*$list[]=$this->mkdir($project.'/v1/__call/'.$service.'/yaml');
-                       $list[]=$this->touch($project.'/v1/__call/'.$service.'/yaml/index.html',null);
+                       /*$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/yaml');
+                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/yaml/index.html',null);
 
-                       $list[]=$this->mkdir($project.'/v1/__call/'.$service.'/yaml/expected');
-                       $list[]=$this->touch($project.'/v1/__call/'.$service.'/yaml/expected/index.html',null);*/
+                       $list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/yaml/expected');
+                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/yaml/expected/index.html',null);*/
 
-                       /*$list[]=$this->mkdir($project.'/v1/__call/'.$service.'/interfaceObjects');
-                       $list[]=$this->touch($project.'/v1/__call/'.$service.'/interfaceObjects/index.html',null);*/
+                       /*$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/interfaceObjects');
+                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/interfaceObjects/index.html',null);*/
 
-                       /*$list[]=$this->mkdir($project.'/v1/__call/'.$service.'/cache');
-                       $list[]=$this->touch($project.'/v1/__call/'.$service.'/cache/index.html',null);*/
+                       /*$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/cache');
+                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/cache/index.html',null);*/
 
-                       /*$list[]=$this->mkdir($project.'/v1/__call/'.$service.'/source');
-                       $list[]=$this->mkdir($project.'/v1/__call/'.$service.'/source/bundle');
-                       $list[]=$this->touch($project.'/v1/__call/'.$service.'/source/bundle/index.html',null);*/
+                       /*$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/source');
+                       $list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/source/bundle');
+                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/source/bundle/index.html',null);*/
 
 
 
-                       return $this->fileProcessResult($list,function() use($service,$project) {
+                       return utils::fileProcessResult($list,function() use($service,$project) {
                            echo $this->info('-------------------------------------------------------------------------------------------------');
                            echo $this->classical('CONGRATULATİONS! YOU HAVE CREATED A SERVICE NAMED '.$service.' IN THE '.$project.' PROJECT ');
                            echo $this->info('-------------------------------------------------------------------------------------------------');
@@ -302,33 +303,6 @@ $content=str_replace("//publishes","//publishes
         return $params;
     }
 
-
-    //set mkdir
-    public function mkdir($data){
-
-        return $this->fileprocess->mkdir($data);
-    }
-
-    //set mkdir
-    public function touch($data,$param){
-
-        return $this->fileprocess->touch($data,$param);
-    }
-
-    //mkdir process result
-    public function fileProcessResult($data,$callback){
-
-        if(count($data)==0 OR in_array(false,$data)){
-
-            return 'service fail';
-        }
-        else {
-
-            return call_user_func($callback);
-        }
-
-    }
-
     //get project name
     public function getProjectName($data){
 
@@ -338,15 +312,6 @@ $content=str_replace("//publishes","//publishes
         }
     }
 
-    //file process
-    public  function fileprocess(){
-
-        //file process new instance
-        $libconf=require("".staticPathModel::$binCommandsPath."/lib/conf.php");
-        $file=$libconf['libFile'];
-        return new $file();
-
-    }
 
 
 
