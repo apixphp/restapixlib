@@ -34,6 +34,7 @@ class model extends console {
                     $version=(is_array($version) && array_key_exists('version',$version)) ? $version['version'] : 'v1';
                     $list=[];
 
+                    $tablesYamlPath='./src/app/'.$project.'/'.$version.'/model/tables.yaml';
 
                     if(file_exists('./src/app/'.$project.'/'.$version.'/model/eloquent')){
 
@@ -41,6 +42,9 @@ class model extends console {
                         $modelControlPath='./src/app/'.$project.'/'.$version.'/model/eloquent/'.$this->getParams($data)[1]['file'].'.php';
 
                         if(!file_exists($modelControlPath)){
+
+                            $this->setTableYaml($data,$tablesYamlPath);
+
                             $modelParamsBuilder['execution']='services/eloquentmodelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
                             $modelParamsBuilder['params']['className']=$this->getParams($data)[1]['file'];
@@ -73,6 +77,8 @@ class model extends console {
                         $modelControlPath='./src/app/'.$project.'/'.$version.'/model/sudb/'.$this->getParams($data)[1]['file'].'.php';
 
                         if(!file_exists($modelControlPath)){
+
+                            $this->setTableYaml($data,$tablesYamlPath);
 
                             $modelParamsBuilder['execution']='services/modelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
@@ -111,6 +117,8 @@ class model extends console {
                         $modelControlPath='./src/app/'.$project.'/'.$version.'/model/doctrine/'.$this->getParams($data)[1]['file'].'.php';
 
                         if(!file_exists($modelControlPath)){
+
+                            $this->setTableYaml($data,$tablesYamlPath);
 
                             $config="\\src\\app\\".$project."\\".$version."\\config\\database";
                             $configdb=$config::dbsettings();
@@ -247,6 +255,25 @@ class model extends console {
         $file=$libconf['libFile'];
         return new $file();
 
+    }
+
+    private function setTableYaml($data,$tablesYamlPath){
+        if(!file_exists($tablesYamlPath)){
+
+            utils::dumpYaml(['tables'=>[$this->getParams($data)[2]['table']]],$tablesYamlPath);
+        }
+        else{
+
+            $tablesYamlDatas=utils::getYaml($tablesYamlPath);
+            $list=[];
+            foreach($tablesYamlDatas['tables'] as $tables){
+                $list['tables'][]=$tables;
+            }
+            $list['tables'][]=$this->getParams($data)[2]['table'];
+
+            utils::dumpYaml($list,$tablesYamlPath);
+
+        }
     }
 
 }
