@@ -29,12 +29,6 @@ class environment {
     public static function get(){
         return self::defaultEnvironment(function(){
             return self::applicationEnvironment(function(){
-                $otherEnvPath=utils::resolve("\\src\\store\\env\\env");
-                $environment=$otherEnvPath->environmentSetUp();
-                if($environment!==null){
-                    return $environment;
-                }
-
                 return self::$production;
 
             });
@@ -95,7 +89,12 @@ class environment {
      */
     public static function applicationEnvironment($callback){
 
-        $appEnvPath=root.'/.'.app.'env';
+        $appEnvPath=root.'/.env';
+
+        if(defined('app')){
+            $appEnvPath=root.'/.'.app.'env';
+        }
+
         if(file_exists($appEnvPath)){
             return self::$local;
         }

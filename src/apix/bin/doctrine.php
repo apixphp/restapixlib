@@ -21,6 +21,16 @@ use Apix\Utils;
 class doctrine {
 
     /**
+     * Constructor.
+     *
+     * @param type dependency injection and stk class
+     * main loader as construct method
+     */
+    public function __construct(){
+        require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
+    }
+
+    /**
      * index method is main method.
      * Then, require the vendor/autoload.php file to enable the autoloading mechanism provided by Composer.
      * Otherwise, your application won't be able to find the classes of this Symfony component.

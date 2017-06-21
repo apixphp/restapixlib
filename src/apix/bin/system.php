@@ -23,6 +23,16 @@ class system extends Console {
     private $project=null;
 
     /**
+     * Constructor.
+     *
+     * @param type dependency injection and stk class
+     * main loader as construct method
+     */
+    public function __construct(){
+        require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
+    }
+
+    /**
      * execute method is apix service system mode.
      * @return array @method
      */
