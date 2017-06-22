@@ -15,8 +15,14 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class runner {
 
+    /**
+     * @var null
+     */
     public $project=null;
 
+    /**
+     * @param array $arguments
+     */
     public function execute($arguments=array()) {
         $this->getProject($arguments);
 
@@ -40,6 +46,10 @@ class runner {
 
     }
 
+    /**
+     * @param array $arguments
+     * @return null
+     */
     public function getProject($arguments=array()){
         if(array_key_exists(2,$arguments)){
             if(utils::getAppVersion($this->project)===null){
@@ -56,6 +66,9 @@ class runner {
 
     }
 
+    /**
+     * @param null $command
+     */
     public function processRunner($command=null){
         if($command!==null){
 
@@ -71,10 +84,16 @@ class runner {
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function  getCommandProcessRunner(){
         return staticPathModel::getKernelPath($this->project)->commandProcessRunner;
     }
 
+    /**
+     * @param $arguments
+     */
     public function  generalProcessRunner($arguments){
         $storeConfigRunner=staticPathModel::storeConfigRunner();
 
@@ -84,6 +103,10 @@ class runner {
         }
     }
 
+    /**
+     * @param $commandRunner
+     * @param $arguments
+     */
     public function commandRunnerList($commandRunner,$arguments){
 
         $argumentKeyPointer=($this->project===null) ? 2 : 3;
