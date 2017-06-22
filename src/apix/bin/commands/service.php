@@ -50,6 +50,13 @@ class service extends console {
                                 $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'Service.php',$touchServicePostParams);
 
 
+                               $touchServiceInterfaceParams['execution']='services/fileServiceInterface';
+                               $touchServiceInterfaceParams['params']['projectName']=$project;
+                               $touchServiceInterfaceParams['params']['serviceName']=$service;
+                               $touchServiceInterfaceParams['params']['file']=$data['file'];
+                               $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'ServiceInterface.php',$touchServiceInterfaceParams);
+
+
                                return utils::fileProcessResult($list,function() use($service,$project,$data) {
                                    echo $this->info('-------------------------------------------------------------------------------------------------');
                                    echo $this->classical('CONGRATULATİONS! YOU HAVE CREATED A SERVICE FILE NAMED '.$data['file'].'Service FOR '.$service.' IN THE '.$project.' PROJECT ');
@@ -64,36 +71,15 @@ class service extends console {
 
                    if($this->fileprocess->mkdir(''.$project.'/'.$version.'/__call/'.$service)){
 
-
-                       /*$touchReadmeParams['execution']='project_readme';
-                       $touchReadmeParams['params']['projectName']=$project;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/README.md',$touchReadmeParams);*/
-
                        $touchServiceGetParams['execution']='services/getservice';
                        $touchServiceGetParams['params']['projectName']=$project;
                        $touchServiceGetParams['params']['serviceName']=$service;
                        $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/getService.php',$touchServiceGetParams);
 
-                       /*$touchServicePostParams['execution']='services/postservice';
-                       $touchServicePostParams['params']['projectName']=$project;
-                       $touchServicePostParams['params']['serviceName']=$service;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/postService.php',$touchServicePostParams);*/
-
-                       /*$touchServicePutParams['execution']='services/putservice';
-                       $touchServicePutParams['params']['projectName']=$project;
-                       $touchServicePutParams['params']['serviceName']=$service;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/putService.php',$touchServicePutParams);
-
-                       $touchServicePatchParams['execution']='services/patchservice';
-                       $touchServicePatchParams['params']['projectName']=$project;
-                       $touchServicePatchParams['params']['serviceName']=$service;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/patchService.php',$touchServicePatchParams);
-
-                       $touchServiceDeleteParams['execution']='services/deleteservice';
-                       $touchServiceDeleteParams['params']['projectName']=$project;
-                       $touchServiceDeleteParams['params']['serviceName']=$service;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/deleteService.php',$touchServiceDeleteParams);*/
-
+                       $touchServiceGetInterfaceParams['execution']='services/getserviceInterface';
+                       $touchServiceGetInterfaceParams['params']['projectName']=$project;
+                       $touchServiceGetInterfaceParams['params']['serviceName']=$service;
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/getServiceInterface.php',$touchServiceGetInterfaceParams);
 
                        $touchdeveloperParams['execution']='services/developer';
                        $touchdeveloperParams['params']['projectName']=$project;
@@ -111,27 +97,6 @@ class service extends console {
                        $touchServiceConfParams['params']['projectName']=$project;
                        $touchServiceConfParams['params']['serviceName']=$service;
                        $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/serviceConf.php',$touchServiceConfParams);
-
-
-                       //$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/branches');
-                       //$list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/branches/index.html',null);
-
-                       /*$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/yaml');
-                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/yaml/index.html',null);
-
-                       $list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/yaml/expected');
-                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/yaml/expected/index.html',null);*/
-
-                       /*$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/interfaceObjects');
-                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/interfaceObjects/index.html',null);*/
-
-                       /*$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/cache');
-                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/cache/index.html',null);*/
-
-                       /*$list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/source');
-                       $list[]=$this->fileprocess->mkdir($project.'/v1/__call/'.$service.'/source/bundle');
-                       $list[]=$this->fileprocess->touch($project.'/v1/__call/'.$service.'/source/bundle/index.html',null);*/
-
 
 
                        return utils::fileProcessResult($list,function() use($service,$project) {

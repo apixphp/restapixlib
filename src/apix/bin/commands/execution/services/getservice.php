@@ -18,7 +18,7 @@ use Src\Store\Services\appCollection as Collection;
  * @doc getService
  * @package Src_App_Mobi_V1_Call_Stk
  */
-class getService extends app
+class getService extends app implements getServiceInterface
 {
 
     /**

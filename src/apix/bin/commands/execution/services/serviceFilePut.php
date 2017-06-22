@@ -18,7 +18,7 @@ use Src\Store\Services\appCollection as Collection;
  * Class __method__Service
  * @package src\app\__projectName__\v1\__call\__serviceName__
  */
-class __method__Service extends app
+class __method__Service extends app implements __method__ServiceInterface
 {
     /**
      * Production forbidden.
