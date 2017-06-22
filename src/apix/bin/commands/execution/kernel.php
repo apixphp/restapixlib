@@ -51,7 +51,9 @@ class Kernel
      * @return array
      */
     public $commandProcessRunner = [
-        'ls -la'
+        'mixed'=>[
+            'ls -la'
+        ]
     ];
 
 }

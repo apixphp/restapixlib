@@ -22,16 +22,14 @@ class runner {
 
         if($this->project===null){
 
-            echo $this->generalProcessRunner();
+            echo $this->generalProcessRunner($arguments);
         }
         else{
 
             $commandRunner=$this->getCommandProcessRunner();
 
             if(count($commandRunner)){
-                foreach($commandRunner as $command){
-                    echo $this->processRunner($command);
-                }
+                $this->commandRunnerList($commandRunner,$arguments);
             }
             else{
                 echo 'no command';
@@ -44,7 +42,12 @@ class runner {
 
     public function getProject($arguments=array()){
         if(array_key_exists(2,$arguments)){
-            $this->project=$arguments[2];
+            if(utils::getAppVersion($this->project)===null){
+               $this->project=null;
+            }
+            else{
+                $this->project=$arguments[2];
+            }
             define('app',$this->project);
             define('version',utils::getAppVersion($this->project));
         }
@@ -72,14 +75,32 @@ class runner {
         return staticPathModel::getKernelPath($this->project)->commandProcessRunner;
     }
 
-    public function  generalProcessRunner(){
+    public function  generalProcessRunner($arguments){
         $storeConfigRunner=staticPathModel::storeConfigRunner();
 
         if($storeConfigRunner!==null){
             $storeConfigRunnerList=require_once($storeConfigRunner);
-            foreach ($storeConfigRunnerList as $command){
+            $this->commandRunnerList($storeConfigRunnerList,$arguments);
+        }
+    }
+
+    public function commandRunnerList($commandRunner,$arguments){
+
+        $argumentKeyPointer=($this->project===null) ? 2 : 3;
+
+        if(array_key_exists($argumentKeyPointer,$arguments)){
+            foreach($commandRunner[$arguments[$argumentKeyPointer]] as $command){
                 echo $this->processRunner($command);
             }
         }
+        else{
+
+            foreach($commandRunner as $command=>$allCommandArray){
+                foreach($commandRunner[$command] as $commandList){
+                    echo $this->processRunner($commandList);
+                }
+            }
+        }
+
     }
 }
