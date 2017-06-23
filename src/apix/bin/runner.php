@@ -52,14 +52,16 @@ class runner {
      */
     public function getProject($arguments=array()){
         if(array_key_exists(2,$arguments)){
+            $this->project=$arguments[2];
             if(utils::getAppVersion($this->project)===null){
                $this->project=null;
             }
-            else{
-                $this->project=$arguments[2];
+
+            if($this->project!==null){
+                define('app',$this->project);
+                define('version',utils::getAppVersion($this->project));
             }
-            define('app',$this->project);
-            define('version',utils::getAppVersion($this->project));
+
         }
         return null;
 
