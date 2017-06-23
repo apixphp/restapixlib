@@ -18,7 +18,7 @@ class model extends console {
 
     public function __construct(){
         parent::__construct();
-        $this->fileprocess=$this->fileprocess();
+        $this->fileprocess=utils::fileprocess();
         require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
     }
 
@@ -26,99 +26,107 @@ class model extends console {
     //service create command
     public function create ($data){
 
-        foreach ($this->getParams($data) as $key=>$value){
+        $getParams=$this->getParams($data);
+        
+        foreach ($getParams as $key=>$value){
             if($key==0){
 
                 foreach ($value as $project=>$service){
+
                     $version=require ('./src/app/'.$project.'/version.php');
                     $version=(is_array($version) && array_key_exists('version',$version)) ? $version['version'] : 'v1';
+                    $base=staticPathModel::getAppServiceBase($project,$version);
+                    $baseModel=$base->model;
+
+                    if(array_key_exists('set',$getParams[1])){
+                        return $this->setModelDirectory($project,$version,$getParams[1]['set']);
+                    }
                     $list=[];
 
                     $tablesYamlPath='./src/app/'.$project.'/'.$version.'/model/tables.yaml';
 
-                    if(file_exists('./src/app/'.$project.'/'.$version.'/model/eloquent')){
+                    if($baseModel==="eloquent"){
 
-
-                        $modelControlPath='./src/app/'.$project.'/'.$version.'/model/eloquent/'.$this->getParams($data)[1]['file'].'.php';
+                        $modelControlPath='./src/app/'.$project.'/'.$version.'/model/eloquent/'.$getParams[1]['file'].'.php';
 
                         if(!file_exists($modelControlPath)){
 
-                            $this->setTableYaml($data,$tablesYamlPath);
+                            $this->setTableYaml($data,$tablesYamlPath,$getParams);
 
                             $modelParamsBuilder['execution']='services/eloquentmodelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
-                            $modelParamsBuilder['params']['className']=$this->getParams($data)[1]['file'];
-                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
-                            $list[]=$this->touch($project.'/'.$version.'/model/eloquent/builder/'.$this->getParams($data)[1]['file'].'Builder.php',$modelParamsBuilder);
+                            $modelParamsBuilder['params']['className']=$getParams[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
 
                             $modelParamsAdapter['execution']='services/modelAdapter';
                             $modelParamsAdapter['params']['projectName']=$project;
                             $modelParamsAdapter['params']['orm']='eloquent';
-                            $modelParamsAdapter['params']['className']=$this->getParams($data)[1]['file'];
-                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
-                            $list[]=$this->touch($project.'/'.$version.'/model/eloquent/adapter/'.$this->getParams($data)[1]['file'].'Adapter.php',$modelParamsAdapter);
+                            $modelParamsAdapter['params']['className']=$getParams[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/adapter/'.$getParams[1]['file'].'Adapter.php',$modelParamsAdapter);
 
                             $modelParams['execution']='services/eloquentmodel';
                             $modelParams['params']['projectName']=$project;
-                            $modelParams['params']['className']=$this->getParams($data)[1]['file'];
-                            $modelParams['params']['tableName']=$this->getParams($data)[2]['table'];
-                            $list[]=$this->touch($project.'/'.$version.'/model/eloquent/'.$this->getParams($data)[1]['file'].'.php',$modelParams);
+                            $modelParams['params']['className']=$getParams[1]['file'];
+                            $modelParams['params']['tableName']=$getParams[2]['table'];
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/'.$getParams[1]['file'].'.php',$modelParams);
                         }
                         else{
-                            return $this->error($this->getParams($data)[1]['file'].' model is already available');
+                            return $this->error($getParams[1]['file'].' model is already available');
                         }
 
 
                     }
 
 
-                    if(file_exists('./src/app/'.$project.'/'.$version.'/model/sudb')){
+                    if($baseModel==="sudb"){
 
-                        $modelControlPath='./src/app/'.$project.'/'.$version.'/model/sudb/'.$this->getParams($data)[1]['file'].'.php';
+                        $modelControlPath='./src/app/'.$project.'/'.$version.'/model/sudb/'.$getParams[1]['file'].'.php';
 
                         if(!file_exists($modelControlPath)){
 
-                            $this->setTableYaml($data,$tablesYamlPath);
+                            $this->setTableYaml($data,$tablesYamlPath,$getParams);
 
                             $modelParamsBuilder['execution']='services/modelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
-                            $modelParamsBuilder['params']['className']=$this->getParams($data)[1]['file'];
-                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
-                            $list[]=$this->touch($project.'/'.$version.'/model/sudb/builder/'.$this->getParams($data)[1]['file'].'Builder.php',$modelParamsBuilder);
+                            $modelParamsBuilder['params']['className']=$getParams[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
 
                             $modelParams['execution']='services/model';
                             $modelParams['params']['projectName']=$project;
-                            $modelParams['params']['className']=$this->getParams($data)[1]['file'];
-                            $modelParams['params']['tableName']=$this->getParams($data)[2]['table'];
-                            $list[]=$this->touch($project.'/'.$version.'/model/sudb/'.$this->getParams($data)[1]['file'].'.php',$modelParams);
+                            $modelParams['params']['className']=$getParams[1]['file'];
+                            $modelParams['params']['tableName']=$getParams[2]['table'];
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/'.$getParams[1]['file'].'.php',$modelParams);
 
 
 
                             $modelParamsAdapter['execution']='services/modelAdapter';
                             $modelParamsAdapter['params']['orm']='sudb';
                             $modelParamsAdapter['params']['projectName']=$project;
-                            $modelParamsAdapter['params']['className']=$this->getParams($data)[1]['file'];
-                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
-                            $list[]=$this->touch($project.'/'.$version.'/model/sudb/adapter/'.$this->getParams($data)[1]['file'].'Adapter.php',$modelParamsAdapter);
+                            $modelParamsAdapter['params']['className']=$getParams[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/adapter/'.$getParams[1]['file'].'Adapter.php',$modelParamsAdapter);
 
 
 
 
                         }
                         else{
-                            return $this->error($this->getParams($data)[1]['file'].' model is already available');
+                            return $this->error($getParams[1]['file'].' model is already available');
                         }
 
                     }
 
 
-                    if(file_exists('./src/app/'.$project.'/'.$version.'/model/doctrine')){
+                    if($baseModel==="doctrine"){
 
-                        $modelControlPath='./src/app/'.$project.'/'.$version.'/model/doctrine/'.$this->getParams($data)[1]['file'].'.php';
+                        $modelControlPath='./src/app/'.$project.'/'.$version.'/model/doctrine/'.$getParams[1]['file'].'.php';
 
                         if(!file_exists($modelControlPath)){
 
-                            $this->setTableYaml($data,$tablesYamlPath);
+                            $this->setTableYaml($data,$tablesYamlPath,$getParams);
 
                             $config="\\src\\app\\".$project."\\".$version."\\config\\database";
                             $configdb=$config::dbsettings();
@@ -140,14 +148,14 @@ class model extends console {
 
 
 
-                            $process = new Process('php api doctrine '.$project.' '.$this->getParams($data)[2]['table']);
+                            $process = new Process('php api doctrine '.$project.' '.$getParams[2]['table']);
                             $process->run();
 
-                            rename(root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.ucfirst($this->getParams($data)[2]['table']).'.php',
-                                root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.$this->getParams($data)[1]['file'].'.php');
+                            rename(root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.ucfirst($getParams[2]['table']).'.php',
+                                root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.$getParams[1]['file'].'.php');
 
-                            utils::changeClass(root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.$this->getParams($data)[1]['file'].'.php',[
-                               'class '.ucfirst($this->getParams($data)[2]['table']).''=>'class '.ucfirst($this->getParams($data)[1]['file']),
+                            utils::changeClass(root.'/src/app/'.$project.'/'.$version.'/model/doctrine/'.$getParams[1]['file'].'.php',[
+                               'class '.ucfirst($getParams[2]['table']).''=>'class '.ucfirst($getParams[1]['file']),
                                 'private'=>'public'
                             ]);
 
@@ -156,30 +164,30 @@ class model extends console {
 
                             $modelParamsBuilder['execution']='services/doctrineModelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
-                            $modelParamsBuilder['params']['className']=$this->getParams($data)[1]['file'];
-                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
-                            $list[]=$this->touch($project.'/'.$version.'/model/doctrine/builder/'.$this->getParams($data)[1]['file'].'Builder.php',$modelParamsBuilder);
+                            $modelParamsBuilder['params']['className']=$getParams[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/doctrine/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
 
                             $modelParamsAdapter['execution']='services/doctrineModelAdapter';
                             $modelParamsAdapter['params']['orm']='doctrine';
                             $modelParamsAdapter['params']['projectName']=$project;
-                            $modelParamsAdapter['params']['className']=$this->getParams($data)[1]['file'];
-                            //$modelParamsBuilder['params']['tableName']=$this->getParams($data)[2]['table'];
-                            $list[]=$this->touch($project.'/'.$version.'/model/doctrine/adapter/'.$this->getParams($data)[1]['file'].'Adapter.php',$modelParamsAdapter);
+                            $modelParamsAdapter['params']['className']=$getParams[1]['file'];
+                            //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/doctrine/adapter/'.$getParams[1]['file'].'Adapter.php',$modelParamsAdapter);
 
 
 
 
                         }
                         else{
-                            return $this->error($this->getParams($data)[1]['file'].' model is already available');
+                            return $this->error($getParams[1]['file'].' model is already available xxx');
                         }
 
                     }
 
-                    return $this->fileProcessResult($list,function() use($data,$project,$version){
+                    return utils::fileProcessResult($list,function() use($data,$project,$version,$getParams){
                         echo $this->info('-------------------------------------------------------------------------------------------------');
-                        echo $this->classical('MODEL GENERATOR : '.$this->getParams($data)[1]['file'].' --- '.$this->getParams($data)[2]['table'].'');
+                        echo $this->classical('MODEL GENERATOR : '.$getParams[1]['file'].' --- '.$getParams[2]['table'].'');
                         echo $this->info('-------------------------------------------------------------------------------------------------');
                         echo $this->success('You can see in the src/app/'.$project.'/'.$version.'/model Directory');
                         echo $this->info('--------------------------------------------------------------------------------------------------');
@@ -212,31 +220,12 @@ class model extends console {
     }
 
 
-    //set mkdir
-    public function mkdir($data){
-
-        return $this->fileprocess->mkdir($data);
-    }
-
-    //set mkdir
+    //set touch
     public function touch($data,$param){
 
         return $this->fileprocess->touch($data,$param);
     }
 
-    //mkdir process result
-    public function fileProcessResult($data,$callback){
-
-        if(count($data)==0 OR in_array(false,$data)){
-
-            return 'service fail';
-        }
-        else {
-
-            return call_user_func($callback);
-        }
-
-    }
 
     //get project name
     public function getProjectName($data){
@@ -247,20 +236,11 @@ class model extends console {
         }
     }
 
-    //file process
-    public  function fileprocess(){
 
-        //file process new instance
-        $libconf=require("".staticPathModel::$binCommandsPath."/lib/conf.php");
-        $file=$libconf['libFile'];
-        return new $file();
-
-    }
-
-    private function setTableYaml($data,$tablesYamlPath){
+    private function setTableYaml($data,$tablesYamlPath,$getParams){
         if(!file_exists($tablesYamlPath)){
 
-            utils::dumpYaml(['tables'=>[$this->getParams($data)[2]['table']]],$tablesYamlPath);
+            utils::dumpYaml(['tables'=>[$getParams[2]['table']]],$tablesYamlPath);
         }
         else{
 
@@ -269,11 +249,66 @@ class model extends console {
             foreach($tablesYamlDatas['tables'] as $tables){
                 $list['tables'][]=$tables;
             }
-            $list['tables'][]=$this->getParams($data)[2]['table'];
+
+            if(!in_array($getParams[2]['table'],$list['tables'])){
+                $list['tables'][]=$getParams[2]['table'];
+
+            }
 
             utils::dumpYaml($list,$tablesYamlPath);
 
         }
+    }
+
+
+
+    private function setModelDirectory($project,$version,$orm){
+
+        if($orm=="sudb" && !file_exists('./src/app/'.$project.'/'.$version.'/model/sudb')){
+
+            $list[]=$this->fileprocess->mkdir($project.'/v1/model/sudb');
+            $list[]=$this->fileprocess->touch($project.'/v1/model/sudb/index.html',null);
+
+            $list[]=$this->fileprocess->mkdir($project.'/v1/model/sudb/adapter');
+            $list[]=$this->fileprocess->touch($project.'/v1/model/sudb/adapter/index.html',null);
+
+            $list[]=$this->fileprocess->mkdir($project.'/v1/model/sudb/builder');
+            $list[]=$this->fileprocess->touch($project.'/v1/model/sudb/builder/index.html',null);
+
+            $modelVarLoad['execution']='services/modelVarTrait';
+            $modelVarLoad['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/v1/model/modelVar.php',$modelVarLoad);
+        }
+
+
+        if($orm=="eloquent" && !file_exists('./src/app/'.$project.'/'.$version.'/model/eloquent')){
+            $list[]=$this->fileprocess->mkdir($project.'/v1/model/eloquent');
+            $list[]=$this->fileprocess->touch($project.'/v1/model/eloquent/index.html',null);
+
+            $list[]=$this->fileprocess->mkdir($project.'/v1/model/eloquent/adapter');
+            $list[]=$this->fileprocess->touch($project.'/v1/model/eloquent/adapter/index.html',null);
+
+            $list[]=$this->fileprocess->mkdir($project.'/v1/model/eloquent/builder');
+            $list[]=$this->fileprocess->touch($project.'/v1/model/eloquent/builder/index.html',null);
+        }
+
+
+        if($orm=="doctrine" && !file_exists('./src/app/'.$project.'/'.$version.'/model/doctrine')){
+            $list[]=$this->fileprocess->mkdir($project.'/v1/model/doctrine');
+            $list[]=$this->fileprocess->touch($project.'/v1/model/doctrine/index.html',null);
+
+            $list[]=$this->fileprocess->mkdir($project.'/v1/model/doctrine/adapter');
+            $list[]=$this->fileprocess->touch($project.'/v1/model/doctrine/adapter/index.html',null);
+
+            $list[]=$this->fileprocess->mkdir($project.'/v1/model/doctrine/builder');
+            $list[]=$this->fileprocess->touch($project.'/v1/model/doctrine/builder/index.html',null);
+        }
+
+        return utils::fileProcessResult($list,function() use($project,$version,$orm){
+            echo $this->info('-------------------------------------------------------------------------------------------------');
+            echo $this->classical('ORM '.$orm.' HAS BEEN SUCCESSFULLY CREATED');
+            echo $this->info('--------------------------------------------------------------------------------------------------');
+        });;
     }
 
 }

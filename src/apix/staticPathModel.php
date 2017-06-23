@@ -145,10 +145,14 @@ class staticPathModel {
         }
     }
 
-    public static function getAppServiceBase(){
+    public static function getAppServiceBase($app=null,$version=null){
 
         if(defined('app')){
             $serviceBase='\\src\\app\\'.app.'\\'.version.'\\serviceBaseController';
+            return new $serviceBase();
+        }
+        else{
+            $serviceBase='\\src\\app\\'.$app.'\\'.$version.'\\serviceBaseController';
             return new $serviceBase();
         }
         return null;
