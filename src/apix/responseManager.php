@@ -28,7 +28,6 @@ class responseManager {
             $responseOutType=staticPathModel::getAppServiceBase()->response;
         }
         $this->definitor=$responseOutType;
-        //header('Content-Type: application/'.$responseOutType);
 
     }
 
@@ -137,7 +136,16 @@ class responseManager {
         }
 
         $msg=($msg!==null) ? $msg : 'data is empty';
-        $data=['success'=>(bool)false,'statusCode'=>204,'responseTime'=>microtime(true)-time_start,
+
+        $statusCode=204;
+        if(is_array($msg) && !$msg['success']){
+            $configException=staticPathModel::getConfigStaticApp('exception');
+            if(array_key_exists($msg['errorType'],$configException::exceptionTypeCodes()) && $configException::exceptionTypeCodes($msg['errorType'])!==null){
+                $statusCode=$configException::exceptionTypeCodes($msg['errorType']);
+            }
+        }
+
+        $data=['success'=>(bool)false,'statusCode'=>$statusCode,'responseTime'=>microtime(true)-time_start,
                 'requestDate'=>date("Y-m-d H:i:s")]+['message'=>$msg,'development'=>$developInfo];
 
         return $this->responseDefinitor($data);
