@@ -180,7 +180,7 @@ class model extends console {
 
                         }
                         else{
-                            return $this->error($getParams[1]['file'].' model is already available xxx');
+                            return $this->error($getParams[1]['file'].' model is already available');
                         }
 
                     }

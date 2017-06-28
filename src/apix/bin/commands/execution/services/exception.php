@@ -18,57 +18,49 @@ class exception
      * @param string
      * @return response exception handler runner
      */
-    public static function handler($errNo=null, $errStr=null, $errFile=null, $errLine=null, array $errContext)
+    public static function handler($errNo=null, $errStr=null, $errFile=null, $errLine=null,$errType=null, array $errContext)
     {
         return [
 
             /**
-             * project exception handler.
-             *
-             * class exception container call access for every service.
-             *
-             * @param array key
-             * @key error File
+             * Error file.
+             * @key errorFile
+             * @value $errFile
              */
             'errorFile'=>$errFile,
 
             /**
-             * project exception handler.
-             *
-             * class exception container call access for every service.
-             *
-             * @param array key
-             * @key error Line
+             * Error Line.
+             * @key errorLine
+             * @value $errLine
              */
             'errorLine'=>$errLine,
 
             /**
-             * project exception handler.
-             *
-             * class exception container call access for every service.
-             *
-             * @param array key
-             * @key error String
+             * Error Type.
+             * @key errorType
+             * @value $errType
+             */
+            'errorType'=>$errType,
+
+            /**
+             * Error String.
+             * @key errorString
+             * @value $errStr
              */
             'errorString'=>$errStr,
 
             /**
-             * project exception handler.
-             *
-             * class exception container call access for every service.
-             *
-             * @param array key
-             * @key error Number
+             * Error No.
+             * @key errorNo
+             * @value $errNo
              */
             'errorNo'=>$errNo,
 
             /**
-             * project exception handler.
-             *
-             * class exception container call access for every service.
-             *
-             * @param array key
-             * @key error Context
+             * Context.
+             * @key context
+             * @value $errContext
              */
             'Context'=>$errContext
         ];

@@ -10,6 +10,8 @@
 
 namespace src\app\__projectName__\v1\__call\__serviceName__;
 
+use src\app\__projectName__\v1\serviceBaseController as base;
+
 /**
  * Represents a app abstract class.
  *
@@ -17,7 +19,7 @@ namespace src\app\__projectName__\v1\__call\__serviceName__;
  * return type array
  */
 
-abstract class app
+class app extends base
 {
     public $source;
     public $model;
@@ -35,6 +37,7 @@ abstract class app
         $this->source=\branch::source();
         $this->model=\branch::query();
         $this->main=\branch::main();
+        parent::__construct();
     }
 
 

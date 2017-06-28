@@ -26,9 +26,6 @@ class serviceBaseController
     //data object Loader
     public $objectLoader=false;
 
-    //http request
-    public $request;
-
     //default search driver
     public $search='elasticSearch';
 
@@ -51,7 +48,6 @@ class serviceBaseController
      */
     public function __construct()
     {
-        $this->request=new Request();
         $this->throttle=$this->throttle();
     }
 
@@ -87,12 +83,13 @@ class serviceBaseController
      */
     public function fingerPrint($show=false)
     {
+        $request=new Request();
         $list=[
-            'ip'=>$this->request->getClientIp(),
-            'getHost'=>$this->request->getHost(),
-            'getBasePath'=>$this->request->getBasePath(),
+            'ip'=>$request->getClientIp(),
+            'getHost'=>$request->getHost(),
+            'getBasePath'=>$request->getBasePath(),
             'deviceToken'=>\app::deviceToken(),
-            'isSecure'=>$this->request->isSecure()
+            'isSecure'=>$request->isSecure()
 
         ];
 

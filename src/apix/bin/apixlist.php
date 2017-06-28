@@ -68,6 +68,7 @@ class apixlist extends console  {
 
         echo $this->success('MODEL CREATE : ');
         echo $this->bluePrint('model create [projectName] file:[modelfilename] table:[databasetablename] => "create a model file in project"');
+        echo $this->bluePrint('model create [projectName] set:[orm] => "create a new orm(doctrine,eloquent,sudb) doctrine in project"');
 
         echo PHP_EOL;
 

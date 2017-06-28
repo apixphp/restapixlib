@@ -389,7 +389,26 @@ class connection extends Definitor {
         $exception='\\src\\app\\'.app.'\\'.version.'\\config\\exception';
 
         $appExceptionSuccess=['success'=>false];
-        $appException=$appExceptionSuccess+$exception::handler($errNo,$errStr,$errFile,$errLine,$errContext);
+
+        $errType='Undefined';
+        if(preg_match('@(.*?):@is',$errStr,$errArr)){
+            $errType=trim(str_replace('Uncaught','',$errArr[1]));
+        }
+
+        if(preg_match('@(.*?):(.*?)in@is',$errStr,$errStrRealArray)){
+            $errStrReal=trim($errStrRealArray[2]);
+        }
+
+        if($errType==="Undefined"){
+            $errStrReal=$errStr;
+        }
+        else{
+            $errContext['trace']=$errStr;
+        }
+
+
+
+        $appException=$appExceptionSuccess+$exception::handler($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
 
             staticPathModel::getAppServiceLog('error')->handle($appException);
             $this->responseOutRedirect($this,$appException,false);
