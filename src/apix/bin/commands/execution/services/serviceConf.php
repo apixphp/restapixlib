@@ -14,4 +14,11 @@ return [
      */
     'dataDump'=>false,
 
+    /**
+     * Service model object
+     * it is mainly database orm for service
+     * @default null
+     */
+    'model'=>null
+
 ];

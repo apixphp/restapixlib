@@ -160,6 +160,53 @@ class staticPathModel {
 
     }
 
+
+    public static function getServiceConf($app=null,$version=null,$service=null){
+
+        $app=($app!==null) ? $app : app;
+        $version=($version!==null) ? $version : version;
+        $service=($service!==null) ? $service : service;
+
+        $serviceConfNamespace='\\src\\app\\'.$app.'\\'.$version.'\\__call\\'.$service.'\serviceConf';
+        $serviceConfFile=utils::convertPathFromNamespace($serviceConfNamespace).'.php';
+
+        $serviceConfPath=[];
+        if(file_exists($serviceConfFile)){
+            $serviceConfPath=require($serviceConfFile);
+        }
+
+        if(count($serviceConfPath)===0){
+            $packageDevSource=self::getServicePackageDev();
+            $packageList=$packageDevSource['packageDevSource']['package'];
+            $packageDef=$packageDevSource['packageDevSource']['packageDefinition'];
+            if(in_array($service,$packageList) && array_key_exists($service,$packageDef) && array_key_exists('model',$packageDef[$service])){
+                return ['model'=>$packageDef[$service]['model']];
+            }
+        }
+
+        return $serviceConfPath;
+
+    }
+
+
+    public static function getServicePackageDev($app=null,$version=null,$service=null){
+
+        $app=($app!==null) ? $app : app;
+        $version=($version!==null) ? $version : version;
+        $service=($service!==null) ? $service : service;
+
+        $serviceConfNamespace='\\src\\app\\'.$app.'\\'.$version.'\\servicePackageDevController';
+        $serviceConfFile=utils::convertPathFromNamespace($serviceConfNamespace).'.php';
+
+        $serviceConfPath=[];
+        if(file_exists($serviceConfFile)){
+            $serviceConfPath=require($serviceConfFile);
+        }
+
+        return $serviceConfPath;
+
+    }
+
     public static function getAppServiceNamespace($project,$version,$service,$method){
 
         return '\\src\\app\\'.$project.'\\'.$version.'\__call\\'.$service.'\\'.$method.'Service';
