@@ -166,9 +166,10 @@ class connection extends Definitor {
 
                         //check package dev service and method
                         if($instance->checkPackageDev($service)['status']){
-                            $packageDev=utils::resolve($instance->checkPackageDev($service)['class']);
+                            $cDev=$instance->checkPackageDev($service);
+                            $packageDev=utils::resolve($cDev['class']);
                             define("devPackage",true);
-                            return $instance->responseOutRedirect($instance,$packageDev->$serviceMethod($instance->checkPackageDev($service))['definitions'],true);
+                            return $instance->responseOutRedirect($instance,$packageDev->$serviceMethod());
                         }
 
                         $serviceNo=$instance->getFixLog('serviceNo');

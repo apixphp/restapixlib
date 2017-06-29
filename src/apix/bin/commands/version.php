@@ -149,8 +149,9 @@ class version {
                     $sourcepath='./src/app/dev/v1/__call/'.$this->getParams($data)[1]['service'].'';
                     $modelpath='./src/app/dev/v1/model';
                     $migrations='./src/app/dev/v1/migrations';
-                    $repository='./src/app/dev/v1/repository';
-                    $destinationpath='./src/packages/dev/'.$this->getParams($data)[1]['service'].'';
+                    $repository='./src/app/dev/v1/optional/repository';
+                    $destinationpath='./src/store/packages/dev/'.$this->getParams($data)[1]['service'].'';
+
 
 
                     if(!file_exists($destinationpath))
@@ -232,17 +233,23 @@ class version {
                             }
                         }
 
+                        $toolBoxPath=str_replace('./',root.'/',$destinationpath);
+
+                        $toolBox['execution']='services/devPackage_toolbox';
+                        $toolBox['params']['serviceName']=$this->getParams($data)[1]['service'];
+
+                        $this->fileprocess->touch_path($toolBoxPath.'/toolBox.php',$toolBox);
 
                         foreach ($fl as $val)
                         {
                             $dosya =$val;
                             $dt = @fopen($dosya, "rb");
                             $icerik =@fread($dt, filesize($dosya));
-                            $icerik=preg_replace('@app\\\\dev\\\\v1\\\\__call@',"packages\\dev",$icerik);
-                            $icerik=preg_replace('@app\\\\dev\\\\v1\\\\model@',"packages\\dev\\".$this->getParams($data)[1]['service']."\\devpack\\model",$icerik);
-                            $icerik=preg_replace('@app\\\\dev\\\\v1\\\\migrations@',"packages\\dev\\".$this->getParams($data)[1]['service']."\\devpack\\migrations",$icerik);
-                            $icerik=preg_replace('@app\\\\dev\\\\v1\\\\repository@',"packages\\dev\\".$this->getParams($data)[1]['service']."\\devpack\\repository",$icerik);
-
+                            $icerik=preg_replace('@app\\\\dev\\\\v1\\\\__call@',"store\\packages\\dev",$icerik);
+                            $icerik=preg_replace('@app\\\\dev\\\\v1\\\\model@',"store\\packages\\dev\\".$this->getParams($data)[1]['service']."\\devpack\\model",$icerik);
+                            $icerik=preg_replace('@app\\\\dev\\\\v1\\\\migrations@',"store\\packages\\dev\\".$this->getParams($data)[1]['service']."\\devpack\\migrations",$icerik);
+                            $icerik=preg_replace('@app\\\\dev\\\\v1\\\\optional\\\\repository@',"store\\packages\\dev\\".$this->getParams($data)[1]['service']."\\devpack\\repository",$icerik);
+                            $icerik=preg_replace('@extends base@','extends toolBox',$icerik);
                             $dt = fopen($dosya, 'w');
 
                             fwrite($dt,$icerik);
