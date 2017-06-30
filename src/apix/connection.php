@@ -211,6 +211,7 @@ class connection extends Definitor {
 
                                 $memoryGetUsage = memory_get_usage();
 
+                                $requestServiceMethodReal=null;
                                 if($serviceBasePlatformStatus){
                                     $servicePlatform=utils::resolve(staticPathModel::$apiPlatformNamespace);
                                     $serviceBasePlatformConfig='\\src\\app\\'.app.'\\'.version.'\\optional\platform\config';
@@ -225,9 +226,11 @@ class connection extends Definitor {
 
 
                                 }
-                                else{
+
+                                if($requestServiceMethodReal===null){
                                     $requestServiceMethodReal=$apix->$requestServiceMethod();
                                 }
+
 
                                 $ClassMethodMemoryGetUsage = memory_get_usage()-$memoryGetUsage;
 
