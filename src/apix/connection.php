@@ -147,119 +147,119 @@ class connection extends Definitor {
                     return $instance->rateLimiterQuery(/**
                      * @return mixed
                      */
-                    function() use ($service,$serviceMethod,$getVersion,$instance) {
+                        function() use ($service,$serviceMethod,$getVersion,$instance) {
 
-                        if($service[1]=="doc"){
-                            header("Content-Type: text/html");
-                            $apiDoc=staticPathModel::$apiDocNamespace;
-                            return utils::resolve($apiDoc)->index();
-                        }
+                            if($service[1]=="doc"){
+                                header("Content-Type: text/html");
+                                $apiDoc=staticPathModel::$apiDocNamespace;
+                                return utils::resolve($apiDoc)->index();
+                            }
 
-                        $instance->serviceMiddlewareRun();
+                            $instance->serviceMiddlewareRun();
 
-                        //check package auto service and method
-                        if($instance->checkPackageAuto($service)['status']){
-                            $packageAuto=utils::resolve($instance->checkPackageAuto($service)['class']);
-                            return $instance->responseOutRedirect($instance,$packageAuto->$serviceMethod(),true);
+                            //check package auto service and method
+                            if($instance->checkPackageAuto($service)['status']){
+                                $packageAuto=utils::resolve($instance->checkPackageAuto($service)['class']);
+                                return $instance->responseOutRedirect($instance,$packageAuto->$serviceMethod(),true);
 
-                        }
+                            }
 
-                        //check package dev service and method
-                        if($instance->checkPackageDev($service)['status']){
-                            $cDev=$instance->checkPackageDev($service);
-                            $packageDev=utils::resolve($cDev['class']);
-                            define("devPackage",true);
-                            return $instance->responseOutRedirect($instance,$packageDev->$serviceMethod());
-                        }
+                            //check package dev service and method
+                            if($instance->checkPackageDev($service)['status']){
+                                $cDev=$instance->checkPackageDev($service);
+                                $packageDev=utils::resolve($cDev['class']);
+                                define("devPackage",true);
+                                return $instance->responseOutRedirect($instance,$packageDev->$serviceMethod());
+                            }
 
-                        $serviceNo=$instance->getFixLog('serviceNo');
-                        if(!file_exists(root . '/'.src.'/'.$service[0].'/'.$getVersion.'/__call/'.$service[1].'')){
-                            return $instance->responseOutRedirect($instance,$serviceNo,false);
-                        }
+                            $serviceNo=$instance->getFixLog('serviceNo');
+                            if(!file_exists(root . '/'.src.'/'.$service[0].'/'.$getVersion.'/__call/'.$service[1].'')){
+                                return $instance->responseOutRedirect($instance,$serviceNo,false);
+                            }
 
-                        if(!file_exists(root . '/'.src.'/'.$service[0].'/'.$getVersion.'/__call/'.$service[1].'/app.php')){
-                            return $instance->responseOutRedirect($instance,$serviceNo,false);
+                            if(!file_exists(root . '/'.src.'/'.$service[0].'/'.$getVersion.'/__call/'.$service[1].'/app.php')){
+                                return $instance->responseOutRedirect($instance,$serviceNo,false);
 
-                        }
+                            }
 
-                        //service main file extends this file
-                        require(root . '/'.src.'/'.$service[0].'/'.$getVersion.'/__call/'.$service[1].'/app.php');
+                            //service main file extends this file
+                            require(root . '/'.src.'/'.$service[0].'/'.$getVersion.'/__call/'.$service[1].'/app.php');
 
-                        //$service Base
-                        $serviceBase=utils::resolve(api."serviceBaseController");
+                            //$service Base
+                            $serviceBase=utils::resolve(api."serviceBaseController");
 
-                        //apix resolve
-                        $apix=utils::resolve("\\src\\app\\".$service[0]."\\".$getVersion."\\__call\\".$service[1]."\\".strtolower(request)."Service");
+                            //apix resolve
+                            $apix=utils::resolve("\\src\\app\\".$service[0]."\\".$getVersion."\\__call\\".$service[1]."\\".strtolower(request)."Service");
 
 
-                        $requestServiceMethod=$serviceMethod;
-                        if(method_exists($apix,$requestServiceMethod)){
-                            if(property_exists($apix,"forbidden") && \Apix\environment::get()=="production"){
-                                if($apix->forbidden){
-                                    return $instance->responseOutRedirect($instance,$instance->getFixLog('noaccessright'),false);
+                            $requestServiceMethod=$serviceMethod;
+                            if(method_exists($apix,$requestServiceMethod)){
+                                if(property_exists($apix,"forbidden") && \Apix\environment::get()=="production"){
+                                    if($apix->forbidden){
+                                        return $instance->responseOutRedirect($instance,$instance->getFixLog('noaccessright'),false);
+                                    }
                                 }
-                            }
-                            //call service
-                            $restrictions=$apix->restrictions();
-                            $restrictionsStatus=true;
-                            if(is_array($restrictions) && array_key_exists($requestServiceMethod,$restrictions)){
-                                $restrictionsStatus=$restrictions[$requestServiceMethod];
-                            }
-                            if($restrictionsStatus){
-                                $serviceBasePlatformStatus=$serviceBase->platform;
+                                //call service
+                                $restrictions=$apix->restrictions();
+                                $restrictionsStatus=true;
+                                if(is_array($restrictions) && array_key_exists($requestServiceMethod,$restrictions)){
+                                    $restrictionsStatus=$restrictions[$requestServiceMethod];
+                                }
+                                if($restrictionsStatus){
+                                    $serviceBasePlatformStatus=$serviceBase->platform;
 
 
-                                $memoryGetUsage = memory_get_usage();
+                                    $memoryGetUsage = memory_get_usage();
 
-                                $requestServiceMethodReal=null;
-                                if($serviceBasePlatformStatus){
-                                    $servicePlatform=utils::resolve(staticPathModel::$apiPlatformNamespace);
-                                    $serviceBasePlatformConfig='\\src\\app\\'.app.'\\'.version.'\\optional\platform\config';
-                                    $platformDirectoryCallStaticVariable=utils::resolve($serviceBasePlatformConfig)->handle();
+                                    $requestServiceMethodReal=null;
+                                    if($serviceBasePlatformStatus){
+                                        $servicePlatform=utils::resolve(staticPathModel::$apiPlatformNamespace);
+                                        $serviceBasePlatformConfig='\\src\\app\\'.app.'\\'.version.'\\optional\platform\config';
+                                        $platformDirectoryCallStaticVariable=utils::resolve($serviceBasePlatformConfig)->handle();
 
-                                    if($platformDirectoryCallStaticVariable!==null){
-                                        $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$instance){
-                                            return $instance->responseOutRedirect($instance,$apix->$requestServiceMethod(),true);
-                                        });
+                                        if($platformDirectoryCallStaticVariable!==null){
+                                            $requestServiceMethodReal=$servicePlatform->$platformDirectoryCallStaticVariable()->take(function() use(&$requestServiceMethodReal,$apix,$requestServiceMethod,$instance){
+                                                return $instance->responseOutRedirect($instance,$apix->$requestServiceMethod(),true);
+                                            });
+
+                                        }
+
 
                                     }
 
-
-                                }
-
-                                if($requestServiceMethodReal===null){
-                                    $requestServiceMethodReal=$apix->$requestServiceMethod();
-                                }
+                                    if($requestServiceMethodReal===null){
+                                        $requestServiceMethodReal=$apix->$requestServiceMethod();
+                                    }
 
 
-                                $ClassMethodMemoryGetUsage = memory_get_usage()-$memoryGetUsage;
+                                    $ClassMethodMemoryGetUsage = memory_get_usage()-$memoryGetUsage;
 
-                                $instance->refreshRouterList($apix,$ClassMethodMemoryGetUsage);
+                                    $instance->refreshRouterList($apix,$ClassMethodMemoryGetUsage);
 
 
-                                $instance->serviceDump($requestServiceMethodReal,$requestServiceMethod);
-                                if($serviceBase->log){
-                                    return $instance->logging($requestServiceMethodReal,function() use ($instance,$requestServiceMethodReal){
+                                    $instance->serviceDump($requestServiceMethodReal,$requestServiceMethod);
+                                    if($serviceBase->log){
+                                        return $instance->logging($requestServiceMethodReal,function() use ($instance,$requestServiceMethodReal){
+                                            return $instance->responseOutRedirect($instance,$requestServiceMethodReal,true);
+                                        });
+                                    }
+                                    else{
+
                                         return $instance->responseOutRedirect($instance,$requestServiceMethodReal,true);
-                                    });
-                                }
-                                else{
 
-                                    return $instance->responseOutRedirect($instance,$requestServiceMethodReal,true);
+                                    }
 
                                 }
+
+                                return $instance->responseOutRedirect($instance,$instance->getFixLog('serviceRestrictions'),false);
 
                             }
+                            else{
 
-                            return $instance->responseOutRedirect($instance,$instance->getFixLog('serviceRestrictions'),false);
+                                return $instance->responseOutRedirect($instance,$instance->getFixLog('invalidservice'),false);
+                            }
 
-                        }
-                        else{
-
-                            return $instance->responseOutRedirect($instance,$instance->getFixLog('invalidservice'),false);
-                        }
-
-                    });
+                        });
 
 
                 });
@@ -411,16 +411,28 @@ class connection extends Definitor {
         }
 
 
+        $exceptionHandler=$exception::handler($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
 
-        $appException=$appExceptionSuccess+$exception::handler($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
+        $outPutterException=$exception::outPutter();
 
-            staticPathModel::getAppServiceLog('error')->handle($appException);
-            $this->responseOutRedirect($this,$appException,false);
+        $logExceptionDefinitor=[];
+        foreach($outPutterException as $key=>$value){
+            if($value!=="handler"){
+                $logExceptionDefinitor[$key]=$value;
+            }
+        }
+
+        $exceptionBlockDefinitor=array_search('handler',$outPutterException);
+        $logExceptionDefinitor[$exceptionBlockDefinitor]=$exceptionHandler;
+
+        $appException=$appExceptionSuccess+$exceptionHandler;
+
+        staticPathModel::getAppServiceLog('error')->handle($logExceptionDefinitor);
+        $this->responseOutRedirect($this,$appException,false);
 
         //set json app exception
         if(environment()=="local"){
             echo $this->responseOutRedirect($this,$appException,false);
-            exit();
         }
         else{
             $productionException=[
@@ -429,7 +441,6 @@ class connection extends Definitor {
             ];
 
             echo $this->responseOutRedirect($this,$productionException,false);
-            exit();
         }
 
 

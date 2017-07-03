@@ -188,4 +188,22 @@ class exception
 
     }
 
+
+    /**
+     * project exception outPutter handler.
+     *
+     * class exception outPutter shapes exception log for every service.
+     * @important never delete handler value [handler value is important]
+     *
+     * @param string
+     * @return response exception outPutter handler runner
+     */
+    public static function outPutter(){
+
+        return [
+            'exceptionBlock'=>'handler',
+            'data'=>true
+        ];
+    }
+
 }
