@@ -15,7 +15,6 @@ use Apix\StaticPathModel;
 class appBootLoader {
 
     /**
-     * prefer-source
      * @var param bootFile
      * it is boot resolve
      * for service base controller

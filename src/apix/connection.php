@@ -296,7 +296,6 @@ class connection extends Definitor {
      */
     private function getAutoLoadsFromServices(){
 
-
         //get defines
         $this->getDefinitions();
 

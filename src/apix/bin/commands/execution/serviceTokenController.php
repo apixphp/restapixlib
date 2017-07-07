@@ -25,7 +25,7 @@ class serviceTokenController {
     /**
      * status variable
      */
-    public $status;
+    public $status=[];
 
     /**
      * Represents a token provision construct class.
@@ -35,9 +35,20 @@ class serviceTokenController {
      */
     public function __construct(){
 
-        //get status value
+        /**
+         * @var method maybe header or get
+         */
+        $this->status['method']='get';
+
+        /**
+         * @var local true|false
+         */
         $this->status['local']=false;
-        $this->status['production']=false;
+
+        /**
+         * @var production true|false
+         */
+        $this->status['production']=true;
 
     }
 
