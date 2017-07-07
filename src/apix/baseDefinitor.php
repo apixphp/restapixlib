@@ -10,6 +10,7 @@ use Apix\Utils;
 use Apix\StaticPathModel;
 use Apix\RateLimitQuery;
 use Apix\ServiceDumpObjects;
+use Symfony\Component\HttpFoundation\Request;
 
 
 /**
@@ -455,7 +456,21 @@ class BaseDefinitor  {
             }
 
         }
+
         $queryParams=$this->getQueryParamsFromRoute();
+
+        if($token->status['method']==="header"){
+            $request=Request::createFromGlobals();
+            $headers=$request->headers->all();
+
+            $queryParams=[];
+            if(array_key_exists("token",$headers)){
+                $queryParams=[
+                    '_token'=>$headers['token'][0]
+                ];
+            }
+        }
+
 
 
         //token provision
@@ -497,7 +512,7 @@ class BaseDefinitor  {
             }
         }
 
-        return $this->responseOut([],'token provision error');
+        return $this->responseOutRedirect($this,'token provision error',false);
 
 
 
@@ -639,6 +654,17 @@ class BaseDefinitor  {
             return true;
         }
         return false;
+    }
+
+
+    public function responseOutRedirect($instance,$requestServiceMethodReal,$type=true){
+        header('Content-Type: application/'.utils::responseOutType());
+
+        if($type){
+            return $instance->responseOut($requestServiceMethodReal);
+        }
+        return $instance->responseOut([],$requestServiceMethodReal);
+
     }
 
 

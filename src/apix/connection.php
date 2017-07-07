@@ -453,15 +453,7 @@ class connection extends Definitor {
     }
 
 
-    public function responseOutRedirect($instance,$requestServiceMethodReal,$type=true){
-        header('Content-Type: application/'.utils::responseOutType());
 
-        if($type){
-            return $instance->responseOut($requestServiceMethodReal);
-        }
-        return $instance->responseOut([],$requestServiceMethodReal);
-
-    }
 
 
 
