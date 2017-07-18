@@ -8,6 +8,7 @@
 namespace src\app\__projectName__\v1;
 
 use Src\Store\Services\Httprequest as Request;
+use Apix\Utils;
 
 class serviceBaseController
 {
@@ -89,6 +90,13 @@ class serviceBaseController
             'getHost'=>$request->getHost(),
             'getBasePath'=>$request->getBasePath(),
             'deviceToken'=>\app::deviceToken(),
+            'service'=>service,
+            'method'=>Utils::cleanActionMethod(method),
+            'request'=>request,
+            'version'=>version,
+            'token'=>\app::checkToken(),
+            'user'=>\app::getAppDefinition(),
+            'query'=>$request->query(),
             'isSecure'=>$request->isSecure()
 
         ];

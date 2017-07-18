@@ -211,8 +211,6 @@ class project extends console {
                 $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/sudb');
                 $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/sudb/index.html',null);
 
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/sudb/adapter');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/sudb/adapter/index.html',null);
 
                 $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/sudb/builder');
                 $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/sudb/builder/index.html',null);
@@ -227,9 +225,6 @@ class project extends console {
                 $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/eloquent');
                 $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/eloquent/index.html',null);
 
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/eloquent/adapter');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/eloquent/adapter/index.html',null);
-
                 $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/eloquent/builder');
                 $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/eloquent/builder/index.html',null);
             }
@@ -238,9 +233,6 @@ class project extends console {
             if($orm=="doctrine"){
                 $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/doctrine');
                 $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/doctrine/index.html',null);
-
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/doctrine/adapter');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/doctrine/adapter/index.html',null);
 
                 $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/doctrine/builder');
                 $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/doctrine/builder/index.html',null);

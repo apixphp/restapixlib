@@ -44,9 +44,6 @@ class getService extends app implements getServiceInterface
      */
     public function indexAction()
     {
-        return [
-            'environment'=>environment(),
-            'isMobile'=>app("device")->isMobile()
-        ];
+        return $this->fingerPrint(true);
     }
 }

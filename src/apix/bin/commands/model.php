@@ -59,13 +59,6 @@ class model extends console {
                             //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
 
-                            $modelParamsAdapter['execution']='services/modelAdapter';
-                            $modelParamsAdapter['params']['projectName']=$project;
-                            $modelParamsAdapter['params']['orm']='eloquent';
-                            $modelParamsAdapter['params']['className']=$getParams[1]['file'];
-                            //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
-                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/adapter/'.$getParams[1]['file'].'Adapter.php',$modelParamsAdapter);
-
                             $modelParams['execution']='services/eloquentmodel';
                             $modelParams['params']['projectName']=$project;
                             $modelParams['params']['className']=$getParams[1]['file'];
@@ -100,14 +93,6 @@ class model extends console {
                             $modelParams['params']['tableName']=$getParams[2]['table'];
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/'.$getParams[1]['file'].'.php',$modelParams);
 
-
-
-                            $modelParamsAdapter['execution']='services/modelAdapter';
-                            $modelParamsAdapter['params']['orm']='sudb';
-                            $modelParamsAdapter['params']['projectName']=$project;
-                            $modelParamsAdapter['params']['className']=$getParams[1]['file'];
-                            //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
-                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/adapter/'.$getParams[1]['file'].'Adapter.php',$modelParamsAdapter);
 
 
 
@@ -168,12 +153,6 @@ class model extends console {
                             //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/doctrine/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
 
-                            $modelParamsAdapter['execution']='services/doctrineModelAdapter';
-                            $modelParamsAdapter['params']['orm']='doctrine';
-                            $modelParamsAdapter['params']['projectName']=$project;
-                            $modelParamsAdapter['params']['className']=$getParams[1]['file'];
-                            //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
-                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/doctrine/adapter/'.$getParams[1]['file'].'Adapter.php',$modelParamsAdapter);
 
 
 
@@ -269,9 +248,6 @@ class model extends console {
             $list[]=$this->fileprocess->mkdir($project.'/v1/model/sudb');
             $list[]=$this->fileprocess->touch($project.'/v1/model/sudb/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($project.'/v1/model/sudb/adapter');
-            $list[]=$this->fileprocess->touch($project.'/v1/model/sudb/adapter/index.html',null);
-
             $list[]=$this->fileprocess->mkdir($project.'/v1/model/sudb/builder');
             $list[]=$this->fileprocess->touch($project.'/v1/model/sudb/builder/index.html',null);
 
@@ -285,9 +261,6 @@ class model extends console {
             $list[]=$this->fileprocess->mkdir($project.'/v1/model/eloquent');
             $list[]=$this->fileprocess->touch($project.'/v1/model/eloquent/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($project.'/v1/model/eloquent/adapter');
-            $list[]=$this->fileprocess->touch($project.'/v1/model/eloquent/adapter/index.html',null);
-
             $list[]=$this->fileprocess->mkdir($project.'/v1/model/eloquent/builder');
             $list[]=$this->fileprocess->touch($project.'/v1/model/eloquent/builder/index.html',null);
         }
@@ -296,9 +269,6 @@ class model extends console {
         if($orm=="doctrine" && !file_exists('./src/app/'.$project.'/'.$version.'/model/doctrine')){
             $list[]=$this->fileprocess->mkdir($project.'/v1/model/doctrine');
             $list[]=$this->fileprocess->touch($project.'/v1/model/doctrine/index.html',null);
-
-            $list[]=$this->fileprocess->mkdir($project.'/v1/model/doctrine/adapter');
-            $list[]=$this->fileprocess->touch($project.'/v1/model/doctrine/adapter/index.html',null);
 
             $list[]=$this->fileprocess->mkdir($project.'/v1/model/doctrine/builder');
             $list[]=$this->fileprocess->touch($project.'/v1/model/doctrine/builder/index.html',null);
