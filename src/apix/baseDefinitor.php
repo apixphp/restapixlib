@@ -459,7 +459,7 @@ class BaseDefinitor  {
 
         $queryParams=$this->getQueryParamsFromRoute();
 
-        if($token->status['method']==="header"){
+        if($token->status['method']==="header" and service!=="doc"){
             $request=Request::createFromGlobals();
             $headers=$request->headers->all();
 
@@ -470,8 +470,6 @@ class BaseDefinitor  {
                 ];
             }
         }
-
-
 
         //token provision
         if(array_key_exists("_token",$queryParams)){

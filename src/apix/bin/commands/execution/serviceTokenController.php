@@ -37,6 +37,7 @@ class serviceTokenController {
 
         /**
          * @var method maybe header or get
+         * @define 'key' is token for header
          */
         $this->status['method']='get';
 

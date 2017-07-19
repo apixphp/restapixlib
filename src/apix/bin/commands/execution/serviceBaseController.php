@@ -19,7 +19,7 @@ class serviceBaseController
     public $lang='tr';
 
     //data log
-    public $log=false;
+    public $log=true;
 
     //cache Adapter
     public $cacheAdapter='file';

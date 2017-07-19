@@ -92,7 +92,7 @@ class exception
              * @define Exception thrown if a callback refers to an undefined function
              * or if some arguments are missing.
              */
-            'BadFunctionCallException'=>null,
+            'BadFunctionCallException'=>100,
 
             /**
              * BadMethodCallException.
@@ -100,28 +100,28 @@ class exception
              * @define Exception thrown if a callback refers to an undefined method
              * or if some arguments are missing.
              */
-            'BadMethodCallException'=>null,
+            'BadMethodCallException'=>101,
 
             /**
              * DomainException.
              *
              * @define Exception thrown if a value does not adhere to a defined valid data domain.
              */
-            'DomainException'=>null,
+            'DomainException'=>102,
 
             /**
              * InvalidArgumentException.
              *
              * @define Exception thrown if an argument is not of the expected type.
              */
-            'InvalidArgumentException'=>null,
+            'InvalidArgumentException'=>103,
 
             /**
              * LengthException.
              *
              * @define Exception thrown if a length is invalid.
              */
-            'LengthException'=>null,
+            'LengthException'=>104,
 
             /**
              * LogicException.
@@ -129,7 +129,7 @@ class exception
              * @define Exception that represents error in the program logic.
              * This kind of exception should lead directly to a fix in your code.
              */
-            'LogicException'=>null,
+            'LogicException'=>105,
 
             /**
              * OutOfBoundsException.
@@ -137,7 +137,7 @@ class exception
              * @define Exception thrown if a value is not a valid key.
              * This represents errors that cannot be detected at compile time.
              */
-            'OutOfBoundsException'=>null,
+            'OutOfBoundsException'=>106,
 
             /**
              * OutOfRangeException.
@@ -145,14 +145,14 @@ class exception
              * @define Exception thrown when an illegal index was requested.
              * This represents errors that should be detected at compile time.
              */
-            'OutOfRangeException'=>null,
+            'OutOfRangeException'=>107,
 
             /**
              * OverflowException.
              *
              * @define Exception thrown when adding an element to a full container.
              */
-            'OverflowException'=>null,
+            'OverflowException'=>108,
 
             /**
              * RangeException.
@@ -161,14 +161,14 @@ class exception
              * Normally this means there was an arithmetic error other than under/overflow.
              * This is the runtime version of DomainException.
              */
-            'RangeException'=>null,
+            'RangeException'=>109,
 
             /**
              * RuntimeException.
              *
              * @define Exception thrown if an error which can only be found on runtime occurs.
              */
-            'RuntimeException'=>null,
+            'RuntimeException'=>110,
 
             /**
              * UnderflowException.
@@ -176,7 +176,7 @@ class exception
              * @define Exception thrown when performing an invalid operation on an empty container,
              * such as removing an element.
              */
-            'UnderflowException'=>null,
+            'UnderflowException'=>111,
 
             /**
              * UnexpectedValueException.
@@ -185,7 +185,7 @@ class exception
              * Typically this happens when a function calls another function and expects
              * the return value to be of a certain type or value not including arithmetic or buffer related errors.
              */
-            'UnexpectedValueException'=>null
+            'UnexpectedValueException'=>112
         ];
 
         if($type!==null){

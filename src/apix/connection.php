@@ -141,6 +141,12 @@ class connection extends Definitor {
             //get token control
             return $instance->token(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
+                if($service[1]=="doc"){
+                    header("Content-Type: text/html");
+                    $apiDoc=staticPathModel::$apiDocNamespace;
+                    return utils::resolve($apiDoc)->index();
+                }
+
                 //provision run
                 return $instance->provision(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
@@ -148,12 +154,6 @@ class connection extends Definitor {
                      * @return mixed
                      */
                     function() use ($service,$serviceMethod,$getVersion,$instance) {
-
-                        if($service[1]=="doc"){
-                            header("Content-Type: text/html");
-                            $apiDoc=staticPathModel::$apiDocNamespace;
-                            return utils::resolve($apiDoc)->index();
-                        }
 
                         $instance->serviceMiddlewareRun();
 
@@ -413,23 +413,17 @@ class connection extends Definitor {
 
         $appException=$appExceptionSuccess+$exception::handler($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
 
-            staticPathModel::getAppServiceLog('error')->handle($appException);
-            $this->responseOutRedirect($this,$appException,false);
+        if(environment()!=='local'){
+            $appException=[];
+            $appException=$appExceptionSuccess+['errorType'=>$errType,'errorString'=>$errStrReal];
+        }
+
+
+        staticPathModel::getAppServiceLog('error')->handle($appException);
 
         //set json app exception
-        if(environment()=="local"){
-            echo $this->responseOutRedirect($this,$appException,false);
-            exit();
-        }
-        else{
-            $productionException=[
-                'success'=>false,
-                'message'=>'error occurred'
-            ];
-
-            echo $this->responseOutRedirect($this,$productionException,false);
-            exit();
-        }
+        echo $this->responseOutRedirect($this,$appException,false);
+        exit();
 
 
     }
