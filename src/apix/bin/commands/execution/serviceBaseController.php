@@ -39,6 +39,9 @@ class serviceBaseController
     //throttle status
     public $throttle;
 
+    //nodelist
+    public $nodes=[];
+
 
     /**
      * Constructor.
@@ -137,6 +140,24 @@ class serviceBaseController
         ];
 
         return $events;
+    }
+
+    /**
+     * The setNode component provides tools that allow your application
+     * components to communicate with each other by setNode events and nodejs to them.
+     *
+     * @return array
+     */
+    public function setNode($key,$callback)
+    {
+        $this->nodes[]=$key;
+        $query=(new Request())->query();
+
+        if($query['node']==$key){
+            $this->nodes['result']=call_user_func($callback);
+        }
+
+
     }
 
 }

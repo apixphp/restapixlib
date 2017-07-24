@@ -341,4 +341,24 @@ class utils {
     public static function convertPathFromNamespace($data){
         return root.''.str_replace('\\','/',$data);
     }
+
+    //get class methods
+    public static function getClassMethods($class=null,$type=false){
+        if($class!==null){
+            $methods=get_class_methods($class);
+
+            if($type===false){
+                return $methods;
+            }
+            $list=[];
+            foreach($methods as $method){
+                if(preg_match('@Action@is',$method)){
+                    $list[]=static::cleanActionMethod($method);
+                }
+            }
+            return $list;
+        }
+
+        return null;
+    }
 }

@@ -207,9 +207,18 @@ class staticPathModel {
 
     }
 
-    public static function getAppServiceNamespace($project,$version,$service,$method){
+    public static function getAppServiceNamespace($project=null,$version=null,$service=null,$method=null){
 
+        if(defined('app') && defined('service') && defined('version') && defined('request')){
+            return '\\src\\app\\'.app.'\\'.version.'\__call\\'.service.'\\'.request.'Service';
+        }
         return '\\src\\app\\'.$project.'\\'.$version.'\__call\\'.$service.'\\'.$method.'Service';
+    }
+
+
+    public static function getServiceNamespace($service=null,$request=null){
+
+        return '\\src\\app\\'.app.'\\'.version.'\__call\\'.$service.'\\'.$request.'Service';
     }
 
     public static function getAppServiceLog($type='access'){
