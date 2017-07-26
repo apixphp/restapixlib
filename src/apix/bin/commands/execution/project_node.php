@@ -42,32 +42,19 @@ request.get(''+query.protocol+'://'+hostUrl[0]+'/apix/service/'+query.params.app
 var result=JSON.parse(body);
 var node=result.data.node;
 
+async.map(node[query.params.node], function (n, call) {
 
+request.get(''+query.protocol+'://'+hostUrl[0]+'/apix/service/'+query.params.app+'/node/'+query.params.node+'?node=' + encodeURIComponent(n), function (error, response, body) {
+if (error) return callback(error)
 
-async.parallel({
+var last = JSON.parse(body)
+call(null,{[n]:last})
+})
 
-foo: function(call) {
-
-request.get(''+query.protocol+'://'+hostUrl[0]+'/apix/service/'+query.params.app+'/node/'+query.params.node+'?node=foo', function (error, response, body) {
-
-var last=JSON.parse(body);
-call(null,last.data.result);
-});
-
-},
-bar: function(call) {
-request.get(''+query.protocol+'://'+hostUrl[0]+'/apix/service/'+query.params.app+'/node/'+query.params.node+'?node=bar', function (error, response, body) {
-
-var last=JSON.parse(body);
-call(null,last.data.result);
-});
-}
-}, function(err, results) {
+}, function (error, results) {
+// handle error
 callback(results)
 });
-
-
-
 
 
 });
