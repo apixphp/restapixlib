@@ -12,6 +12,7 @@ namespace src\app\__projectName__\v1\optional\repository\__bundleName__;
 
 use Src\Store\Services\Httprequest as Request;
 use Src\Store\Services\appCollection as Collection;
+use src\app\__projectName__\v1\serviceBaseController as base;
 
 /**
  * Represents a bundle index class.
@@ -20,7 +21,7 @@ use Src\Store\Services\appCollection as Collection;
  * return type array
  */
 
-class index implements __bundleName__Interface {
+class index extends base implements __bundleName__Interface {
 
 
     /**
@@ -28,7 +29,11 @@ class index implements __bundleName__Interface {
      *
      * @param type dependency injection and function
      */
-    public function __construct() {}
+    public function __construct() {
+
+        parent::__construct();
+        $this->branchInitialize();
+    }
 
 
     /**

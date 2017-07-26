@@ -42,6 +42,15 @@ class serviceBaseController
     //nodelist
     public $nodes=[];
 
+    //source
+    public $source;
+
+    //query
+    public $query;
+
+    //main
+    public $main;
+
 
     /**
      * Constructor.
@@ -53,6 +62,18 @@ class serviceBaseController
     public function __construct()
     {
         $this->throttle=$this->throttle();
+    }
+
+
+    /**
+     * Branch Inıtialize.
+     * source,main,query
+     */
+    public function branchInitialize()
+    {
+        $this->source=\branch::source();
+        $this->query=\branch::query();
+        $this->main=\branch::main();
     }
 
 
