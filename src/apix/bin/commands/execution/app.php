@@ -62,7 +62,8 @@ class app
     public static function getAppClassAlias()
     {
         return [
-            'Adapter'=>'src\app\__projectName__\v1\serviceAdapterController'
+            'Adapter'=>'src\app\__projectName__\v1\serviceAdapterController',
+            'Log'=>'src\app\__projectName__\v1\serviceLogController'
         ];
     }
 

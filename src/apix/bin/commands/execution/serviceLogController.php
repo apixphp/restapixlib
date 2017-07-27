@@ -25,7 +25,7 @@ class serviceLogController extends serviceBaseController
      *
      * @param type dependency injection and function
      */
-    public function __construct($errorFileName='access')
+    public function __construct($errorType='access',$errorFileName='access')
     {
 
         /**
@@ -50,7 +50,7 @@ class serviceLogController extends serviceBaseController
          * @param mixed
          * @result log push handler
          */
-        $this->loggerType=$this->loggerTypes[$errorFileName];
+        $this->loggerType=$this->loggerTypes[$errorType];
         $this->logger->pushHandler(new StreamHandler($this->logPath.''.$errorFileName.'.log', Logger::INFO));
     }
 

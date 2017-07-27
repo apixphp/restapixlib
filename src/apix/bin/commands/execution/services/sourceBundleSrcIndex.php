@@ -12,6 +12,7 @@ namespace src\app\__projectName__\__version__\__call\__serviceName__\source\bund
 
 use Src\Store\Services\Httprequest as Request;
 use Src\Store\Services\appCollection as Collection;
+use Log;
 use src\app\__projectName__\__version__\__call\__serviceName__\app;
 
 /**
