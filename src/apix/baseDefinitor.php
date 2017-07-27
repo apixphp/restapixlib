@@ -428,24 +428,13 @@ class BaseDefinitor  {
      */
 
     protected function token($callback){
+
         //get token
         $token="".staticPathModel::$appNamespace."\\".app."\\".version."\\serviceTokenController";
         $token=utils::resolve($token);
 
-        $prodDumpStatus=false;
-        if(is_callable($callback)){
-            $tokenhandle=$token->handle(\Apix\environment::get());
-        }
-        else{
-            $tokenhandle=$token->handle("production");
-            $this->serviceDump(null,null,['token'=>$tokenhandle['status']]);
-            $prodDumpStatus=true;
-        }
-
-        //return token provision false
-        if(false===$prodDumpStatus){
-            $this->token("production");
-        }
+        $tokenhandle=$token->handle(\Apix\environment::get());
+        $this->serviceDump(null,null,['token'=>$tokenhandle['status']]);
 
         $tokenexcept=$token->except();
 
@@ -470,6 +459,7 @@ class BaseDefinitor  {
                 ];
             }
         }
+
 
         //token provision
         if(array_key_exists("_token",$queryParams)){
