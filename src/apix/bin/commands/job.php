@@ -36,7 +36,7 @@ class job {
         }
 
         $appOptionalJobDir=staticPathModel::getProjectPath($project).'/'.utils::getAppVersion($project).'/optional/jobs';
-        $rabbitMqPath=$appOptionalJobDir.'/rabbitmq';
+        $rabbitMqPath=$appOptionalJobDir.'/'.$dirQueue;
         if(!file_exists($rabbitMqPath)){
             $list[]=$this->mkdir($rabbitMqPath);
         }
@@ -46,10 +46,11 @@ class job {
 
             $list[]=$this->mkdir($rabbitMqPath.'/'.$dir);
 
-            $touchServiceRabbitMqPublisher['execution']='rabbitMq_task';
+            $touchServiceRabbitMqPublisher['execution']='queue_task';
             $touchServiceRabbitMqPublisher['params']['projectName']=$project;
             $touchServiceRabbitMqPublisher['params']['version']=utils::getAppVersion($project);
             $touchServiceRabbitMqPublisher['params']['dir']=$dir;
+            $touchServiceRabbitMqPublisher['params']['queueName']=$dirQueue;
             $list[]=$this->touch($rabbitMqPath.'/'.$dir.'/task.php',$touchServiceRabbitMqPublisher);
 
 

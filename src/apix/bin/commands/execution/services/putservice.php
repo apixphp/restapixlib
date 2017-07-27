@@ -27,8 +27,7 @@ class putService extends app
     /**
      * Constructor.
      *
-     * @param type dependency injection and __serviceName__ class
-     * request method : symfony component
+     * dependency injection and __serviceName__ class
      * main loader as construct method
      */
     public function __construct()
@@ -38,12 +37,8 @@ class putService extends app
 
     /**
      * index method is main method.
-     * it is default method without needed interface implemantation
-     * because method name is called on the url
-     * method can produce ouput as string or array
-     * converted to array everytime as output
      * produced json output as result
-     * @return array @method
+     * @return array
      */
     public function index()
     {

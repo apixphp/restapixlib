@@ -24,8 +24,8 @@ class getService extends app implements getServiceInterface
     /**
      * Production forbidden.
      *
-     * @if it is true,you can't access on the production
-     * @restrictions method is comprenhensive on app class
+     * if it is true,you can't access on the production
+     * restrictions method is comprenhensive on app class
      */
     public $forbidden=false;
 

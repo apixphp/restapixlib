@@ -34,9 +34,10 @@ class version {
                 $fl=[];
                 foreach ($value as $project=>$service){
 
+                    $fl[]='./src/app/'.$project.'/'.$this->getParams($data)[2]['m'].'/serviceAdapterController.php';
                     $fl[]='./src/app/'.$project.'/'.$this->getParams($data)[2]['m'].'/serviceBaseController.php';
                     $fl[]='./src/app/'.$project.'/'.$this->getParams($data)[2]['m'].'/serviceLogController.php';
-                    $fl[]='./src/app/'.$project.'/'.$this->getParams($data)[2]['m'].'/serviceReadyController.php';
+                    $fl[]='./src/app/'.$project.'/'.$this->getParams($data)[2]['m'].'/serviceTokenController.php';
 
                     $sourcepath='./src/app/'.$project.'/'.$this->getParams($data)[1]['d'].'';
                     $destinationpath='./src/app/'.$project.'/'.$this->getParams($data)[2]['m'].'';

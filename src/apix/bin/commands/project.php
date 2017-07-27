@@ -164,9 +164,9 @@ class project extends console {
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/provisions/limitation/yaml');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/provisions/limitation/yaml/index.html',null);
 
-            $touchprovisionobjectloader['execution']='services/objectloader';
+            /*$touchprovisionobjectloader['execution']='services/objectloader';
             $touchprovisionobjectloader['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/provisions/objectloader.php',$touchprovisionobjectloader);
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/provisions/objectloader.php',$touchprovisionobjectloader);*/
 
 
             $touchServiceApp['execution']='app';
