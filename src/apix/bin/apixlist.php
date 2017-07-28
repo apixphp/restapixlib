@@ -81,6 +81,7 @@ class apixlist extends console  {
         echo $this->bluePrint('migration move:[projectName] schema:[tableName] --seed => "create the migration push into src/store/migrations from existing migrations in project"');
 
 
+
         echo PHP_EOL;
 
         echo $this->success('SYSTEM COMMANDS : ');
@@ -108,8 +109,8 @@ class apixlist extends console  {
         echo PHP_EOL;
 
         echo $this->success('JOB COMMANDS : ');
-        echo $this->bluePrint('job create queue:rabbitmq [projectName]:[taskName]');
-        echo $this->bluePrint('job run rabbitmq [projectName] [taskName]');
+        echo $this->bluePrint('job create [projectName]:[taskName]');
+        echo $this->bluePrint('job run [projectName] [taskName]');
 
 
         echo PHP_EOL;

@@ -2,6 +2,10 @@
 use Apix\Console;
 use Apix\StaticPathModel;
 use Apix\Utils;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * Command write.
@@ -10,56 +14,67 @@ use Apix\Utils;
  * user apix
  */
 
-class job {
+class job extends Console {
 
     public $fileprocess;
 
     public function __construct(){
-        $this->fileprocess=$this->fileprocess();
-        //require("./lib/bin/commands/lib/getenv.php");
+
+        parent::__construct();
+        $this->fileprocess=utils::fileprocess();
+        require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
     }
 
 
     //project create command
     public function create ($data){
 
-        //using php api job create queue:rabbitmq|queuename project_name:file
-
-        $dirQueue=$data['queue'];
+        $dirQueue='apix';
         $list=[];
 
         foreach ($data as $key=>$value){
-            if($key!=="queue"){
-                $project=$key;
-                $dir=$value;
-            }
+            $project=$key;
+            $dir=$value;
         }
+
+        define('app',$project);
+        define('version',utils::getAppVersion($project));
 
         $appOptionalJobDir=staticPathModel::getProjectPath($project).'/'.utils::getAppVersion($project).'/optional/jobs';
-        $rabbitMqPath=$appOptionalJobDir.'/'.$dirQueue;
-        if(!file_exists($rabbitMqPath)){
-            $list[]=$this->mkdir($rabbitMqPath);
+        $apixPath=$appOptionalJobDir.'/'.$dirQueue;
+        if(!file_exists($apixPath)){
+            $list[]=$this->fileprocess->mkdir_path($apixPath);
         }
 
 
-        if(!file_exists($rabbitMqPath.'/'.$dir)){
+        if(!file_exists($apixPath.'/'.$dir)){
 
-            $list[]=$this->mkdir($rabbitMqPath.'/'.$dir);
+            $list[]=$this->fileprocess->mkdir_path($apixPath.'/'.$dir);
 
-            $touchServiceRabbitMqPublisher['execution']='queue_task';
-            $touchServiceRabbitMqPublisher['params']['projectName']=$project;
-            $touchServiceRabbitMqPublisher['params']['version']=utils::getAppVersion($project);
-            $touchServiceRabbitMqPublisher['params']['dir']=$dir;
-            $touchServiceRabbitMqPublisher['params']['queueName']=$dirQueue;
-            $list[]=$this->touch($rabbitMqPath.'/'.$dir.'/task.php',$touchServiceRabbitMqPublisher);
+            $touchServiceApixPublisher['execution']='queue_task';
+            $touchServiceApixPublisher['params']['projectName']=$project;
+            $touchServiceApixPublisher['params']['version']=utils::getAppVersion($project);
+            $touchServiceApixPublisher['params']['dir']=$dir;
+            $touchServiceApixPublisher['params']['queueName']=$dirQueue;
+            $list[]=$this->fileprocess->touch_path($apixPath.'/'.$dir.'/task.php',$touchServiceApixPublisher);
 
 
-            return $this->fileProcessResult($list,function(){
-                return 'job has been created';
+            return utils::fileProcessResult($list,function() use($project,$dir) {
+                echo $this->info('------------------------------------------------------------------------------');
+                echo $this->classical('Queue (Job Process) Has Been Successfully Created Named '.$dir.' ');
+                echo $this->info('------------------------------------------------------------------------------');
+                echo $this->success('You can run via cli "php api job run '.$project.' '.$dir.'"');
+                echo $this->info('------------------------------------------------------------------------------');
+
+                $yaml = Yaml::dump([$dir.'Queue'=>[
+
+                ]]);
+
+                file_put_contents(staticPathModel::getStoragePath(true).'/jobs/'.$dir.'.yaml', $yaml);
             });
         }
         else{
-            return 'job fail';
+            return $this->error('Queue named '.$project.'/'.$dir.' is already available');
         }
 
 
@@ -68,66 +83,43 @@ class job {
 
     //project create command
     public function run ($data){
+
         $list=array_keys($data);
-        define ('app',$list[1]);
-        define ('version',utils::getAppVersion($list[1]));
-        //$path=utils::getAppRootNamespace($list[1]).'\\optional\\jobs\\'.$list[0].'\\'.$list[2].'\\'.$list[3];
-        $path="\\src\\store\\services\\rabbitMQ";
+        define ('app',$list[0]);
+        define ('queue',$list[1]);
+        define ('version',utils::getAppVersion($list[0]));
 
-        if(array_key_exists(3,$list)){
-            $method=$list[3];
-            return (new $path($list[1],$list[2]))->$method();
+        if(array_key_exists(2,$list)){
+            return $this->queueApixRun();
         }
-
-        return (new $path($list[1],$list[2]))->run();
-
-    }
-
-
-    //set mkdir
-    public function mkdir($data){
-
-        return $this->fileprocess->mkdir_path($data);
-    }
-
-
-
-    //set mkdir
-    public function touch($data,$param){
-
-        return $this->fileprocess->touch_path($data,$param);
-    }
-
-    //mkdir process result
-    public function fileProcessResult($data,$callback){
-
-        if(count($data)==0 OR in_array(false,$data)){
-
-            return 'job fail';
-        }
-        else {
-
-            return call_user_func($callback);
-        }
-
-    }
-
-    //get project name
-    public function getProjectName($data){
-
-        //get project name
-        foreach ($data as $key=>$value){
-            return $key;
+        else{
+            return $this->nohupApix();
         }
     }
+    
+    public function nohupApix(){
 
-    //file process
-    public  function fileprocess(){
+        $process = new Process('nohup php api job run '.app.' '.queue.' subscriber > '.root.'/src/app/'.app.'/'.utils::getAppVersion(app).'/optional/jobs/apix/'.queue.'/nohup 2>&1 & echo $! > '.root.'/src/app/'.app.'/'.utils::getAppVersion(app).'/optional/jobs/apix/'.queue.'/save_pid.txt');
+        $process->run();
 
-        //file process new instance
-        $libconf=require("".staticPathModel::$binCommandsPath."/lib/conf.php");
-        $file=$libconf['libFile'];
-        return new $file();
+        echo $process->getOutput();
+        echo $this->info('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+        echo $this->info('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+        echo $this->classical('Queue (Job Process) Named '.queue.' is working now ');
+        echo $this->info('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+        echo $this->info('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    }
+
+
+    public function queueApixRun(){
+
+        $nameSpace=StaticPathModel::getJobPath().'\\apix\\'.queue.'\\task';
+        if(class_exists($nameSpace)){
+            while(1){
+                utils::resolve($nameSpace)->execute();
+                sleep(5);
+            }
+        }
 
     }
 }

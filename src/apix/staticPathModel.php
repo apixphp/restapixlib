@@ -302,6 +302,27 @@ class staticPathModel {
     }
 
 
+    public static function getJobPath($type=false){
+
+        if(!$type){
+            return '\\src\\app\\'.app.'\\'.version.'\\optional\\jobs';
+        }
+
+        return root.'/src/app/'.app.'/'.version.'/optional/jobs';
+
+    }
+
+    public static function getStoragePath($type=false){
+
+        if(!$type){
+            return '\\src\\app\\'.app.'\\storage';
+        }
+
+        return root.'/src/app/'.app.'/storage';
+    }
+
+
+
 
 
 }
