@@ -188,8 +188,20 @@ class BaseDefinitor  {
      * @return directory name runner
      */
     protected function getDirectoryName(){
-        $root=explode("/",root);
-        return end($root);
+        
+        $requestUri=explode("/",$this->requestUri());
+        $list=[];
+        foreach($requestUri as $requestValue){
+            if($requestValue=="service"){
+                break;
+            }
+            
+            if(strlen($requestValue)>0){
+                $list[]=$requestValue;
+            }
+            
+        }
+        return implode("/",$list);
     }
 
     /**
