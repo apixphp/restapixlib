@@ -10,7 +10,9 @@ class Kernel
      *
      * @var array
      */
-    public $middleware = [];
+    public $middleware = [
+        'validator'
+    ];
 
 
     /**

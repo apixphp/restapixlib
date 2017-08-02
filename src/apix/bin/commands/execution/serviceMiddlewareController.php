@@ -8,4 +8,12 @@
  * auth
  */
 
-return [];
+return [
+
+    /**
+     * @key middleware name
+     * @value restrictions
+     * @value array | string['all']
+     */
+    'validator'=>'all'
+];

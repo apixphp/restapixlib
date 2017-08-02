@@ -47,8 +47,10 @@ class project extends console {
 
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel');
 
+            $middlewareValidator['execution']='project_middleware_validator';
+            $middlewareValidator['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/middleware');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/middleware/index.html',null);
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/middleware/validator.php',$middlewareValidator);
 
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/node');
 

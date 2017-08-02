@@ -5,7 +5,7 @@
  * the middleware will redirect the user to the login screen.
  * However, if the user is authenticated, the middleware will allow the request to proceed further into the application. .
  * middleware command
- * __class__
+ * validator
  */
 
 namespace src\app\__projectName__\kernel\middleware;
@@ -20,8 +20,17 @@ use Log;
  * Handle an incoming request.
  * return @class
  */
-class __class__  {
+class validator  {
 
+    /*
+     * @var $request
+     */
+    public $request;
+
+    /**
+     * @var $query
+     */
+    public $query;
 
     /**
      * Constructor.
@@ -29,7 +38,12 @@ class __class__  {
      * type dependency injection and middleware construct
      * main loader as construct method
      */
-    public function __construct(){}
+    public function __construct(){
+
+        //request component
+        $this->request=new Request();
+        $this->query=$this->request->query();
+    }
 
     /**
      * Represents a middleware method.
@@ -38,7 +52,22 @@ class __class__  {
      */
     public function handle(){
 
-        //make somethings
+        //validator : page url
+        $this->getUrlPageControl();
+    }
+
+    /**
+     * get url page control.
+     * it is page value on the url
+     */
+    public function getUrlPageControl(){
+
+        //check page on the url
+        if(isset($this->query['page'])){
+            if(!is_numeric($this->query['page'])){
+                throw new \InvalidArgumentException('page value on the url is not valid');
+            }
+        }
     }
 
 

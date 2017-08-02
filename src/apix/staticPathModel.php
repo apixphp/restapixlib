@@ -276,8 +276,18 @@ class staticPathModel {
     }
 
 
-    public static function getMiddlewarePath($project){
+    public static function getMiddlewarePath($project=null,$namespace=false){
 
+        if(defined('app')){
+            if($namespace){
+                return '\\src\\app\\'.app.'\\kernel\\middleware';
+            }
+            return root.'/src/app/'.app.'/kernel/middleware';
+        }
+
+        if($namespace){
+            return '\\src\\app\\'.$project.'\\kernel\\middleware';
+        }
         return root.'/src/app/'.$project.'/kernel/middleware';
 
     }

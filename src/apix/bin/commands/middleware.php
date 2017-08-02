@@ -14,6 +14,7 @@ class middleware extends console {
     public $fileprocess;
 
     public function __construct(){
+        parent::__construct();
         $this->fileprocess=utils::fileprocess();
         require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
     }
@@ -41,8 +42,11 @@ class middleware extends console {
             $list[]=$this->fileprocess->touch_path($middlewareDir.'/'.$data['file'].'.php',$touchServiceMiddlewareMe);
 
 
-            return utils::fileProcessResult($list,function(){
-                return 'middleware has been created';
+            $middleware=$data['file'];
+            return utils::fileProcessResult($list,function() use ($middleware){
+                echo $this->info('------------------------------------------------------------------------------');
+                echo $this->classical('Middleware Has Been Successfully Created Named '.$middleware.'');
+                echo $this->info('------------------------------------------------------------------------------');
             });
         }
         else{
