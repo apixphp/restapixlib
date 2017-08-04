@@ -660,6 +660,7 @@ class BaseDefinitor  {
     public function responseOutRedirect($instance,$requestServiceMethodReal,$type=true){
 
         $responseOutType=(defined('outPutter')) ? outPutter : utils::responseOutType();
+        $responseOutType=(defined('guzzleOutPutter')) ? guzzleOutPutter : $responseOutType;
 
         if($responseOutType=="html"){
             header('Content-Type: text/'.$responseOutType);

@@ -331,6 +331,15 @@ class staticPathModel {
         return root.'/src/app/'.app.'/storage';
     }
 
+    public static function getWebServicePath($type=false){
+
+        if(!$type){
+            return '\\src\\app\\'.app.'\\'.version.'\\optional\\webServices';
+        }
+
+        return root.'/src/app/'.app.'/storage';
+    }
+
 
 
 

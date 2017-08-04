@@ -113,7 +113,14 @@ class project extends console {
 
 
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/webServices');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/webServices/index.html',null);
+
+            $webServiceConfigParams['execution']='webservice_config';
+            $webServiceConfigParams['params']['projectName']=$this->getProjectName($data);
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/webServices/config.php',$webServiceConfigParams);
+
+            $webServiceConnectorParams['execution']='webservice_connector';
+            $webServiceConnectorParams['params']['projectName']=$this->getProjectName($data);
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/webServices/connector.php',$webServiceConnectorParams);
 
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/jobs');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/jobs/index.html',null);
