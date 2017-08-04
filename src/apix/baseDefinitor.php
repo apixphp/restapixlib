@@ -658,7 +658,16 @@ class BaseDefinitor  {
 
 
     public function responseOutRedirect($instance,$requestServiceMethodReal,$type=true){
-        header('Content-Type: application/'.utils::responseOutType());
+
+        $responseOutType=(defined('outPutter')) ? outPutter : utils::responseOutType();
+
+        if($responseOutType=="html"){
+            header('Content-Type: text/'.$responseOutType);
+        }
+        else{
+            header('Content-Type: application/'.$responseOutType);
+        }
+
 
         if($type){
             return $instance->responseOut($requestServiceMethodReal);

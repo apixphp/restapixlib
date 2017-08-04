@@ -168,7 +168,9 @@ class responseManager {
      */
     private function responseDefinitor($data){
 
-        if($this->definitor=="json"){
+        define('outPutter',$this->definitor);
+
+        if($this->definitor=="json" OR $this->definitor=="html"){
 
             //json encode
             return json_encode($data);
