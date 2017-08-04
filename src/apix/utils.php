@@ -257,11 +257,6 @@ class utils {
             $process = new Process($command);
             $process->run();
 
-            // executes after the command finishes
-            if (!$process->isSuccessful()) {
-                throw new ProcessFailedException($process);
-            }
-
             echo $process->getOutput();
         }
     }
@@ -278,6 +273,18 @@ class utils {
         $libconf=require("".staticPathModel::$binCommandsPath."/lib/conf.php");
         $file=$libconf['libFile'];
         return new $file();
+
+    }
+
+    //file process
+    public static function fileRead($path){
+
+        //file process new instance
+        $dt = fopen($path, "r");
+        $content = fread($dt, filesize($path));
+        fclose($dt);
+        return $content;
+
 
     }
 
@@ -360,5 +367,13 @@ class utils {
         }
 
         return null;
+    }
+
+    //forever dir
+    public static function foreverDirectory($directory,$arrayShow=true){
+        if($arrayShow===false){
+            return str_replace("\\","/",$directory);
+        }
+        return explode("/",str_replace("\\","/",$directory));
     }
 }

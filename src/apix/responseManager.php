@@ -196,6 +196,4 @@ class responseManager {
         return $this->responseManagerBoot($data,$msg);
     }
 
-    public function test(){ return 'hello world';}
-
 }

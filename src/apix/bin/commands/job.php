@@ -84,28 +84,80 @@ class job extends Console {
     //project create command
     public function run ($data){
 
-        $list=array_keys($data);
-        define ('app',$list[0]);
-        define ('queue',$list[1]);
-        define ('version',utils::getAppVersion($list[0]));
+        $list=$this->setDefines($data);
 
         if(array_key_exists(2,$list)){
             return $this->queueApixRun();
         }
         else{
-            return $this->nohupApix();
+
+            if(queue==="all"){
+                return $this->allRun();
+            }
+            return $this->nohupApix(app,queue);
         }
     }
-    
-    public function nohupApix(){
 
-        $process = new Process('nohup php api job run '.app.' '.queue.' subscriber > '.root.'/src/app/'.app.'/'.utils::getAppVersion(app).'/optional/jobs/apix/'.queue.'/nohup 2>&1 & echo $! > '.root.'/src/app/'.app.'/'.utils::getAppVersion(app).'/optional/jobs/apix/'.queue.'/save_pid.txt');
+    //project create command
+    public function stop ($data){
+
+        $list=$this->setDefines($data);
+
+        if($list[1]=="all"){
+            return $this->allStop();
+        }
+
+        $nohup=StaticPathModel::getJobPath(true).'/apix/'.queue.'/nohup';
+        $getSavePidPath=StaticPathModel::getJobPath(true).'/apix/'.queue.'/save_pid.txt';
+
+        if(file_exists($getSavePidPath)){
+            $savePid=(int)utils::fileRead($getSavePidPath);
+
+            utils::symfonyProcess('kill -9 '.$savePid);
+            @unlink($getSavePidPath);
+            @unlink($nohup);
+
+            echo $this->info('------------------------------------------------------------------------------');
+            echo $this->info('------------------------------------------------------------------------------');
+            echo $this->blue('Queue (Job Process) Named '.queue.'  Has Been Successfully Stopped');
+            echo $this->info('------------------------------------------------------------------------------');
+            echo $this->success('You can run via cli again "php api job run '.app.' '.queue.'"');
+            echo $this->info('------------------------------------------------------------------------------');
+            echo $this->info('------------------------------------------------------------------------------');
+        }
+
+
+    }
+
+    private function allStop(){
+
+        foreach($this->getAllQueuePaths() as $dir){
+            $dirArray=utils::foreverDirectory($dir,true);
+            utils::symfonyProcess('php api job stop '.app.' '.end($dirArray));
+        }
+    }
+
+    private function allRun(){
+
+        foreach($this->getAllQueuePaths() as $dir){
+            $dirArray=utils::foreverDirectory($dir,true);
+            utils::symfonyProcess('php api job run '.app.' '.end($dirArray));
+        }
+    }
+
+    public function getAllQueuePaths(){
+        return array_filter(glob(StaticPathModel::getJobPath(true).'/apix/*'),'is_dir');
+    }
+    
+    public function nohupApix($app=null,$queue=null){
+
+        $process = new Process('nohup php api job run '.$app.' '.$queue.' subscriber > '.root.'/src/app/'.$app.'/'.utils::getAppVersion($app).'/optional/jobs/apix/'.$queue.'/nohup 2>&1 & echo $! > '.root.'/src/app/'.$app.'/'.utils::getAppVersion($app).'/optional/jobs/apix/'.$queue.'/save_pid.txt');
         $process->run();
 
         echo $process->getOutput();
         echo $this->info('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         echo $this->info('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-        echo $this->classical('Queue (Job Process) Named '.queue.' is working now ');
+        echo $this->classical('Queue (Job Process) Named '.$queue.' is working now ');
         echo $this->info('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         echo $this->info('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     }
@@ -121,5 +173,15 @@ class job extends Console {
             }
         }
 
+    }
+
+
+    public function setDefines($data){
+        $list=array_keys($data);
+        define ('app',$list[0]);
+        define ('queue',$list[1]);
+        define ('version',utils::getAppVersion($list[0]));
+
+        return $list;
     }
 }
