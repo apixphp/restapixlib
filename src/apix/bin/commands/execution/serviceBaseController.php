@@ -64,6 +64,16 @@ class serviceBaseController
         $this->throttle=$this->throttle();
     }
 
+    /**
+     * getExtensionsLoaded.
+     *
+     * get your extensions loaded for php system
+     */
+    public function getExtensionsLoaded()
+    {
+        return (new \Response('html'))->out(phpinfo());
+    }
+
 
     /**
      * Branch Inıtialize.
