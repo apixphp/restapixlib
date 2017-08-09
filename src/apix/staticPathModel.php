@@ -340,6 +340,13 @@ class staticPathModel {
         return root.'/src/app/'.app.'/storage';
     }
 
+    public static function getWebServiceConfig(){
+
+        $configNameSpace='\\src\\app\\'.app.'\\'.version.'\\optional\\webServices\\config';
+        return utils::resolve($configNameSpace);
+
+    }
+
 
 
 

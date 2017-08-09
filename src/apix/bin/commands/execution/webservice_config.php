@@ -38,4 +38,22 @@ class config
         //'xml'=>'stk/xml'
     ];
 
+    /**
+     * @method setUrlGetQuery
+     * it is automatically injected on get query
+     * @return array
+     */
+    public function setUrlGetQuery(){
+        return [];
+    }
+
+    /**
+     * @method setHeaders
+     * it is automatically injected to headers sent
+     * @return array
+     */
+    public function setHeaders(){
+        return [];
+    }
+
 }

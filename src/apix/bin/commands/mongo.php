@@ -24,7 +24,7 @@ class mongo extends console {
 
 
     //service create command
-    public function create ($data){
+    public function model ($data){
 
         $getParams=$this->getParams($data);
 

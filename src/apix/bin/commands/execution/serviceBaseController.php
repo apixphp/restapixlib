@@ -51,6 +51,9 @@ class serviceBaseController
     //main
     public $main;
 
+    //mongo
+    public $mongo;
+
 
     /**
      * Constructor.
