@@ -4,11 +4,11 @@
  * METHOD : __method__
  * every service is called with index method as default
  * service name : __projectName__
- * namespace : src\app\__projectName__\v1\__call\__serviceName__
- * app class namespace : \src\app\__projectName__\v1\__call\__serviceName__\app
+ * namespace : src\app\__projectName__\__version__\__call\__serviceName__
+ * app class namespace : \src\app\__projectName__\__version__\__call\__serviceName__\app
  */
 
-namespace src\app\__projectName__\v1\__call\__serviceName__;
+namespace src\app\__projectName__\__version__\__call\__serviceName__;
 
 use Src\Store\Services\Httprequest as Request;
 use Src\Store\Services\appCollection as Collection;
@@ -16,7 +16,7 @@ use Src\Store\Services\appCollection as Collection;
 
 /**
  * Class __method__Service
- * @package src\app\__projectName__\v1\__call\__serviceName__
+ * @package src\app\__projectName__\__version__\__call\__serviceName__
  */
 class __method__Service extends app implements __method__ServiceInterface
 {

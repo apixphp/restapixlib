@@ -1,11 +1,11 @@
 <?php
-namespace src\app\__projectName__\v1\model\sudb;
+namespace src\app\__projectName__\__version__\model\sudb;
 
 use Src\Store\Packages\Providers\Database\Sudb\Src\Model as Model;
 
 class __className__ extends Model
 {
-    use \src\app\__projectName__\v1\model\modelVar;
+    use \src\app\__projectName__\__version__\model\modelVar;
 
     /**
      * @var table.

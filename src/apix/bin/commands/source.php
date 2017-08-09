@@ -1,6 +1,7 @@
 <?php namespace apix\bin\commands;
 use Apix\Console;
 use Apix\StaticPathModel;
+use Apix\Utils;
 
 /**
  * Command write.
@@ -30,8 +31,7 @@ class source extends console {
             if($key==0){
 
                 foreach ($value as $project=>$service){
-                    $version=require ('./src/app/'.$project.'/version.php');
-                    $version=(is_array($version) && array_key_exists('version',$version)) ? $version['version'] : 'v1';
+                    $version=utils::getAppVersion($project);
                     $list=[];
 
                     if(!file_exists('./src/app/'.$project.'/'.$version.'/__call/'.$service.'/source')){

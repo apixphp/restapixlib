@@ -33,8 +33,7 @@ class model extends console {
 
                 foreach ($value as $project=>$service){
 
-                    $version=require ('./src/app/'.$project.'/version.php');
-                    $version=(is_array($version) && array_key_exists('version',$version)) ? $version['version'] : 'v1';
+                    $version=utils::getAppVersion($project);
                     $base=staticPathModel::getAppServiceBase($project,$version);
                     $baseModel=$base->model;
 
@@ -56,6 +55,7 @@ class model extends console {
                             $modelParamsBuilder['execution']='services/eloquentmodelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
                             $modelParamsBuilder['params']['className']=$getParams[1]['file'];
+                            $modelParamsBuilder['params']['version']=$version;
                             //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
 
@@ -63,6 +63,7 @@ class model extends console {
                             $modelParams['params']['projectName']=$project;
                             $modelParams['params']['className']=$getParams[1]['file'];
                             $modelParams['params']['tableName']=$getParams[2]['table'];
+                            $modelParams['params']['version']=$version;
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/'.$getParams[1]['file'].'.php',$modelParams);
                         }
                         else{
@@ -84,12 +85,14 @@ class model extends console {
                             $modelParamsBuilder['execution']='services/modelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
                             $modelParamsBuilder['params']['className']=$getParams[1]['file'];
+                            $modelParamsBuilder['params']['version']=$version;
                             //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
 
                             $modelParams['execution']='services/model';
                             $modelParams['params']['projectName']=$project;
                             $modelParams['params']['className']=$getParams[1]['file'];
+                            $modelParams['params']['version']=$version;
                             $modelParams['params']['tableName']=$getParams[2]['table'];
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/'.$getParams[1]['file'].'.php',$modelParams);
 
@@ -150,6 +153,7 @@ class model extends console {
                             $modelParamsBuilder['execution']='services/doctrineModelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
                             $modelParamsBuilder['params']['className']=$getParams[1]['file'];
+                            $modelParamsBuilder['params']['version']=$version;
                             //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/doctrine/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
 

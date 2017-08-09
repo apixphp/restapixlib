@@ -33,8 +33,7 @@ class service extends console {
        foreach ($this->getParams($data) as $key=>$value){
            if($key==0){
                foreach ($value as $project=>$service){
-                   $version=require ('./src/app/'.$project.'/version.php');
-                   $version=(is_array($version) && array_key_exists('version',$version)) ? $version['version'] : 'v1';
+                   $version=utils::getAppVersion($project);
                    $list=[];
 
 
@@ -45,6 +44,7 @@ class service extends console {
                                 $touchServicePostParams['execution']='services/serviceFilePut';
                                 $touchServicePostParams['params']['projectName']=$project;
                                 $touchServicePostParams['params']['serviceName']=$service;
+                                $touchServicePostParams['params']['version']=$version;
                                 $touchServicePostParams['params']['method']=$data['file'];
 
                                 $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'Service.php',$touchServicePostParams);
@@ -53,6 +53,7 @@ class service extends console {
                                $touchServiceInterfaceParams['execution']='services/fileServiceInterface';
                                $touchServiceInterfaceParams['params']['projectName']=$project;
                                $touchServiceInterfaceParams['params']['serviceName']=$service;
+                               $touchServiceInterfaceParams['params']['version']=$version;
                                $touchServiceInterfaceParams['params']['file']=$data['file'];
                                $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'ServiceInterface.php',$touchServiceInterfaceParams);
 
@@ -74,28 +75,33 @@ class service extends console {
                        $touchServiceGetParams['execution']='services/getservice';
                        $touchServiceGetParams['params']['projectName']=$project;
                        $touchServiceGetParams['params']['serviceName']=$service;
+                       $touchServiceGetParams['params']['version']=$version;
                        $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/getService.php',$touchServiceGetParams);
 
                        $touchServiceGetInterfaceParams['execution']='services/getserviceInterface';
                        $touchServiceGetInterfaceParams['params']['projectName']=$project;
                        $touchServiceGetInterfaceParams['params']['serviceName']=$service;
+                       $touchServiceGetInterfaceParams['params']['version']=$version;
                        $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/getServiceInterface.php',$touchServiceGetInterfaceParams);
 
                        $touchdeveloperParams['execution']='services/developer';
                        $touchdeveloperParams['params']['projectName']=$project;
                        $touchdeveloperParams['params']['serviceName']=$service;
+                       $touchdeveloperParams['params']['version']=$version;
                        $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/developer.php',$touchdeveloperParams);
 
 
                        $touchappParams['execution']='services/app';
                        $touchappParams['params']['projectName']=$project;
                        $touchappParams['params']['serviceName']=$service;
+                       $touchappParams['params']['version']=$version;
                        $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/app.php',$touchappParams);
 
 
                        $touchServiceConfParams['execution']='services/serviceConf';
                        $touchServiceConfParams['params']['projectName']=$project;
                        $touchServiceConfParams['params']['serviceName']=$service;
+                       $touchServiceConfParams['params']['version']=$version;
                        $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/serviceConf.php',$touchServiceConfParams);
 
 

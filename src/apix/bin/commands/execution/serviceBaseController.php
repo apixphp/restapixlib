@@ -84,6 +84,7 @@ class serviceBaseController
         $this->source=\branch::source();
         $this->query=\branch::query();
         $this->main=\branch::main();
+        $this->mongo=\branch::mongo();
     }
 
 

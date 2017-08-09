@@ -1,4 +1,4 @@
-<?php namespace src\app\__projectName__\v1\model\doctrine\builder;
+<?php namespace src\app\__projectName__\__version__\model\doctrine\builder;
 
 use Src\Store\Packages\Providers\Database\Doctrine\DoctrineEntityManager;
 

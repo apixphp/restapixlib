@@ -4,13 +4,13 @@
  *
  * every service is extends app class as default
  * service name : __projectName__
- * namespace : src\app\__projectName__\v1\__call\__serviceName__
- * app class namespace : \src\app\__projectName__\v1\__call\__serviceName__\app
+ * namespace : src\app\__projectName__\__version__\__call\__serviceName__
+ * app class namespace : \src\app\__projectName__\__version__\__call\__serviceName__\app
  */
 
-namespace src\app\__projectName__\v1\__call\__serviceName__;
+namespace src\app\__projectName__\__version__\__call\__serviceName__;
 
-use src\app\__projectName__\v1\serviceBaseController as base;
+use src\app\__projectName__\__version__\serviceBaseController as base;
 
 /**
  * Represents a app abstract class.

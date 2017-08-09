@@ -1,7 +1,7 @@
 <?php
-namespace src\app\__projectName__\v1\model\__orm__\adapter;
+namespace src\app\__projectName__\__v1__\model\__orm__\adapter;
 
-use src\app\__projectName__\v1\model\__orm__\builder\__className__Builder;
+use src\app\__projectName__\__v1__\model\__orm__\builder\__className__Builder;
 
 /**
  * Class __className__Adapter

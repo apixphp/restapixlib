@@ -1,7 +1,7 @@
 <?php
-namespace src\app\__projectName__\v1\model\sudb\builder;
+namespace src\app\__projectName__\__version__\model\sudb\builder;
 
-use src\app\__projectName__\v1\model\sudb\__className__;
+use src\app\__projectName__\__version__\model\sudb\__className__;
 
 class __className__Builder
 {

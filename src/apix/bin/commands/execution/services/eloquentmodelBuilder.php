@@ -1,7 +1,7 @@
 <?php
-namespace src\app\__projectName__\v1\model\eloquent\builder;
+namespace src\app\__projectName__\__version__\model\eloquent\builder;
 
-use src\app\__projectName__\v1\model\eloquent\__className__;
+use src\app\__projectName__\__version__\model\eloquent\__className__;
 
 class __className__Builder
 {
