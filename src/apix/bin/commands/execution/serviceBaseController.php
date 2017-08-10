@@ -54,6 +54,9 @@ class serviceBaseController
     //mongo
     public $mongo;
 
+    //webservice
+    public $webservice;
+
 
     /**
      * Constructor.
@@ -88,6 +91,7 @@ class serviceBaseController
         $this->query=\branch::query();
         $this->main=\branch::main();
         $this->mongo=\branch::mongo();
+        $this->webservice=\branch::webservice();
     }
 
 
