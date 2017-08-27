@@ -11,29 +11,23 @@ class app
 {
 
     /**
-     * project app.
-     *
-     * class loc container call access for every service.
-     *
-     * @param string
-     * @return response container runner
+     * @method container.
+     * containers can be accessed for every service.
+     * @return array
      */
     public function container()
     {
         return [
 
-            'base' =>'\\src\\app\\__projectName__\\v1\\serviceBaseController'
+            'base'       =>'\\src\\app\\__projectName__\\v1\\serviceBaseController'
         ];
     }
 
 
     /**
-     * project app.
-     *
+     * @method staticProvider.
      * class static call access for every service.
-     *
-     * @param string
-     * @return response container runner
+     * @return array
      */
     public function staticProvider()
     {
@@ -41,10 +35,8 @@ class app
     }
 
     /**
-     * get definitive app.
-     * definition:classess is defined by user
-     * and it is called as IOS,MOBILE,vs..
-     * @param type dependency injection and function
+     * @method getAppDefinition
+     * definition is defined by user
      * @return array
      */
     public static function getAppDefinition()
@@ -53,17 +45,15 @@ class app
     }
 
     /**
-     * get class alias app.
-     * definition:classess is defined by user
-     * and it is called as IOS,MOBILE,vs..
-     * @param type dependency injection and function
+     * @method getAppClassAlias.
+     * aliases are defined by user.
      * @return array
      */
     public static function getAppClassAlias()
     {
         return [
-            'Adapter'=>'src\app\__projectName__\v1\serviceAdapterController',
-            'Log'=>'src\app\__projectName__\v1\serviceLogController'
+            'Adapter'           =>'src\app\__projectName__\v1\serviceAdapterController',
+            'Log'               =>'src\app\__projectName__\v1\serviceLogController'
         ];
     }
 
