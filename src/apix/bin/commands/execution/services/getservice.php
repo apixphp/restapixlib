@@ -16,7 +16,7 @@ use Log;
 
 
 /**
- * @class getService
+ * @doc getService
  * @package Src_App_Mobi_V1_Call_Stk
  */
 class getService extends app implements getServiceInterface
@@ -26,7 +26,7 @@ class getService extends app implements getServiceInterface
      * Production forbidden.
      *
      * if it is true,you can't access on the production
-     * restrictions method is comprehensive on app class
+     * restrictions method is comprenhensive on app class
      */
     public $forbidden=false;
 
@@ -41,7 +41,7 @@ class getService extends app implements getServiceInterface
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function indexAction()
     {

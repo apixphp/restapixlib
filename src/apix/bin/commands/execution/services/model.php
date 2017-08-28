@@ -8,88 +8,88 @@ class __className__ extends Model
     use \src\app\__projectName__\__version__\model\modelVar;
 
     /**
-     * @var $table.
+     * @var table.
      *
-     * table name for your database
-     * status : obligatory
+     * @info table name for your database
+     * @status obligatory
      */
     public $table='__tableName__';
 
     /**
-     * @var $primaryKey.
+     * @var primary key.
      *
-     * primary key column for your database table
-     * status : obligatory
+     * @info primary key column for your database table
+     * @status obligatory
      */
     public $primaryKey='id';
 
     /**
-     * @var $paginator.
+     * @var paginator.
      *
-     * your result is automatically paginated
-     * status : optional
+     * @info your result is automatically paginated
+     * @status optional
      */
     public $paginator=[];
 
     /**
-     * @var $orderBy.
+     * @var orderBy.
      *
-     * your result is automatically ordered
-     * status : optional
+     * @info your result is automatically ordered
+     * @status optional
      */
     public $orderBy=[];
 
     /**
-     * @var $redis.
+     * @var redis cache.
      *
-     * your result is cached for redis
-     * it is run for status true
-     * cache expire time
+     * @info your result is cached for redis
+     * @status it is run for status true
+     * @expire cache expire time
      */
     public $redis=['status'=>false,'expire'=>60];
 
     /**
-     * @var $createdAndUpdatedFields.
+     * @var createdAndUpdatedFields.
      *
-     * this value is created and updated time for values it will be inserted
-     * status : obligatory
+     * @info this value is created and updated time for values it will be inserted
+     * @status obligatory
      */
     public $createdAndUpdatedFields=['created_at'=>'createdAt','updated_at'=>'updatedAt'];
 
 
     /**
-     * @var $resultDataInfo.
+     * @var resultDataInfo.
      *
-     * this value changes default result data info
-     * coultAllData=>'total'
-     * status : optional
+     * @info this value changes default result data info
+     * @example coultAllData=>'total'
+     * @status optional
      */
     public $resultDataInfo=[];
 
 
     /**
-     * @var $joiner.
+     * @var joiner relationship.
      *
-     * joiner table is relationship
-     * it is array
-     * tableName=>['childRelation'=>'tableNameRelation']
+     * @info joiner table is relationship
+     * @status it is array
+     * @param tableName=>['childRelation'=>'tableNameRelation']
      */
     public $joiner=[];
 
 
     /**
-     * @var $selectHidden.
+     * @var selectHidden.
      *
-     * info your table columns is hidden
-     * status : optional
+     * @info your table columns is hidden
+     * @status optional
      */
     public $selectHidden=[];
 
     /**
-     * @var $insertConditions.
+     * @var insertConditions.
      *
-     * restrictions for data inserted by client
-     * status optional - it is run for status true
+     * @info restrictions for data inserted by client
+     * @status optional - it is run for status true
      */
     public $insertConditions=[
         'status'=>false,
@@ -100,10 +100,10 @@ class __className__ extends Model
     ];
 
     /**
-     * @var $updateConditions.
+     * @var updateConditions.
      *
-     * restrictions for data updated by client
-     * status optional - it is run for status true
+     * @info restrictions for data updated by client
+     * @status optional - it is run for status true
      */
     public $updateConditions=[
         'status'=>false,
@@ -114,10 +114,10 @@ class __className__ extends Model
     ];
 
     /**
-     * @var $selectPermissions.
+     * @var selectPermissions.
      *
-     * client can select to data
-     * optional - it is run for status true
+     * @info client can select to data
+     * @status optional - it is run for status true
      */
     public $selectPermissions=[
         'status'=>false,
@@ -129,21 +129,21 @@ class __className__ extends Model
 
 
     /**
-     * @var $scope.
+     * @var scope.
      *
-     * specific where conditional
-     * status : optional
+     * @info specific where conditional
+     * @status optional
      */
     public $scope=['auto'=>[]];
 
 
     /**
-     * @method modelScope.
+     * @var modelScope.
      *
-     * specific where conditional snippet
-     * status : optional
+     * @info specific where conditional snippet
+     * @status optional
      */
-    public function modelScope($data=null, $query=null)
+    public function modelScope($data, $query)
     {
 
         //get id
@@ -162,10 +162,10 @@ class __className__ extends Model
     }
 
     /**
-     * @method fieldPassword.
+     * @var specific field .
      *
-     * your table columns is value
-     * status : optional
+     * @info your table columns is value
+     * @status optional
      */
     /*public function fieldPassword(){
         return md5(\app::post("password"));

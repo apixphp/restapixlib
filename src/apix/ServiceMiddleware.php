@@ -21,21 +21,25 @@ class ServiceMiddleware {
         $serviceMiddleware=staticPathModel::serviceMiddleware();
 
         foreach($serviceMiddleware as $middleware=>$permissions){
-            if(in_array($middleware,$kernelMiddleware)){
 
+            if(in_array($middleware,$kernelMiddleware)){
                 //service layer
                 $cond1=service.':'.strtolower(request).':'.utils::cleanActionMethod(method);
                 $cond2=service.':'.strtolower(request).'';
                 $cond3=service.'';
 
                 if(is_string($permissions) AND $permissions==="all"){
-                    return $this->getMiddlewarePath($middleware);
+                    $this->getMiddlewarePath($middleware);
+                }
+                else{
+
+                    //check service layer
+                    if(in_array($cond1,$permissions) OR in_array($cond2,$permissions) OR in_array($cond3,$permissions)){
+                        $this->getMiddlewarePath($middleware);
+                    }
                 }
 
-                //check service layer
-                if(in_array($cond1,$permissions) OR in_array($cond2,$permissions) OR in_array($cond3,$permissions)){
-                    return $this->getMiddlewarePath($middleware);
-                }
+
             }
         }
 
