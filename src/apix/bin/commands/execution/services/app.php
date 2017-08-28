@@ -27,9 +27,6 @@ class app extends base
 
     /**
      * Abstract Constructor.
-     *
-     * @param type dependency injection and app class
-     * request method : symfony component
      * main loader as construct method
      */
     public function __construct()
@@ -41,9 +38,6 @@ class app extends base
 
     /**
      * service restrictions method.
-     *
-     * @param prepared functions and objects
-     * request method : super service call
      * main overloading method as restrictions
      * @return array
      */

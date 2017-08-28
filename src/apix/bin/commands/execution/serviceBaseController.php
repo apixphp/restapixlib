@@ -60,9 +60,6 @@ class serviceBaseController
 
     /**
      * Constructor.
-     *
-     * @param type dependency injection and stk class
-     * request method : symfony component
      * main loader as construct method
      */
     public function __construct()
@@ -122,7 +119,7 @@ class serviceBaseController
      * if show paremeter is false,it returns md5 value
      * if show paremeter is true,it returns array values
      *
-     * @return string
+     * @return array
      */
     public function fingerPrint($show=false)
     {
@@ -153,7 +150,7 @@ class serviceBaseController
     /**
      * handle.
      *
-     * @param data client responses
+     * data client responses
      * @return bool
      */
     public function setLogger($data,$logInstance)
