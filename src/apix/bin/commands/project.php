@@ -65,9 +65,6 @@ class project extends console {
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/stubs');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/stubs/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/bootstrap');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/bootstrap/index.html',null);
-
             $touchKernel['execution']='kernel';
             $touchKernel['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/kernel.php',$touchKernel);
