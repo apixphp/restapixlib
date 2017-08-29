@@ -118,6 +118,27 @@ class migration extends console {
             }
 
             echo 'migration named '.$arguments['schema'].' in '.$arguments['move'].' project has been successfully moved';
+            echo '<br>';
+        }
+
+
+        $migrationSeedPathWillBeMoved=staticPathModel::getProjectPath($arguments['move']).'/'.utils::getAppVersion($arguments['move']).'/migrations/seeds/';
+        $newSeedPath=root.'/'.staticPathModel::$storeMigrationsPath.'/seeds/';
+
+
+        $migrationSeedPurePath=str_replace(root.'/','',$migrationSeedPathWillBeMoved);
+        $migrationSeedNamespace=str_replace('/','\\',$migrationSeedPurePath);
+        $newMigrationSeedNamespace=str_replace('/','\\',str_replace(root.'/','',$newSeedPath));
+
+        if(rename($migrationSeedPathWillBeMoved,$newSeedPath)){
+
+            foreach (glob($newSeedPath."/*.php") as $filename) {
+                utils::changeClass($filename,[
+                    $migrationSeedNamespace=>$newMigrationSeedNamespace
+                ]);
+            }
+
+            echo 'migration seeds named '.$arguments['schema'].' in '.$arguments['move'].' project has been successfully moved';
 
         }
     }
