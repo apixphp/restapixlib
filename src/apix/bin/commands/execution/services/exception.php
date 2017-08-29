@@ -14,9 +14,7 @@ class exception
      * project exception handler.
      *
      * class exception container call access for every service.
-     *
-     * @param string
-     * @return response exception handler runner
+     * @return array
      */
     public static function handler($errNo=null, $errStr=null, $errFile=null, $errLine=null,$errType=null, array $errContext)
     {
@@ -80,7 +78,7 @@ class exception
      * class exception type codes call access for every service.
      *
      * @param string
-     * @return response exception codes handler runner
+     * @return array
      */
     public static function exceptionTypeCodes($type=null){
 

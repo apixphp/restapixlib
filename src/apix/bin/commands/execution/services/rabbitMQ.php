@@ -14,9 +14,7 @@ class rabbitMQ
      * project app.
      *
      * rabbitMQ access for every service.
-     *
-     * @param string
-     * @return response Rabbitmq runner
+     * @return array
      */
     public static function rmqSettings()
     {

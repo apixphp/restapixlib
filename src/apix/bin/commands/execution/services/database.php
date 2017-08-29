@@ -16,7 +16,7 @@ class database
      * static call access for every service.
      *
      * @param string
-     * @return response container runner
+     * @return array
      */
     public static function dbSettings()
     {

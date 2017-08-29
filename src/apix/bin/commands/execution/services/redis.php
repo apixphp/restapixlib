@@ -14,9 +14,7 @@ class redis
      * project app.
      *
      * redis access for every service.
-     *
-     * @param string
-     * @return response redis runner
+     * @return array
      */
     public static function redisConnection()
     {

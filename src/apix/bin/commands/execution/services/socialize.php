@@ -14,9 +14,7 @@ class socialize
      * project socialize git repo config.
      *
      * static call git repo settings for every service.
-     *
-     * @param string
-     * @return response git Repo  runner
+     * @return array
      */
     public static function gitRepo()
     {
@@ -34,9 +32,7 @@ class socialize
      * project socialize facebook config.
      *
      * static call facebook settings for every service.
-     *
-     * @param string
-     * @return response facebook  runner
+     * @return array
      */
     public static function facebook()
     {
@@ -54,9 +50,7 @@ class socialize
      * project socialize instagram config.
      *
      * static call instagram settings for every service.
-     *
-     * @param string
-     * @return response instagram  runner
+     * @return array
      */
     public static function instagram()
     {
@@ -70,9 +64,7 @@ class socialize
      * project socialize twitter config.
      *
      * static call twitter settings for every service.
-     *
-     * @param string
-     * @return response twitter  runner
+     * @return array
      */
     public static function twitter()
     {
@@ -86,9 +78,7 @@ class socialize
      * project socialize googlePlus config.
      *
      * static call googlePlus settings for every service.
-     *
-     * @param string
-     * @return response googlePlus  runner
+     * @return array
      */
     public static function googlePlus()
     {
