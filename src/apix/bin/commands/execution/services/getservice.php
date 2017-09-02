@@ -45,6 +45,8 @@ class getService extends app implements getServiceInterface
      */
     public function indexAction()
     {
-        return $this->fingerPrint(true);
+        return [
+            'endpoint'=>'__serviceName__'
+        ];
     }
 }

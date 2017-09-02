@@ -20,17 +20,5 @@ class serviceAdapterController
      */
     public function __construct() { }
 
-    /**
-     * Search name
-     * @introduce : serviceBaseController search key
-     * @introduce: default elasticSearch adapter
-     * @return search class
-     */
-    public function search()
-    {
-        //adapter class for search
-        return app('search')->driver();
-    }
-
 
 }

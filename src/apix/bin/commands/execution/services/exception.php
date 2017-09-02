@@ -21,14 +21,6 @@ class exception
         return [
 
             /**
-             * user information.
-             * @key user
-             * @value fingerPrint from base
-             * @return array
-             */
-            'user'=>app('base')->fingerPrint(true),
-
-            /**
              * Error file.
              * @key errorFile
              * @value $errFile
@@ -62,6 +54,14 @@ class exception
              * @value $errNo
              */
             'errorNo'=>$errNo,
+
+            /**
+             * user information.
+             * @key user
+             * @value fingerPrint from base
+             * @return array
+             */
+            'user'=>app('base')->fingerPrint(true),
 
             /**
              * Context.
