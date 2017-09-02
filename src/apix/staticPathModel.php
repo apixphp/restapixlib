@@ -34,6 +34,12 @@ class staticPathModel {
      */
     public static $appNamespace='\\src\\app';
 
+
+    /**
+     * @var server requirement
+     */
+    public static $serverPath='src/store/server';
+
     /**
      * @var param bootFile
      * it is boot resolve
@@ -346,6 +352,7 @@ class staticPathModel {
         return utils::resolve($configNameSpace);
 
     }
+
 
 
 

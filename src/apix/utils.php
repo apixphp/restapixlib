@@ -148,6 +148,10 @@ class utils {
             $consoleCommandApplication=new \Apix\bin\system();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
         }
+        elseif($argv[1]=="server"){
+            $consoleCommandApplication=new \Apix\bin\server();
+            echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
+        }
         elseif($argv[1]=="git"){
             $consoleCommandApplication=new \Apix\bin\git();
             echo $consoleCommandApplication->execute($argv).''.PHP_EOL;
