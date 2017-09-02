@@ -72,6 +72,11 @@ class apixlist extends console  {
 
         echo PHP_EOL;
 
+        echo $this->success('WEBSERVICE CREATE : ');
+        echo $this->bluePrint('webservice request [projectName] group:[groupName] => "A webservice request model file creates"');
+
+        echo PHP_EOL;
+
         echo $this->success('MIGRATION CREATE : ');
         echo $this->bluePrint('migration pull:[projectName] => "create entity for all changes from existing database in project"');
         echo $this->bluePrint('migration push:[projectName] => "create the migration push for all changes from existing database in project"');
