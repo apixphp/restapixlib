@@ -1,18 +1,9 @@
-<?php
-/**
- * Service log controller
- * it is mainly service logging for service
- * service logging
- */
+<?php namespace src\app\mobi\v1;
 
-namespace src\app\mobi\v1;
-
-use Src\Store\Services\Httprequest as Request;
-use Apix\Utils;
 use Apix\StaticPathModel;
-use Apix\serviceLog as LogProvider;
+use Apix\logProvider;
 
-class serviceLogController extends LogProvider
+class serviceLogController extends logProvider
 {
     /**
      * @var null|string
