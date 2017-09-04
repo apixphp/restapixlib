@@ -188,18 +188,18 @@ class BaseDefinitor  {
      * @return directory name runner
      */
     protected function getDirectoryName(){
-        
+
         $requestUri=explode("/",$this->requestUri());
         $list=[];
         foreach($requestUri as $requestValue){
             if($requestValue=="service"){
                 break;
             }
-            
+
             if(strlen($requestValue)>0){
                 $list[]=$requestValue;
             }
-            
+
         }
         return implode("/",$list);
     }
@@ -439,7 +439,7 @@ class BaseDefinitor  {
      * @return response token runner
      */
 
-    protected function token($callback){
+    protected function checkForToken($instance){
 
         //get token
         $token="".staticPathModel::$appNamespace."\\".app."\\".version."\\serviceTokenController";
@@ -452,9 +452,7 @@ class BaseDefinitor  {
 
         if(!$tokenhandle['status']){
             //return token provision
-            if(is_callable($callback)){
-                return call_user_func($callback);
-            }
+            return true;
 
         }
 
@@ -479,16 +477,12 @@ class BaseDefinitor  {
             if(in_array($queryParams['_token'],$tokenhandle['tokens'])){
                 if(!array_key_exists($queryParams['_token'],$tokenhandle['clientIp'])){
                     //return token provision
-                    if(is_callable($callback)){
-                        return call_user_func($callback);
-                    }
+                    return true;
 
                 }
                 if(array_key_exists($queryParams['_token'],$tokenhandle['clientIp']) && $tokenhandle['clientIp'][$queryParams['_token']]==$_SERVER['REMOTE_ADDR']){
                     //return token provision
-                    if(is_callable($callback)){
-                        return call_user_func($callback);
-                    }
+                    return true;
                 }
 
             }
@@ -497,22 +491,18 @@ class BaseDefinitor  {
         //except provision
         if(in_array(app.'/'.service.'/'.method.'',$tokenexcept) OR in_array(app.'/'.service.'',$tokenexcept)){
             //return token provision
-            if(is_callable($callback)){
-                return call_user_func($callback);
-            }
+            return true;
         }
 
         //except provision clientIp
         if(array_key_exists($_SERVER['REMOTE_ADDR'],$tokenexcept['clientIp'])){
             if(in_array(app.'/'.service.'/'.method.'',$tokenexcept['clientIp'][$_SERVER['REMOTE_ADDR']]) OR in_array(app.'/'.service.'',$tokenexcept['clientIp'][$_SERVER['REMOTE_ADDR']])){
                 //return token provision
-                if(is_callable($callback)){
-                    return call_user_func($callback);
-                }
+                return true;
             }
         }
 
-        return $this->responseOutRedirect($this,'token provision error',false);
+       throw new \LogicException('Token Provision Error');
 
 
 
@@ -675,6 +665,20 @@ class BaseDefinitor  {
         }
         return $instance->responseOut([],$requestServiceMethodReal);
 
+    }
+
+    public function setErrorHandlerFormatter($instance){
+        if(defined('app')){
+            set_error_handler([$instance,'setErrorHandler']);
+            register_shutdown_function([$instance,'fatalErrorShutdownHandler']);
+        }
+    }
+
+    public function checkForMaintenance($instance){
+        $downPath=StaticPathModel::getProjectPath(app).'/down.yaml';
+        if(file_exists($downPath)){
+            throw new \LogicException($instance->getFixLog('maintenance'));
+        }
     }
 
 

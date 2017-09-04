@@ -109,10 +109,7 @@ class connection extends Definitor {
     /**
      * connect to api service (created service).
      *
-     * Enabled by default.
-     *
-     * @param bool $bool
-     * @return connectin runner
+     * @return mixed
      */
     public static function run() {
 
@@ -124,28 +121,13 @@ class connection extends Definitor {
 
         return $instance->checkServiceUrlParamArray(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
-            //get auto loads from services
+            //load services
             $instance->getAutoLoadsFromServices();
+            $instance->setErrorHandlerFormatter($instance);
+            $instance->checkForMaintenance($instance);
+            $instance->checkForToken($instance);
+            $instance->getDeclarationApi();
 
-
-            if(defined('app')){
-                set_error_handler([$instance,'setErrorHandler']);
-                register_shutdown_function([$instance,'fatalErrorShutdownHandler']);
-            }
-
-            $downPath=staticPathModel::getProjectPath(app).'/down.yaml';
-            if(file_exists($downPath)){
-                return $instance->responseOut([],$instance->getFixLog('maintenance'));
-            }
-
-            //get token control
-            return $instance->token(function() use ($service,$serviceMethod,$getVersion,$instance) {
-
-                if($service[1]=="doc"){
-                    header("Content-Type: text/html");
-                    $apiDoc=staticPathModel::$apiDocNamespace;
-                    return utils::resolve($apiDoc)->index();
-                }
 
                 //provision run
                 return $instance->provision(function() use ($service,$serviceMethod,$getVersion,$instance) {
@@ -263,7 +245,6 @@ class connection extends Definitor {
 
 
                 });
-            });
         });
     }
 
@@ -281,10 +262,6 @@ class connection extends Definitor {
         return (array_key_exists("version",self::$queryParams)) ? self::$queryParams['version'] : $defaultVersionCheck;
 
     }
-
-
-
-
 
     /**
      * get service autoloads classes.
@@ -443,6 +420,15 @@ class connection extends Definitor {
         if ($last_error['type'] === E_ERROR) {
             // fatal error
             $this->setErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'],[]);
+        }
+    }
+
+    public function getDeclarationApi(){
+        if(self::$service[1]=="doc"){
+            header("Content-Type: text/html");
+            $apiDoc=staticPathModel::$apiDocNamespace;
+            echo utils::resolve($apiDoc)->index();
+            die();
         }
     }
 
