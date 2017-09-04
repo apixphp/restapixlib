@@ -13,10 +13,9 @@ namespace src\app\__projectName__\__version__\__call\__serviceName__;
 use src\app\__projectName__\__version__\serviceBaseController as base;
 
 /**
- * Represents a app abstract class.
+ * Represents a app helper class.
  *
  * it is helper for main file
- * return type array
  */
 
 class app extends base
@@ -26,10 +25,9 @@ class app extends base
     public $main;
 
     /**
-     * Abstract Constructor.
+     * app Constructor.
      *
-     * @param type dependency injection and app class
-     * request method : symfony component
+     * type dependency injection and app class
      * main loader as construct method
      */
     public function __construct()
@@ -42,14 +40,11 @@ class app extends base
     /**
      * service restrictions method.
      *
-     * @param prepared functions and objects
-     * request method : super service call
-     * main overloading method as restrictions
+     * restrictions for production environment
      * @return array
      */
     public function restrictions()
     {
-        $list=[];
-        return $list;
+        return [];
     }
 }

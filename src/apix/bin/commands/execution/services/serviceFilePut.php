@@ -23,8 +23,8 @@ class __method__Service extends app implements __method__ServiceInterface
     /**
      * Production forbidden.
      *
-     * @if it is true,you can't access on the production
-     * @restrictions method is comprenhensive on app class
+     * if it is true,you can't access on the production
+     * restrictions method is comprehensive on app class
      */
     public $forbidden=false;
 
