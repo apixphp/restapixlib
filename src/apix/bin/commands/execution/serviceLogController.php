@@ -8,67 +8,37 @@
 namespace src\app\mobi\v1;
 
 use Src\Store\Services\Httprequest as Request;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler as StreamHandler;
 use Apix\Utils;
 use Apix\StaticPathModel;
+use Apix\serviceLog as LogProvider;
 
-class serviceLogController extends serviceBaseController
+class serviceLogController extends LogProvider
 {
-    public $logger;
+    /**
+     * @var null|string
+     */
     public $logPath=null;
-    public $loggerType;
-    public $loggerTypes=['access'=>'INFO','error'=>'ERROR'];
 
     /**
      * Constructor.
-     *
-     * @param type dependency injection and function
+     * @param $errorType
+     * @param $errorFileName
      */
     public function __construct($errorType='access',$errorFileName='access')
     {
-
-        /**
-         * Get Log Component.
-         *
-         * @param mixed
-         * @monoLog class call
-         */
-        $this->logger=new logger('log');
-
-        /**
-         * Get Log Path.
-         *
-         * @param string
-         * @info log register path
-         */
+        //get log path and register
         $this->logPath=staticPathModel::getProjectPath(app).'/storage/logs/';
+        $this->register($errorType,$errorFileName);
 
-        /**
-         * Log Pushhandler.
-         *
-         * @param mixed
-         * @result log push handler
-         */
-        $this->loggerType=$this->loggerTypes[$errorType];
-        $this->logger->pushHandler(new StreamHandler($this->logPath.''.$errorFileName.'.log', Logger::INFO));
     }
 
     /**
      * handle.
-     *
-     * @param data client responses
-     * @return bool
+     * @param $data array
+     * @return mixed
      */
     public function handle($data=array())
     {
-
-        /**
-         * Logging data.
-         *
-         * @param @data array
-         * set Logger calling
-         */
         return $this->setLogger(json_encode($data),$this);
     }
 

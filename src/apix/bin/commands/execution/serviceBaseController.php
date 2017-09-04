@@ -151,21 +151,6 @@ class serviceBaseController
 
 
     /**
-     * handle.
-     *
-     * @param data client responses
-     * @return bool
-     */
-    public function setLogger($data,$logInstance)
-    {
-
-        //logging data
-        $loggerType=$logInstance->loggerType;
-        return $logInstance->logger->$loggerType($data);
-    }
-
-
-    /**
      * The EventDispatcher component provides tools that allow your application
      * components to communicate with each other by dispatching events and listening to them.
      * @event param src/store/services/event
