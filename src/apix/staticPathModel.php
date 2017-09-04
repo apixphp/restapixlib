@@ -36,6 +36,14 @@ class staticPathModel {
 
 
     /**
+     * @var $systemKernel
+     * it is boot resolve
+     * for service base controller
+     */
+    public static $systemKernel='\\src\\kernel';
+
+
+    /**
      * @var server requirement
      */
     public static $serverPath='src/store/server';
@@ -351,6 +359,10 @@ class staticPathModel {
         $configNameSpace='\\src\\app\\'.app.'\\'.version.'\\optional\\webServices\\config';
         return utils::resolve($configNameSpace);
 
+    }
+
+    public  static function getSystemKernel(){
+        return utils::resolve(self::$systemKernel);
     }
 
 

@@ -125,7 +125,7 @@ class connection extends Definitor {
             $instance->getAutoLoadsFromServices();
             $instance->setErrorHandlerFormatter($instance);
             $instance->checkForMaintenance($instance);
-            $instance->checkForToken($instance);
+            $instance->bootStrap();
             $instance->getDeclarationApi();
 
 
