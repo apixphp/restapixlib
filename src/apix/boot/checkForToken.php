@@ -3,6 +3,7 @@
 use Apix\Utils;
 use Apix\StaticPathModel;
 use Apix\Connection;
+use Symfony\Component\HttpFoundation\Request;
 
 class checkForToken extends Connection {
 
