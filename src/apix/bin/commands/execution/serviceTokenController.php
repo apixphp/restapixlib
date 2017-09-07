@@ -17,7 +17,6 @@ use src\store\Services\Httprequest as Request;
  * Represents a provision class.
  *
  * main call
- * return type boolean
  */
 
 class serviceTokenController {
@@ -31,31 +30,23 @@ class serviceTokenController {
      * Represents a token provision construct class.
      *
      * $data main variables
-     * return type string
+     * return array
      */
     public function __construct(){
 
         /**
-         * @var method maybe header or get
-         * @define 'key' is token for header
+         *  method maybe header or get
+         * define 'key' is token for header
          */
         $this->status['method']='get';
-
-        /**
-         * @var local true|false
-         */
         $this->status['local']=false;
-
-        /**
-         * @var production true|false
-         */
         $this->status['production']=true;
 
     }
 
     /**
      * token provision for get method.
-     *
+     * @param string $environment
      * @return array
      */
     public function handle($environment='local'){
