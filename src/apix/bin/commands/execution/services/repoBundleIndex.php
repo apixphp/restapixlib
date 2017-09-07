@@ -28,7 +28,6 @@ class index extends base implements __bundleName__Interface {
     /**
      * Constructor.
      *
-     * @param type dependency injection and function
      */
     public function __construct() {
 
@@ -41,7 +40,7 @@ class index extends base implements __bundleName__Interface {
      * for repository service
      * handle method is auto run.
      *
-     * @return string|array|object
+     * @return mixed
      */
     public function get()
     {

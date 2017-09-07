@@ -10,7 +10,7 @@ use Apix\Utils;
  */
 
 
-class repo {
+class repo extends Console {
 
     public $fileprocess;
 
@@ -94,7 +94,9 @@ class repo {
 
 
                 return $this->fileProcessResult($list,function(){
-                    return 'repo has been created';
+                    echo $this->info('------------------------------------------------------------------------------');
+                    echo $this->blue('REPOSITORY HAS SUCCESSFULLY BEEN CREATED IN OPTIONAL/REPOSITORY ');
+                    echo $this->info('------------------------------------------------------------------------------');
                 });
             }
         }
@@ -134,7 +136,7 @@ class repo {
 
         if(count($data)==0 OR in_array(false,$data)){
 
-            return 'repo fail';
+            return $this->error('Repository fail');
         }
         else {
 
