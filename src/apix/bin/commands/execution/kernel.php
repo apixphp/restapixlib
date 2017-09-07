@@ -19,30 +19,10 @@ class Kernel
      * The application's global class loaders.
      *
      * These service loc containers can be changed by user.
-     *
-     * @var array
-     */
-    public $serviceLocContainer = [
-        '\Apix\ResponseManager'=>'\Apix\ResponseManager'
-    ];
-
-
-    /**
-     * The application's global class loaders.
-     *
-     * These service loc containers can be changed by user.
      * @using console param ; 'service create' =>'stubsClass'
      * @var array
      */
     public $stubsForGenerator = [];
-
-
-    /**
-     * The bootstrap classes for the application.
-     *
-     * @var array
-     */
-    public $bootstrappers = [];
 
 
     /**

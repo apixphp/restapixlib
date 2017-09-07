@@ -58,10 +58,6 @@ class project extends console {
             $node['params']['projectName']=null;
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/node/app.js',$node);
 
-
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/loc');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/loc/index.html',null);
-
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/stubs');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/stubs/index.html',null);
 
