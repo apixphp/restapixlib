@@ -352,13 +352,13 @@ class BaseDefinitor  {
         }
         else{
 
+            $responseManager='\Apix\ResponseManager';
+
             if(defined('app')){
-                $kernelResponseManager=staticPathModel::getKernelPath(app)->serviceLocContainer;
-                $responseManager=$kernelResponseManager['\Apix\ResponseManager'];
                 $responseManager=new $responseManager();
             }
             else{
-                $responseManager='\Apix\ResponseManager';
+
                 $responseManager=new $responseManager('json');
             }
 
