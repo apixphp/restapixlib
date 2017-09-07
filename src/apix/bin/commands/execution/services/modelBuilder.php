@@ -8,7 +8,7 @@ class __className__Builder
 
     /**
      * model __className__ get method
-     * @return array @method
+     * @return mixed
      */
     public function get()
     {
@@ -17,7 +17,8 @@ class __className__Builder
 
     /**
      * model __className__ create method
-     * @return array @method
+     * @param $post array
+     * @return mixed
      */
     public function create($post=array())
     {
@@ -26,7 +27,8 @@ class __className__Builder
 
     /**
      * model __className__ update method
-     * @return array @method
+     * @param $post array
+     * @return mixed
      */
     public function update($post=array())
     {
@@ -35,7 +37,8 @@ class __className__Builder
 
     /**
      * model __className__ delete method
-     * @return array @method
+     * @param $post array
+     * @return mixed
      */
     public function delete($post=array())
     {

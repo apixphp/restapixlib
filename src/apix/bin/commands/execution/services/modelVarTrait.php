@@ -3,10 +3,10 @@
 trait modelVar {
 
     /**
-     * @var orderBy.
+     * @method orderBy
      *
-     * @info your result is automatically ordered
-     * @status optional
+     * info your result is automatically ordered
+     * status optional
      * @return array
      */
     public function orderBy(){
@@ -19,10 +19,10 @@ trait modelVar {
     }
 
     /**
-     * @var paginator.
+     * @method paginator.
      *
-     * @info your result is automatically paginated
-     * @status optional
+     * your result is automatically paginated
+     * status optional
      * @return array
      */
     public function paginator(){
@@ -33,11 +33,11 @@ trait modelVar {
     }
 
     /**
-     * @var resultDataInfo.
+     * @method resultDataInfo.
      *
-     * @info this value changes default result data info
-     * @example coultAllData=>'total'
-     * @status optional
+     * this value changes default result data info
+     * example coultAllData=>'total'
+     * status optional
      * @return array
      */
     public function resultDataInfo(){

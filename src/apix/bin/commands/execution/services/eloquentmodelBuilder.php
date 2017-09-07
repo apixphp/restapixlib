@@ -8,7 +8,7 @@ class __className__Builder
 
     /**
      * model __className__ get method
-     * @return array @method
+     * @return array
      */
     public function get()
     {
