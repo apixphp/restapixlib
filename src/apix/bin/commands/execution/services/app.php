@@ -14,15 +14,27 @@ use src\app\__projectName__\__version__\serviceBaseController as base;
 
 /**
  * Represents a app helper class.
- *
  * it is helper for main file
  */
 
 class app extends base
 {
+    /**
+     * @var
+     */
     public $source;
+    /**
+     * @var
+     */
     public $query;
+    /**
+     * @var
+     */
     public $main;
+    /**
+     * @var \stdClass
+     */
+    public $app;
 
     /**
      * app Constructor.
@@ -34,6 +46,7 @@ class app extends base
     {
         parent::__construct();
         $this->branchInitialize();
+        $this->app=new \stdClass();
     }
 
 
