@@ -11,9 +11,19 @@
 return [
 
     /**
-     * @key middleware name
-     * @value restrictions
-     * @value array | string['all']
+     * middleware validator
+     * value restrictions
+     * array | string['all']
+     * array service:request:method | service:request | service
      */
-    'validator'=>'all'
+    'validator'=>'all',
+
+    /**
+     * exclude
+     * it excludes middleware
+     * * array service:request:method | service:request | service
+     */
+    'exclude'=>[
+        'validator'=>[]
+    ]
 ];
