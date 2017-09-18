@@ -68,6 +68,9 @@ class project extends console {
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/lang');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/lang/index.html',null);
 
+            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/resourches');
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/resourches/index.html',null);
+
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/jobs');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/jobs/index.html',null);
 
