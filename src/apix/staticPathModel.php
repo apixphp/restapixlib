@@ -365,6 +365,10 @@ class staticPathModel {
         return utils::resolve(self::$systemKernel);
     }
 
+    public  static function getResourchesPath(){
+        return self::getStoragePath(true).'/resourches';
+    }
+
 
 
 
