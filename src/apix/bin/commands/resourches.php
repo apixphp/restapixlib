@@ -25,8 +25,10 @@ class resourches extends console {
     public function clear ($data){
 
                 $this->getProjectName($data);
-                utils::symfonyProcess('sudo rm -rf '.staticPathModel::getResourchesPath().'/*');
+                utils::removeDirectory(staticPathModel::getResourchesPath());
+                mkdir(staticPathModel::getResourchesPath(),0777);
                 touch(staticPathModel::getResourchesPath().'/index.html');
+                
                 echo $this->info('------------------------------------------------------------------------------');
                 echo $this->info('------------------------------------------------------------------------------');
                 echo $this->classical('Resourches has been successfully cleared');
