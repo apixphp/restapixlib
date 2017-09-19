@@ -121,6 +121,9 @@ class project extends console {
             $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/jobs');
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/jobs/index.html',null);
 
+            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/eagers');
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/eagers/index.html',null);
+
             $touchServiceBaseControllerParams['execution']='serviceBaseController';
             $touchServiceBaseControllerParams['params']['orm']=$orm;
             $touchServiceBaseControllerParams['params']['projectName']=$this->getProjectName($data);

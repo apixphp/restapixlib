@@ -325,6 +325,15 @@ class staticPathModel {
 
     }
 
+    public static function optionalPath($type=false){
+
+        if(!$type){
+            return '\\src\\app\\'.app.'\\'.version.'\\optional';
+        }
+
+        return root.'/src/app/'.app.'/'.version.'/optional';
+    }
+
 
     public static function getJobPath($type=false){
 
@@ -367,6 +376,16 @@ class staticPathModel {
 
     public  static function getResourchesPath(){
         return self::getStoragePath(true).'/resourches';
+    }
+
+    public  static function getEagersPath($type=true){
+
+        if($type){
+            return self::optionalPath($type).'/eagers';
+        }
+
+        return self::optionalPath($type).'\\eagers';
+
     }
 
 

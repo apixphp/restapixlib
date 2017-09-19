@@ -612,6 +612,22 @@ class BaseDefinitor  {
         }
     }
 
+    public function eagersBooting(){
+
+        $eagersPath=StaticPathModel::getEagersPath();
+        foreach (glob($eagersPath."/*.php") as $file) {
+            $file=explode("/",$file);
+            $file=str_replace('.php','',end($file));
+
+            $eagersClass=StaticPathModel::getEagersPath(false).'\\'.$file;
+            if(class_exists($eagersClass)){
+                if(method_exists($eagersClass,'boot')){
+                    Utils::resolve($eagersClass)->boot();
+                }
+            }
+        }
+    }
+
 
 
 }
