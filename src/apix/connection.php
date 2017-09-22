@@ -222,7 +222,9 @@ class connection extends Definitor {
 
 
                                 $instance->serviceDump($requestServiceMethodReal,$requestServiceMethod);
+
                                 if($serviceBase->log){
+
                                     return $instance->logging($requestServiceMethodReal,function() use ($instance,$requestServiceMethodReal){
                                         return $instance->responseOutRedirect($instance,$requestServiceMethodReal,true);
                                     });

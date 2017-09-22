@@ -1,4 +1,4 @@
-<?php namespace src\app\mobi\v1;
+<?php namespace src\app\__projectName__\v1;
 
 use Apix\StaticPathModel;
 use Apix\logProvider;
