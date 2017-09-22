@@ -185,8 +185,9 @@ class connection extends Definitor {
                             //call service
                             $restrictions=$apix->restrictions();
                             $restrictionsStatus=true;
-                            if(is_array($restrictions) && array_key_exists($requestServiceMethod,$restrictions)){
-                                $restrictionsStatus=$restrictions[$requestServiceMethod];
+                            $restrictionsServiceMethod=Utils::cleanActionMethod($requestServiceMethod);
+                            if(is_array($restrictions) && array_key_exists($restrictionsServiceMethod,$restrictions)){
+                                $restrictionsStatus=$restrictions[$restrictionsServiceMethod];
                             }
                             if($restrictionsStatus){
                                 $serviceBasePlatformStatus=$serviceBase->platform;

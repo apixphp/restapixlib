@@ -57,6 +57,9 @@ class serviceBaseController
     //webservice
     public $webservice;
 
+    //symfony request
+    public $request;
+
 
     /**
      * Constructor.
@@ -68,6 +71,7 @@ class serviceBaseController
     public function __construct()
     {
         $this->throttle=$this->throttle();
+        $this->request=new Request();
     }
 
     /**
@@ -114,6 +118,15 @@ class serviceBaseController
     public function throttle()
     {
         return false;
+    }
+
+    /**
+     * call_user_func,
+     * @return mixed
+     */
+    public function call($data)
+    {
+        return call_user_func($data);
     }
 
 
