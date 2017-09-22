@@ -184,6 +184,10 @@ class project extends console {
             $touchServiceApp['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/app.php',$touchServiceApp);
 
+            $touchAuthApp['execution']='auth';
+            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/auth.php',$touchAuthApp);
+
+
             $touchServiceSocialize['execution']='services/socialize';
             $touchServiceSocialize['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/socialize.php',$touchServiceSocialize);

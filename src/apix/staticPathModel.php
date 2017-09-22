@@ -314,9 +314,15 @@ class staticPathModel {
 
     }
 
-    public static function getConfigStaticApp($className=null){
+    public static function getConfigStaticApp($className=null,$type=null){
 
         if($className!==null){
+
+            if($type=='array'){
+                $config=root.'/src/app/'.app.'/'.version.'/config/'.$className.'.php';
+                $list=require_once ($config);
+                return $list;
+            }
             $config='\\src\\app\\'.app.'\\'.version.'\\config\\'.$className;
             return $config;
         }
