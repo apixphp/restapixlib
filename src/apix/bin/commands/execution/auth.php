@@ -9,8 +9,22 @@ return [
 
     'provides'=>[
 
-        'driver'=>'database',
-        'model'=>src\app\mobi\v1\model\sudb\user::class
+        //default user guard
+        'default'=>[
+            'driver'=>'database',
+            'model'=>src\app\mobi\v1\model\sudb\user::class,
+            'credentials'=>[],
+            'registerMethod'=>'session'
+        ],
+
+        //admin user guard
+        'admin'=>[
+            'driver'=>'database',
+            'model'=>src\app\mobi\v1\model\sudb\user::class,
+            'credentials'=>[],
+            'registerMethod'=>'session'
+        ]
+
     ]
 
 
