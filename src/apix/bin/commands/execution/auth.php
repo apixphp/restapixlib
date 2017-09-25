@@ -14,7 +14,9 @@ return [
             'driver'=>'database',
             'model'=>src\app\mobi\v1\model\sudb\user::class,
             'credentials'=>[],
-            'registerMethod'=>'session'
+            'registerMethod'=>'session',
+            'tokenField'=>'app_token',
+            'encrypt'=>'math'
         ],
 
         //admin user guard
@@ -22,7 +24,9 @@ return [
             'driver'=>'database',
             'model'=>src\app\mobi\v1\model\sudb\user::class,
             'credentials'=>[],
-            'registerMethod'=>'session'
+            'registerMethod'=>'session',
+            'tokenField'=>'app_token',
+            'encrypt'=>'math'
         ]
 
     ]
