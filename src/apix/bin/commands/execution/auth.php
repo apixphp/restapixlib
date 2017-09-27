@@ -5,31 +5,48 @@
  * which contains several well documented options for tweaking the behavior of the authentication services.
  */
 
-return [
+namespace src\app\__projectName__\v1\config;
 
-    'provides'=>[
+class auth {
 
-        //default user guard
-        'default'=>[
-            'driver'=>'database',
-            'model'=>src\app\mobi\v1\model\sudb\user::class,
-            'credentials'=>[],
-            'registerMethod'=>'session',
-            'tokenField'=>'app_token',
-            'encrypt'=>'math'
-        ],
+    /**
+     * @return array
+     */
+    public function handle(){
 
-        //admin user guard
-        'admin'=>[
-            'driver'=>'database',
-            'model'=>src\app\mobi\v1\model\sudb\user::class,
-            'credentials'=>[],
-            'registerMethod'=>'session',
-            'tokenField'=>'app_token',
-            'encrypt'=>'math'
-        ]
+        return [
 
-    ]
+            'provides'=>[
+
+                //default user guard
+                'default'=>[
+                    'driver'=>'database',
+                    'model'=>\src\app\__projectName__\v1\model\sudb\user::class,
+                    'credentials'=>[
+                        'username'=>'usertest',
+                        'password'=>'123456'
+                    ],
+                    'registerMethod'=>'session',
+                    'tokenField'=>'app_token',
+                    'encrypt'=>'math'
+                ],
+
+                //admin user guard
+                'admin'=>[
+                    'driver'=>'database',
+                    'model'=>\src\app\__projectName__\v1\model\sudb\user::class,
+                    'credentials'=>[],
+                    'registerMethod'=>'session',
+                    'tokenField'=>'app_token',
+                    'encrypt'=>'math'
+                ]
+
+            ]
 
 
-];
+        ];
+
+    }
+
+}
+

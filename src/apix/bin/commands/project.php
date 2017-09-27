@@ -185,6 +185,7 @@ class project extends console {
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/app.php',$touchServiceApp);
 
             $touchAuthApp['execution']='auth';
+            $touchAuthApp['params']['projectName']=$this->getProjectName($data);
             $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/auth.php',$touchAuthApp);
 
 
