@@ -28,7 +28,9 @@ class auth {
                     ],
                     'registerMethod'=>'session',
                     'tokenField'=>'app_token',
-                    'encrypt'=>'math'
+                    'encrypt'=>'math',
+                    'persistent'=>'header', //header or get
+                    'persistentKey'=>'auth'
                 ],
 
                 //admin user guard
@@ -38,7 +40,9 @@ class auth {
                     'credentials'=>[],
                     'registerMethod'=>'session',
                     'tokenField'=>'app_token',
-                    'encrypt'=>'math'
+                    'encrypt'=>'math',
+                    'persistent'=>'header', //header or get
+                    'persistentKey'=>'auth'
                 ]
 
             ]
