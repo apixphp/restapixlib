@@ -226,21 +226,22 @@ class utils {
         if(file_exists($serviceRouteListPath)){
             $routeList=self::getYaml($serviceRouteListPath);
         }
-
-
         $class_methods = get_class_methods($class);
+
 
         foreach ($class_methods as $methodName){
             if($methodName!=='__construct' && preg_match('@Action@is',$methodName)){
 
                 $methodName=str_replace('Action','',$methodName);
 
-
                 if(count($routeList) && array_key_exists($service,$routeList) &&
                     array_key_exists($version,$routeList[$service]) &&
-                    array_key_exists($method,$routeList[$service][$version]) && !in_array($methodName,$routeList[$service][$version][$method]['methods'])){
-                    $routeList[$service][$version][$method]['methods'][]=$methodName;
-                    $routeList[$service][$version][$method]['memory'][$methodName]=$memory;
+                    array_key_exists($method,$routeList[$service][$version])){
+
+                    if(in_array($methodName,$routeList[$service][$version][$method]['methods'])){
+                        $routeList[$service][$version][$method]['memory'][utils::cleanActionMethod(method)]=$memory;
+                    }
+
                 }
 
                 if(count($routeList)===0 OR !array_key_exists($service,$routeList) OR !array_key_exists($version,$routeList[$service]) OR !array_key_exists($method,$routeList[$service][$version])){
@@ -250,6 +251,7 @@ class utils {
             }
 
         }
+
 
         return self::dumpYaml($routeList,$serviceRouteListPath);
 
