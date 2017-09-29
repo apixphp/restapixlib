@@ -10,7 +10,7 @@
 
 namespace src\app\__projectName__\__version__\__call\__serviceName__;
 
-use Src\Store\Services\Httprequest as Request;
+use src\app\__projectName__\__version__\serviceAnnotationsController;
 use Src\Store\Services\appCollection as Collection;
 
 
@@ -20,6 +20,9 @@ use Src\Store\Services\appCollection as Collection;
  */
 class __method__Service extends app implements __method__ServiceInterface
 {
+    //set annotations trait
+    use serviceAnnotationsController;
+
     /**
      * Production forbidden.
      *
