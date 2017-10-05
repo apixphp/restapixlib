@@ -10,7 +10,6 @@
 
 namespace src\app\__projectName__\__version__\__call\__serviceName__;
 
-use src\app\__projectName__\__version__\serviceAnnotationsController;
 use Src\Store\Services\appCollection as Collection;
 use Log;
 
@@ -21,9 +20,6 @@ use Log;
  */
 class getService extends app implements getServiceInterface
 {
-
-    //set annotations trait
-    use serviceAnnotationsController;
 
     /**
      * Production forbidden.

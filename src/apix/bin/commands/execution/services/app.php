@@ -10,6 +10,7 @@
 
 namespace src\app\__projectName__\__version__\__call\__serviceName__;
 
+use src\app\__projectName__\__version__\serviceAnnotationsController;
 use src\app\__projectName__\__version__\serviceBaseController as base;
 
 /**
@@ -19,6 +20,9 @@ use src\app\__projectName__\__version__\serviceBaseController as base;
 
 class app extends base
 {
+    //set annotations trait
+    use serviceAnnotationsController;
+
     /**
      * @var
      */

@@ -318,7 +318,6 @@ class utils {
         $content = fread($dt, filesize($executionPath));
         fclose($dt);
 
-
         foreach ($param as $key=>$value){
             $content=str_replace($key,$value,$content);
         }

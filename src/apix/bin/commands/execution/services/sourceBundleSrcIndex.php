@@ -12,7 +12,6 @@ namespace src\app\__projectName__\__version__\__call\__serviceName__\source\bund
 
 use Log;
 use Src\Store\Services\appCollection as Collection;
-use src\app\__projectName__\__version__\serviceAnnotationsController;
 use src\app\__projectName__\__version__\__call\__serviceName__\app;
 
 /**
@@ -24,9 +23,6 @@ use src\app\__projectName__\__version__\__call\__serviceName__\app;
 
 class __className__ extends app
 {
-
-    //set annotations trait
-    use serviceAnnotationsController;
 
     /**
      * Constructor.

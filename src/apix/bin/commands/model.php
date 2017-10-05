@@ -65,6 +65,14 @@ class model extends console {
                             $modelParams['params']['tableName']=$getParams[2]['table'];
                             $modelParams['params']['version']=$version;
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/'.$getParams[1]['file'].'.php',$modelParams);
+
+
+                            $this->setAnnotation([
+                                'project'=>$project,
+                                'version'=>$version,
+                                'file'=>$getParams[1]['file'],
+                                'orm'=>'eloquent'
+                            ]);
                         }
                         else{
                             return $this->error($getParams[1]['file'].' model is already available');
@@ -96,7 +104,12 @@ class model extends console {
                             $modelParams['params']['tableName']=$getParams[2]['table'];
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/'.$getParams[1]['file'].'.php',$modelParams);
 
-
+                            $this->setAnnotation([
+                                'project'=>$project,
+                                'version'=>$version,
+                                'file'=>$getParams[1]['file'],
+                                'orm'=>'sudb'
+                            ]);
 
 
 
@@ -159,6 +172,12 @@ class model extends console {
 
 
 
+                            $this->setAnnotation([
+                                'project'=>$project,
+                                'version'=>$version,
+                                'file'=>$getParams[1]['file'],
+                                'orm'=>'doctrine'
+                            ]);
 
 
                         }
@@ -283,6 +302,34 @@ class model extends console {
             echo $this->classical('ORM '.$orm.' HAS BEEN SUCCESSFULLY CREATED');
             echo $this->info('--------------------------------------------------------------------------------------------------');
         });;
+    }
+
+
+    public function setAnnotation($annotation=array()){
+
+        utils::changeClass(root.'/src/app/'.$annotation['project'].'/'.$annotation['version'].'/serviceAnnotationsController.php',[
+
+            '//annotationController' => '
+            
+    /**
+     * @var $model'.ucfirst($annotation['file']).' \src\app\\'.$annotation['project'].'\\'.$annotation['version'].'\model\\'.$annotation['orm'].'\builder\\'.$annotation['file'].'Builder
+     */
+     public $model'.ucfirst($annotation['file']).';
+     
+     /**
+     * @return model\\'.$annotation['orm'].'\builder\\'.$annotation['file'].'Builder
+     */
+     public function getModel'.ucfirst($annotation['file']).'(){
+
+         $this->model'.ucfirst($annotation['file']).'=$this->query->'.$annotation['file'].'();
+         return $this->model'.ucfirst($annotation['file']).';
+     }
+             
+     //annotationController
+            
+            '
+        ]);
+
     }
 
 }

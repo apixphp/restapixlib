@@ -99,6 +99,14 @@ class source extends console {
                         $bundleParamsInterface['params']['version']=$version;
                         $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/'.$this->getParams($data)[1]['bundle'].'Interface.php',$bundleParamsInterface);
 
+
+                        $this->setAnnotation([
+                            'project'=>$project,
+                            'version'=>$version,
+                            'service'=>$service,
+                            'bundle'=>$this->getParams($data)[1]['bundle']
+                            ]);
+
                     }
 
 
@@ -170,6 +178,35 @@ class source extends console {
         $libconf=require("".staticPathModel::$binCommandsPath."/lib/conf.php");
         $file=$libconf['libFile'];
         return new $file();
+
+    }
+
+
+
+    public function setAnnotation($annotation=array()){
+
+        utils::changeClass(root.'/src/app/'.$annotation['project'].'/'.$annotation['version'].'/serviceAnnotationsController.php',[
+
+            '//annotationController' => '
+            
+    /**
+     * @var $source'.ucfirst($annotation['bundle']).' \src\app\\'.$annotation['project'].'\\'.$annotation['version'].'\__call\\'.$annotation['service'].'\source\bundle\\'.$annotation['bundle'].'\index
+     */
+     public $source'.ucfirst($annotation['bundle']).';
+     
+     /**
+     * @return __call\\'.$annotation['service'].'\source\bundle\\'.$annotation['bundle'].'\index
+     */
+     public function getSource'.ucfirst($annotation['bundle']).'(){
+
+         $this->source'.ucfirst($annotation['bundle']).'=$this->source->'.$annotation['bundle'].'();
+         return $this->source'.ucfirst($annotation['bundle']).';
+     }
+             
+     //annotationController
+            
+            '
+        ]);
 
     }
 

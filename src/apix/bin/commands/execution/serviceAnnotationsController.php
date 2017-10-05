@@ -8,8 +8,5 @@ namespace src\app\__projectName__\v1;
 
 trait serviceAnnotationsController
 {
-    /**
-     * @var $base \src\app\__projectName__\v1\serviceBaseController
-     */
-    public $base;
+    //annotationController
 }
