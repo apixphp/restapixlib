@@ -29,17 +29,8 @@ class getService extends app implements getServiceInterface
      */
     public $forbidden=false;
 
-
     /**
-     * Construct Load
-     */
-    public function __construct()
-    {
-        //get app extends
-        parent::__construct();
-    }
-
-    /**
+     * @method indexAction
      * @return mixed
      */
     public function indexAction()

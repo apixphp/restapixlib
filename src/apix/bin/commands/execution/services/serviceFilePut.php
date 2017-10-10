@@ -29,17 +29,8 @@ class __method__Service extends app implements __method__ServiceInterface
      */
     public $forbidden=false;
 
-
     /**
-     * Construct load
-     */
-    public function __construct()
-    {
-        //get app extends
-        parent::__construct();
-    }
-
-    /**
+     * @method indexAction
      * @return array
      */
     public function indexAction()
