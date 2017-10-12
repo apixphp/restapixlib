@@ -5,7 +5,8 @@
  * __class__
  */
 
-namespace src\store\commands;
+namespace Src\Store\Commands;
+
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Src\Store\Services\FileProcess as File;
@@ -17,7 +18,7 @@ use Apix\Console;
  * every method that on this command is called with console method as string on console
  * return type string
  */
-class __class__ extends  console {
+class __class__ extends  Console {
 
     /**
      * The name and signature of the console command.

@@ -1,25 +1,14 @@
 <?php
-/*
- * This file is token provision of the every service.
- *
- * provision returns boolean value (true|false)
- * token provision
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace src\app\__projectName__\v1;
+namespace Src\App\__projectName__\V1;
 
-use src\store\Services\Httprequest as Request;
+use Src\App\__projectName__\V1\ServiceAnnotationsController;
+use Src\App\__projectName__\V1\ServiceBaseController as Base;
 
-/**
- * Represents a provision class.
- *
- * main call
- */
+class serviceTokenController extends Base {
 
-class serviceTokenController {
+    //set annotations trait
+    use ServiceAnnotationsController;
 
     /**
      * status variable
@@ -33,6 +22,8 @@ class serviceTokenController {
      * return array
      */
     public function __construct(){
+
+        parent::__construct();
 
         /**
          *  method maybe header or get

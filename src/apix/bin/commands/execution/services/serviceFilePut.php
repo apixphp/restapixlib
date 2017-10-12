@@ -1,26 +1,9 @@
 <?php
-/*
- * This file is main class of the  service named __serviceName__ on  __projectName__ project .
- * METHOD : __method__
- * every service is called with index method as default
- * service name : __projectName__
- * namespace : src\app\__projectName__\__version__\__call\__serviceName__
- * app class namespace : \src\app\__projectName__\__version__\__call\__serviceName__\app
- */
 
-namespace src\app\__projectName__\__version__\__call\__serviceName__;
+namespace Src\App\__projectName__\__version__\__Call\__serviceName__;
 
-use Src\Store\Services\appCollection as Collection;
-use Log;
-
-
-/**
- * Class __method__Service
- * @package src\app\__projectName__\__version__\__call\__serviceName__
- */
-class __method__Service extends app implements __method__ServiceInterface
+class __method__Service extends App implements __method__ServiceInterface
 {
-
     /**
      * Production forbidden.
      *

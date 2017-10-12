@@ -1,10 +1,6 @@
 <?php
-namespace src\app\__projectName__\__version__\__call\__serviceName__;
+namespace Src\App\__projectName__\__version__\__Call\__serviceName__;
 
-/**
- * Interface __file__ServiceInterface
- * @package src\app\__projectName__\__version__\__call\__serviceName__
- */
 interface __file__ServiceInterface
 {
     /**

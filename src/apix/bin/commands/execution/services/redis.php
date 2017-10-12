@@ -1,13 +1,8 @@
 <?php
-/**
- * redis config controller
- * it is mainly redis connection for service
- * service redis provider
- */
 
-namespace src\app\__projectName__\v1\config;
+namespace Src\App\__projectName__\V1\Config;
 
-class redis
+class Redis
 {
 
     /**

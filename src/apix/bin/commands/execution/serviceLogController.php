@@ -1,9 +1,11 @@
-<?php namespace src\app\__projectName__\v1;
+<?php
+
+namespace Src\App\__projectName__\V1;
 
 use Apix\StaticPathModel;
 use Apix\logProvider;
 
-class serviceLogController extends logProvider
+class ServiceLogController extends LogProvider
 {
     /**
      * @var null|string

@@ -1,13 +1,8 @@
 <?php
-/**
- * database config controller
- * it is mainly database connection for service
- * service database provider
- */
 
-namespace src\app\__projectName__\v1\config;
+namespace Src\App\__projectName__\V1\Config;
 
-class socialize
+class Socialize
 {
 
     /**

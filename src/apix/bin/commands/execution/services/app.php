@@ -8,20 +8,20 @@
  * app class namespace : \src\app\__projectName__\__version__\__call\__serviceName__\app
  */
 
-namespace src\app\__projectName__\__version__\__call\__serviceName__;
+namespace Src\App\__projectName__\__version__\__Call\__serviceName__;
 
-use src\app\__projectName__\__version__\serviceAnnotationsController;
-use src\app\__projectName__\__version__\serviceBaseController as base;
+use Src\App\__projectName__\__version__\ServiceAnnotationsController;
+use Src\App\__projectName__\__version__\ServiceBaseController as Base;
 
 /**
  * Represents a app helper class.
  * it is helper for main file
  */
 
-class app extends base
+class App extends Base
 {
     //set annotations trait
-    use serviceAnnotationsController;
+    use ServiceAnnotationsController;
 
     /**
      * @var

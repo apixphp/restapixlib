@@ -1,13 +1,8 @@
 <?php
-/**
- * app exception handler
- * it is mainly service app exception for service
- * service app exception
- */
 
-namespace src\app\__projectName__\v1\config;
+namespace Src\App\__projectName__\V1\Config;
 
-class exception
+class Exception
 {
 
     /**

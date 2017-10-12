@@ -1,13 +1,8 @@
 <?php
-/**
- * rabbitMQ config controller
- * it is mainly rabbitMQ connection for service
- * service rabbitMQ provider
- */
 
-namespace src\app\__projectName__\v1\config;
+namespace Src\App\__projectName__\V1\Config;
 
-class rabbitMQ
+class RabbitMQ
 {
 
     /**

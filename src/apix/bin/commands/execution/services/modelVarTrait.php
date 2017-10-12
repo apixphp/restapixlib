@@ -1,6 +1,6 @@
-<?php namespace src\app\__projectName__\v1\model;
+<?php namespace Src\App\__projectName__\V1\Model;
 
-trait modelVar {
+trait ModelVar {
 
     /**
      * @method orderBy

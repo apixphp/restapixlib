@@ -5,9 +5,9 @@
  * service app provider
  */
 
-namespace src\app\__projectName__\v1\config;
+namespace Src\App\__projectName__\V1\Config;
 
-class app
+class App
 {
 
     /**

@@ -33,7 +33,9 @@ class model extends console {
 
                 foreach ($value as $project=>$service){
 
-                    $version=utils::getAppVersion($project);
+                    $project=ucfirst($project);
+                    $version=ucfirst(utils::getAppVersion($project));
+                    $service=ucfirst($service);
                     $base=staticPathModel::getAppServiceBase($project,$version);
                     $baseModel=$base->model;
 
@@ -42,11 +44,11 @@ class model extends console {
                     }
                     $list=[];
 
-                    $tablesYamlPath='./src/app/'.$project.'/'.$version.'/model/tables.yaml';
+                    $tablesYamlPath='./src/app/'.$project.'/'.$version.'/Model/Tables.yaml';
 
-                    if($baseModel==="eloquent"){
+                    if($baseModel==="Eloquent"){
 
-                        $modelControlPath='./src/app/'.$project.'/'.$version.'/model/eloquent/'.$getParams[1]['file'].'.php';
+                        $modelControlPath='./src/app/'.$project.'/'.$version.'/Model/Eloquent/'.ucfirst($getParams[1]['file']).'.php';
 
                         if(!file_exists($modelControlPath)){
 
@@ -54,14 +56,14 @@ class model extends console {
 
                             $modelParamsBuilder['execution']='services/eloquentmodelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
-                            $modelParamsBuilder['params']['className']=$getParams[1]['file'];
+                            $modelParamsBuilder['params']['className']=ucfirst($getParams[1]['file']);
                             $modelParamsBuilder['params']['version']=$version;
                             //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
-                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/Model/Eloquent/Builder/'.ucfirst($getParams[1]['file']).'Builder.php',$modelParamsBuilder);
 
                             $modelParams['execution']='services/eloquentmodel';
                             $modelParams['params']['projectName']=$project;
-                            $modelParams['params']['className']=$getParams[1]['file'];
+                            $modelParams['params']['className']=ucfirst($getParams[1]['file']);
                             $modelParams['params']['tableName']=$getParams[2]['table'];
                             $modelParams['params']['version']=$version;
                             $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/eloquent/'.$getParams[1]['file'].'.php',$modelParams);
@@ -70,7 +72,7 @@ class model extends console {
                             $this->setAnnotation([
                                 'project'=>$project,
                                 'version'=>$version,
-                                'file'=>$getParams[1]['file'],
+                                'file'=>ucfirst($getParams[1]['file']),
                                 'orm'=>'eloquent'
                             ]);
                         }
@@ -82,9 +84,9 @@ class model extends console {
                     }
 
 
-                    if($baseModel==="sudb"){
+                    if($baseModel==="Sudb"){
 
-                        $modelControlPath='./src/app/'.$project.'/'.$version.'/model/sudb/'.$getParams[1]['file'].'.php';
+                        $modelControlPath='./src/app/'.$project.'/'.$version.'/Model/Sudb/'.ucfirst($getParams[1]['file']).'.php';
 
                         if(!file_exists($modelControlPath)){
 
@@ -92,22 +94,22 @@ class model extends console {
 
                             $modelParamsBuilder['execution']='services/modelBuilder';
                             $modelParamsBuilder['params']['projectName']=$project;
-                            $modelParamsBuilder['params']['className']=$getParams[1]['file'];
+                            $modelParamsBuilder['params']['className']=ucfirst($getParams[1]['file']);
                             $modelParamsBuilder['params']['version']=$version;
                             //$modelParamsBuilder['params']['tableName']=$getParams[2]['table'];
-                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/builder/'.$getParams[1]['file'].'Builder.php',$modelParamsBuilder);
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/Model/Sudb/Builder/'.ucfirst($getParams[1]['file']).'Builder.php',$modelParamsBuilder);
 
                             $modelParams['execution']='services/model';
                             $modelParams['params']['projectName']=$project;
-                            $modelParams['params']['className']=$getParams[1]['file'];
+                            $modelParams['params']['className']=ucfirst($getParams[1]['file']);
                             $modelParams['params']['version']=$version;
                             $modelParams['params']['tableName']=$getParams[2]['table'];
-                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/model/sudb/'.$getParams[1]['file'].'.php',$modelParams);
+                            $list[]=$this->fileprocess->touch($project.'/'.$version.'/Model/Sudb/'.ucfirst($getParams[1]['file']).'.php',$modelParams);
 
                             $this->setAnnotation([
                                 'project'=>$project,
                                 'version'=>$version,
-                                'file'=>$getParams[1]['file'],
+                                'file'=>ucfirst($getParams[1]['file']),
                                 'orm'=>'sudb'
                             ]);
 

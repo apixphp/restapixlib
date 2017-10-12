@@ -23,7 +23,7 @@ class middleware extends console {
     //project create command
     public function create ($data){
 
-       $project=$this->getProjectName($data);
+       $project=ucfirst($this->getProjectName($data));
 
         $middlewareDir=''.staticPathModel::getMiddlewarePath($project);
 
@@ -31,15 +31,15 @@ class middleware extends console {
             $this->fileprocess->mkdir_path($middlewareDir);
         }
 
-        $path=''.$middlewareDir.''.$data['file'].'.php';
+        $path=''.$middlewareDir.''.ucfirst($data['file']).'.php';
 
         if(!file_exists($path)){
             //usage api command create file:file
             $list=[];
             $touchServiceMiddlewareMe['execution']='middleware';
             $touchServiceMiddlewareMe['params']['projectName']=$project;
-            $touchServiceMiddlewareMe['params']['class']=$data['file'];
-            $list[]=$this->fileprocess->touch_path($middlewareDir.'/'.$data['file'].'.php',$touchServiceMiddlewareMe);
+            $touchServiceMiddlewareMe['params']['class']=ucfirst($data['file']);
+            $list[]=$this->fileprocess->touch_path($middlewareDir.'/'.ucfirst($data['file']).'.php',$touchServiceMiddlewareMe);
 
 
             $middleware=$data['file'];

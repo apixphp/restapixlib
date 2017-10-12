@@ -1,16 +1,11 @@
 <?php
-/**
- * Service base controller
- * it is mainly service provider for service
- * service provider
- */
 
-namespace src\app\__projectName__\v1;
+namespace Src\App\__projectName__\V1;
 
 use Src\Store\Services\Httprequest as Request;
 use Apix\Utils;
 
-class serviceBaseController
+class ServiceBaseController
 {
     //response object
     public $response='json';

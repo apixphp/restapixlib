@@ -1,16 +1,6 @@
 <?php
-/*
- * This file is platform part of the __projectName__ service.
- *
- * every request can give reference to platform specified
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace src\app\__projectName__\v1\optional\webServices;
-
-use Src\Store\Services\Httprequest as Request;
+namespace Src\App\__projectName__\V1\Optional\WebServices;
 
 /**
  * Represents a config class.
@@ -19,7 +9,7 @@ use Src\Store\Services\Httprequest as Request;
  * return type array
  */
 
-class config
+class Config
 {
 
     /**

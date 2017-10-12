@@ -30,24 +30,30 @@ class service extends console {
     //service create command
     public function create ($data){
 
+        $data=array_map(function($value){
+            return ucfirst($value);
+        },$data);
+
        foreach ($this->getParams($data) as $key=>$value){
            if($key==0){
                foreach ($value as $project=>$service){
-                   $version=utils::getAppVersion($project);
+                   $project=ucfirst($project);
+                   $service=ucfirst($service);
+                   $version=ucfirst(utils::getAppVersion($project));
                    $list=[];
 
 
-                   if(file_exists('./src/app/'.$project.'/'.$version.'/__call/'.$service)){
+                   if(file_exists('./src/app/'.$project.'/'.$version.'/__Call/'.$service)){
 
                        if(array_key_exists('file',$data)){
-                           if(!file_exists('./src/app/'.$project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'Service.php')){
+                           if(!file_exists('./src/app/'.$project.'/'.$version.'/__Call/'.$service.'/'.$data['file'].'Service.php')){
                                 $touchServicePostParams['execution']='services/serviceFilePut';
                                 $touchServicePostParams['params']['projectName']=$project;
                                 $touchServicePostParams['params']['serviceName']=$service;
                                 $touchServicePostParams['params']['version']=$version;
                                 $touchServicePostParams['params']['method']=$data['file'];
 
-                                $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'Service.php',$touchServicePostParams);
+                                $list[]=$this->fileprocess->touch($project.'/'.$version.'/__Call/'.$service.'/'.$data['file'].'Service.php',$touchServicePostParams);
 
 
                                $touchServiceInterfaceParams['execution']='services/fileServiceInterface';
@@ -55,7 +61,7 @@ class service extends console {
                                $touchServiceInterfaceParams['params']['serviceName']=$service;
                                $touchServiceInterfaceParams['params']['version']=$version;
                                $touchServiceInterfaceParams['params']['file']=$data['file'];
-                               $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/'.$data['file'].'ServiceInterface.php',$touchServiceInterfaceParams);
+                               $list[]=$this->fileprocess->touch($project.'/'.$version.'/__Call/'.$service.'/'.$data['file'].'ServiceInterface.php',$touchServiceInterfaceParams);
 
 
                                return utils::fileProcessResult($list,function() use($service,$project,$data) {
@@ -70,39 +76,39 @@ class service extends console {
 
                    }
 
-                   if($this->fileprocess->mkdir(''.$project.'/'.$version.'/__call/'.$service)){
+                   if($this->fileprocess->mkdir(''.$project.'/'.$version.'/__Call/'.$service)){
 
                        $touchServiceGetParams['execution']='services/getservice';
                        $touchServiceGetParams['params']['projectName']=$project;
                        $touchServiceGetParams['params']['serviceName']=$service;
                        $touchServiceGetParams['params']['version']=$version;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/getService.php',$touchServiceGetParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__Call/'.$service.'/GetService.php',$touchServiceGetParams);
 
                        $touchServiceGetInterfaceParams['execution']='services/getserviceInterface';
                        $touchServiceGetInterfaceParams['params']['projectName']=$project;
                        $touchServiceGetInterfaceParams['params']['serviceName']=$service;
                        $touchServiceGetInterfaceParams['params']['version']=$version;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/getServiceInterface.php',$touchServiceGetInterfaceParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__Call/'.$service.'/GetServiceInterface.php',$touchServiceGetInterfaceParams);
 
                        $touchdeveloperParams['execution']='services/developer';
                        $touchdeveloperParams['params']['projectName']=$project;
                        $touchdeveloperParams['params']['serviceName']=$service;
                        $touchdeveloperParams['params']['version']=$version;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/developer.php',$touchdeveloperParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__Call/'.$service.'/Developer.php',$touchdeveloperParams);
 
 
                        $touchappParams['execution']='services/app';
                        $touchappParams['params']['projectName']=$project;
                        $touchappParams['params']['serviceName']=$service;
                        $touchappParams['params']['version']=$version;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/app.php',$touchappParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__Call/'.$service.'/App.php',$touchappParams);
 
 
                        $touchServiceConfParams['execution']='services/serviceConf';
                        $touchServiceConfParams['params']['projectName']=$project;
                        $touchServiceConfParams['params']['serviceName']=$service;
                        $touchServiceConfParams['params']['version']=$version;
-                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__call/'.$service.'/serviceConf.php',$touchServiceConfParams);
+                       $list[]=$this->fileprocess->touch($project.'/'.$version.'/__Call/'.$service.'/ServiceConf.php',$touchServiceConfParams);
 
 
                        return utils::fileProcessResult($list,function() use($service,$project) {
@@ -151,11 +157,11 @@ class service extends console {
 
 
 
-                    $servicePath='\\\\src\\\\app\\\\'.$project.'\\\\'.$versionNumber.'\\\\__call\\\\'.$service.'\\\\'.$this->getParams($data)[2]['http'].'Service';
+                    $servicePath='\\\\src\\\\app\\\\'.$project.'\\\\'.$versionNumber.'\\\\__Call\\\\'.$service.'\\\\'.$this->getParams($data)[2]['http'].'Service';
                     //$names=explode("/",$this->getParams($data)[1]['names']);
                     $list[]=''.$servicePath.'::'.$this->getParams($data)[1]['names'].'';
 
-                    $yamlFilePath=root.'/src/app/'.$project.'/'.$versionNumber.'/__call/'.$service.'/yaml/expected/'.$service.'_'.$this->getParams($data)[2]['http'].'_'.$this->getParams($data)[1]['names'].'.yaml';
+                    $yamlFilePath=root.'/src/app/'.$project.'/'.$versionNumber.'/__Call/'.$service.'/yaml/expected/'.$service.'_'.$this->getParams($data)[2]['http'].'_'.$this->getParams($data)[1]['names'].'.yaml';
                     if(!file_exists($yamlFilePath)){
                         return '!!! No service dump for your service';
                     }
@@ -207,7 +213,7 @@ $content=str_replace("//publishes","//publishes
                         fwrite($dt, $content);
                         fclose($dt);
 
-                        $this->fileprocess->changeClass(root.'/src/app/'.$project.'/'.$versionNumber.'/__call/'.$service.'/serviceConf.php',[
+                        $this->fileprocess->changeClass(root.'/src/app/'.$project.'/'.$versionNumber.'/__Call/'.$service.'/serviceConf.php',[
                             "'dataDump'=>true"=>"'dataDump'=>false"
                         ]);
 
@@ -241,12 +247,12 @@ $content=str_replace("//publishes","//publishes
                     }
 
                     if(end($data)){
-                        $this->fileprocess->changeClass(root.'/src/app/'.$project.'/'.$versionNumber.'/__call/'.$service.'/serviceConf.php',[
+                        $this->fileprocess->changeClass(root.'/src/app/'.$project.'/'.$versionNumber.'/__Call/'.$service.'/serviceConf.php',[
                             "'dataDump'=>false"=>"'dataDump'=>".end($data).""
                         ]);
                     }
                     else{
-                        $this->fileprocess->changeClass(root.'/src/app/'.$project.'/'.$versionNumber.'/__call/'.$service.'/serviceConf.php',[
+                        $this->fileprocess->changeClass(root.'/src/app/'.$project.'/'.$versionNumber.'/__Call/'.$service.'/serviceConf.php',[
                             "'dataDump'=>true"=>"'dataDump'=>".end($data).""
                         ]);
                     }

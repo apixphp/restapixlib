@@ -1,25 +1,10 @@
 <?php
-/*
- * This file is platform part of the __projectName__ service.
- *
- * every request can give reference to platform specified
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace src\app\__projectName__\v1\optional\webServices;
+namespace Src\App\__projectName__\V1\Optional\WebServices;
 
 use Src\Store\Services\Httprequest as Request;
 
-/**
- * Represents a connector class.
- *
- * main call
- * return type array
- */
-
-class connector extends config
+class Connector extends Config
 {
 
     /**
@@ -29,8 +14,6 @@ class connector extends config
     public function endPoints($key=null,$group=null){
 
         return $this->resultPoints($key,$group,$this->endPoints);
-
-
     }
 
     /**

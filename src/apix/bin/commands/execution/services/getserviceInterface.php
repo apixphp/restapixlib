@@ -1,11 +1,7 @@
 <?php
-namespace src\app\__projectName__\__version__\__call\__serviceName__;
+namespace Src\App\__projectName__\__version__\__Call\__serviceName__;
 
-/**
- * Interface getServiceInterface
- * @package src\app\__projectName__\__version__\__call\__serviceName__
- */
-interface getServiceInterface
+interface GetServiceInterface
 {
     /**
      * @return mixed

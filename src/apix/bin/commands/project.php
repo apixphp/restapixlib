@@ -18,7 +18,7 @@ class project extends console {
 
         parent::__construct();
         $this->fileprocess=utils::fileprocess();
-        require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
+        require("".staticPathModel::$binCommandsPath."/lib/getEnv.php");
     }
 
     //project create command
@@ -28,244 +28,242 @@ class project extends console {
 
         echo $this->info('------------------------------------------------------------------------------');
         echo $this->classical('HI DEVELOPER! WE WANT TO ASK SOME QUESTİONS BEFORE STARTING');
-        $composer=$this->ReadStdin('Do you want to use composer in the your project? ["Y","N"]',null,'N');
-        $orm=$this->ReadStdin('Which orm do you want to use in the your project? ["sudb","doctrine","eloquent"]',null,'sudb');
+        $Composer=$this->ReadStdin('Do you want to use Composer in the your project? ["Y","N"]',null,'N');
+        $orm=$this->ReadStdin('Which orm do you want to use in the your project? ["Sudb","Doctrine","Eloquent"]',null,'Sudb');
 
-        if($this->fileprocess->mkdir($this->getProjectName($data))){
+        $project=ucfirst($this->getProjectName($data));
+
+        if($this->fileprocess->mkdir($project)){
 
             $touchServiceVersionMe['execution']='project_version';
-            $touchServiceVersionMe['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/version.php',$touchServiceVersionMe);
+            $touchServiceVersionMe['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/Version.php',$touchServiceVersionMe);
 
             $touchServicePublishMe['execution']='project_publish';
-            $touchServicePublishMe['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/publish.php',$touchServicePublishMe);
+            $touchServicePublishMe['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/Publish.php',$touchServicePublishMe);
 
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage');
+            $list[]=$this->fileprocess->mkdir($project.'/Storage');
 
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel');
+            $list[]=$this->fileprocess->mkdir($project.'/Kernel');
 
             $middlewareValidator['execution']='project_middleware_validator';
-            $middlewareValidator['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/middleware');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/middleware/validator.php',$middlewareValidator);
+            $middlewareValidator['params']['projectName']=$project;
+            $list[]=$this->fileprocess->mkdir($project.'/Kernel/Middleware');
+            $list[]=$this->fileprocess->touch($project.'/Kernel/Middleware/Validator.php',$middlewareValidator);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/node');
+            $list[]=$this->fileprocess->mkdir($project.'/Kernel/Node');
 
             $node['execution']='project_node';
             $node['params']['projectName']=null;
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/node/app.js',$node);
+            $list[]=$this->fileprocess->touch($project.'/Kernel/Node/App.js',$node);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/kernel/stubs');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/stubs/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/Kernel/Stubs');
+            $list[]=$this->fileprocess->touch($project.'/Kernel/Stubs/index.html',null);
 
             $touchKernel['execution']='kernel';
-            $touchKernel['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/kernel/kernel.php',$touchKernel);
+            $touchKernel['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/Kernel/Kernel.php',$touchKernel);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/lang');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/lang/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/Storage/Lang');
+            $list[]=$this->fileprocess->touch($project.'/Storage/Lang/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/resourches');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/resourches/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/Storage/Resourches');
+            $list[]=$this->fileprocess->touch($project.'/Storage/Resourches/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/jobs');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/jobs/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/Storage/Jobs');
+            $list[]=$this->fileprocess->touch($project.'/Storage/Jobs/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/session');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/session/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/Storage/Session');
+            $list[]=$this->fileprocess->touch($project.'/Storage/Session/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/logs');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/logs/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/Storage/Logs');
+            $list[]=$this->fileprocess->touch($project.'/Storage/Logs/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/storage/env');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/storage/env/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/Storage/Env');
+            $list[]=$this->fileprocess->touch($project.'/Storage/Env/index.html',null);
 
-            if($composer=="y"){
+            if($Composer=="y"){
 
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/composer');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/composer/index.html',null);
+                $list[]=$this->fileprocess->mkdir($project.'/Composer');
+                $list[]=$this->fileprocess->touch($project.'/Composer/index.html',null);
 
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/composer.json',null);
+                $list[]=$this->fileprocess->touch($project.'/Composer.json',null);
 
-                $touchProjectComposer['execution']='project_composer';
-                $touchProjectComposer['params']['projectName']=$this->getProjectName($data);
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/composer.json',$touchProjectComposer);
+                $touchProjectComposer['execution']='project_Composer';
+                $touchProjectComposer['params']['projectName']=$project;
+                $list[]=$this->fileprocess->touch($project.'/Composer.json',$touchProjectComposer);
             }
 
 
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/.gitignore',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1');
+            $list[]=$this->fileprocess->touch($project.'/.gitignore',null);
 
             $touchProjectGitignore['execution']='project_gitignore';
-            $touchProjectGitignore['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/.gitignore',$touchProjectGitignore);
+            $touchProjectGitignore['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/.gitignore',$touchProjectGitignore);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional');
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/index.html',null);
 
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/webServices');
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/WebServices');
 
-            $webServiceConfigParams['execution']='webservice_config';
-            $webServiceConfigParams['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/webServices/config.php',$webServiceConfigParams);
+            $webServiceConfigParams['execution']='webservice_Config';
+            $webServiceConfigParams['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/WebServices/Config.php',$webServiceConfigParams);
 
-            $webServiceConnectorParams['execution']='webservice_connector';
-            $webServiceConnectorParams['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/webServices/connector.php',$webServiceConnectorParams);
+            $webServiceConnectorParams['execution']='webservice_Connector';
+            $webServiceConnectorParams['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/WebServices/Connector.php',$webServiceConnectorParams);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/jobs');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/jobs/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Jobs');
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Jobs/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/eagers');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/eagers/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Eagers');
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Eagers/index.html',null);
 
-            $touchServiceBaseControllerParams['execution']='serviceBaseController';
+            $touchServiceBaseControllerParams['execution']='ServiceBaseController';
             $touchServiceBaseControllerParams['params']['orm']=$orm;
-            $touchServiceBaseControllerParams['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/serviceBaseController.php',$touchServiceBaseControllerParams);
+            $touchServiceBaseControllerParams['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/ServiceBaseController.php',$touchServiceBaseControllerParams);
 
-            $touchServiceAnnotationsControllerParams['execution']='serviceAnnotationsController';
-            $touchServiceAnnotationsControllerParams['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/serviceAnnotationsController.php',$touchServiceAnnotationsControllerParams);
+            $touchServiceAnnotationsControllerParams['execution']='ServiceAnnotationsController';
+            $touchServiceAnnotationsControllerParams['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/ServiceAnnotationsController.php',$touchServiceAnnotationsControllerParams);
 
             $touchServiceTokenControllerParams['execution']='serviceTokenController';
-            $touchServiceTokenControllerParams['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/serviceTokenController.php',$touchServiceTokenControllerParams);
+            $touchServiceTokenControllerParams['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/serviceTokenController.php',$touchServiceTokenControllerParams);
 
 
-            $serviceLogController['execution']='serviceLogController';
-            $serviceLogController['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/serviceLogController.php',$serviceLogController);
+            $ServiceLogController['execution']='ServiceLogController';
+            $ServiceLogController['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/ServiceLogController.php',$ServiceLogController);
 
-            $servicePackageDevController['execution']='servicePackageDevController';
-            $servicePackageDevController['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/servicePackageDevController.php',$servicePackageDevController);
+            $ServicePackageDevController['execution']='ServicePackageDevController';
+            $ServicePackageDevController['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/ServicePackageDevController.php',$ServicePackageDevController);
 
-            $serviceMiddleController['execution']='serviceMiddlewareController';
-            $serviceMiddleController['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/serviceMiddlewareController.php',$serviceMiddleController);
+            $serviceMiddleController['execution']='ServiceMiddlewareController';
+            $serviceMiddleController['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/ServiceMiddlewareController.php',$serviceMiddleController);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/staticProvider');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/staticProvider/index.html',null);
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/__call');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/__call/index.html',null);
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/config');
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/StaticProvider');
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/StaticProvider/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/__Call');
+            $list[]=$this->fileprocess->touch($project.'/V1/__Call/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Config');
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/repository');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/repository/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Repository');
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Repository/index.html',null);
 
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/provisions');
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions');
 
             $touchprovisionindex['execution']='services/provision';
-            $touchprovisionindex['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/provisions/index.php',$touchprovisionindex);
+            $touchprovisionindex['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Provisions/Index.php',$touchprovisionindex);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/provisions/limitation');
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions/Limitation');
 
-            $touchprovisionlimitationaccess['execution']='services/accessRules';
-            $touchprovisionlimitationaccess['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/provisions/limitation/accessRules.php',$touchprovisionlimitationaccess);
+            $touchprovisionLimitationaccess['execution']='services/accessRules';
+            $touchprovisionLimitationaccess['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Provisions/Limitation/accessRules.php',$touchprovisionLimitationaccess);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/provisions/limitation/yaml');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/provisions/limitation/yaml/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions/Limitation/Yaml');
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Provisions/Limitation/Yaml/index.html',null);
 
             /*$touchprovisionobjectloader['execution']='services/objectloader';
-            $touchprovisionobjectloader['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/provisions/objectloader.php',$touchprovisionobjectloader);*/
+            $touchprovisionobjectloader['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Provisions/objectloader.php',$touchprovisionobjectloader);*/
 
 
-            $touchServiceApp['execution']='app';
-            $touchServiceApp['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/app.php',$touchServiceApp);
+            $touchServiceApp['execution']='App';
+            $touchServiceApp['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Config/App.php',$touchServiceApp);
 
-            $touchAuthApp['execution']='auth';
-            $touchAuthApp['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/auth.php',$touchAuthApp);
+            $touchAuthApp['execution']='Auth';
+            $touchAuthApp['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Config/Auth.php',$touchAuthApp);
 
 
             $touchServiceSocialize['execution']='services/socialize';
-            $touchServiceSocialize['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/socialize.php',$touchServiceSocialize);
+            $touchServiceSocialize['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Config/Socialize.php',$touchServiceSocialize);
 
 
             $touchServiceException['execution']='services/exception';
-            $touchServiceException['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/exception.php',$touchServiceException);
+            $touchServiceException['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Config/Exception.php',$touchServiceException);
 
             $database['execution']='services/database';
-            $database['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/database.php',$database);
+            $database['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Config/Database.php',$database);
 
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/optional/platform');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/platform/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Platform');
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Platform/index.html',null);
 
-            $platformServiceConfParams['execution']='services/platform_config';
-            $platformServiceConfParams['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/optional/platform/config.php',$platformServiceConfParams);
+            $PlatformServiceConfParams['execution']='services/Platform_Config';
+            $PlatformServiceConfParams['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Platform/Config.php',$PlatformServiceConfParams);
 
             $database['execution']='services/rabbitMQ';
-            $database['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/rabbitMQ.php',$database);
+            $database['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Config/RabbitMQ.php',$database);
 
             $redis['execution']='services/redis';
-            $redis['params']['projectName']=$this->getProjectName($data);
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/config/redis.php',$redis);
+            $redis['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Config/Redis.php',$redis);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/migrations');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/migrations/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Migrations');
+            $list[]=$this->fileprocess->touch($project.'/V1/Migrations/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/migrations/schemas');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/migrations/schemas/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Migrations/Schemas');
+            $list[]=$this->fileprocess->touch($project.'/V1/Migrations/Schemas/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/migrations/seeds');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/migrations/seeds/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Migrations/Seeds');
+            $list[]=$this->fileprocess->touch($project.'/V1/Migrations/Seeds/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model');
-            $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/index.html',null);
+            $list[]=$this->fileprocess->mkdir($project.'/V1/Model');
 
-            if($orm=="sudb"){
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/sudb');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/sudb/index.html',null);
+            if($orm=="Sudb"){
+                $list[]=$this->fileprocess->mkdir($project.'/V1/Model/Sudb');
 
 
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/sudb/builder');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/sudb/builder/index.html',null);
+                $list[]=$this->fileprocess->mkdir($project.'/V1/Model/Sudb/Builder');
+                $list[]=$this->fileprocess->touch($project.'/V1/Model/Sudb/Builder/index.html',null);
 
-                $modelVarLoad['execution']='services/modelVarTrait';
-                $modelVarLoad['params']['projectName']=$this->getProjectName($data);
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/modelVar.php',$modelVarLoad);
+                $ModelVarLoad['execution']='services/ModelVarTrait';
+                $ModelVarLoad['params']['projectName']=$project;
+                $list[]=$this->fileprocess->touch($project.'/V1/Model/ModelVar.php',$ModelVarLoad);
             }
 
 
-            if($orm=="eloquent"){
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/eloquent');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/eloquent/index.html',null);
+            if($orm=="Eloquent"){
+                $list[]=$this->fileprocess->mkdir($project.'/V1/Model/Eloquent');
 
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/eloquent/builder');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/eloquent/builder/index.html',null);
+                $list[]=$this->fileprocess->mkdir($project.'/V1/Model/Eloquent/Builder');
+                $list[]=$this->fileprocess->touch($project.'/V1/Model/Eloquent/Builder/index.html',null);
             }
 
 
-            if($orm=="doctrine"){
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/doctrine');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/doctrine/index.html',null);
+            if($orm=="Doctrine"){
+                $list[]=$this->fileprocess->mkdir($project.'/V1/Model/Doctrine');
 
-                $list[]=$this->fileprocess->mkdir($this->getProjectName($data).'/v1/model/doctrine/builder');
-                $list[]=$this->fileprocess->touch($this->getProjectName($data).'/v1/model/doctrine/builder/index.html',null);
+                $list[]=$this->fileprocess->mkdir($project.'/V1/Model/Doctrine/Builder');
+                $list[]=$this->fileprocess->touch($project.'/V1/Model/Doctrine/Builder/index.html',null);
             }
 
 
 
-            return utils::fileProcessResult($list,function() use($data) {
+            return utils::fileProcessResult($list,function() use($data,$project) {
                 echo $this->info('------------------------------------------------------------------------------');
-                echo $this->classical('WELCOME TO '.$this->getProjectName($data).' PROJECT ');
+                echo $this->classical('WELCOME TO '.$project.' PROJECT ');
                 echo $this->info('------------------------------------------------------------------------------');
                 echo $this->success('+++ Your project has been created succesfully...');
                 echo $this->info('------------------------------------------------------------------------------');
