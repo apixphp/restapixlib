@@ -19,6 +19,20 @@ trait ServiceAnnotationsController
     }
 
     /**
+     * @var $session \src\store\services\httpSession
+     */
+    public $session;
+
+    /**
+     * @return \src\store\services\httpSession
+     */
+    public function session(){
+
+        $this->session=app('session');
+        return $this->session;
+    }
+
+    /**
      * @var $collection \src\store\services\appCollection
      */
     public $collection;

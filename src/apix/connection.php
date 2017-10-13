@@ -138,7 +138,6 @@ class connection extends Definitor {
                     function() use ($service,$serviceMethod,$getVersion,$instance) {
 
                         $instance->serviceMiddlewareRun();
-                        $instance->eagersBooting();
 
                         //check package auto service and method
                         if($instance->checkPackageAuto($service)['status']){

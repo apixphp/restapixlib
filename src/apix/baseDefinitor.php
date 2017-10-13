@@ -36,7 +36,6 @@ class BaseDefinitor  {
      */
 
     protected function getPreLoaderClasses(){
-        $this->getStaticProvider();
         return $this->getFileClassRequire(root.'/vendor/apixphp/restapixlib/src/apix/appClassAlias.php');
 
     }
@@ -87,29 +86,7 @@ class BaseDefinitor  {
         return (new \Apix\ServiceMiddleware())->handle();
     }
 
-    /**
-     * get static provider classes.
-     * static provider is class alias for developer comfortable
-     *
-     * outputs class static provider.
-     *
-     * @param string
-     * @return response static provider runner
-     */
 
-    protected function getStaticProvider(){
-        $staticProvider=$this->getServiceConfig()->staticProvider();
-        foreach($staticProvider as $key=>$value){
-            $namespace=api."optional\\staticProvider\\".$key."";
-            if($value=="all"){
-                class_alias($namespace,$key);
-            }
-            if(is_array($value) && (in_array(service,$value) OR in_array(''.service.'@'.method,$value))){
-                class_alias($namespace,$key);
-            }
-        }
-
-    }
 
 
 
@@ -609,22 +586,6 @@ class BaseDefinitor  {
         $downPath=StaticPathModel::getProjectPath(app).'/down.yaml';
         if(file_exists($downPath)){
             throw new \LogicException($instance->getFixLog('maintenance'));
-        }
-    }
-
-    public function eagersBooting(){
-
-        $eagersPath=StaticPathModel::getEagersPath();
-        foreach (glob($eagersPath."/*.php") as $file) {
-            $file=explode("/",$file);
-            $file=str_replace('.php','',end($file));
-
-            $eagersClass=StaticPathModel::getEagersPath(false).'\\'.$file;
-            if(class_exists($eagersClass)){
-                if(method_exists($eagersClass,'boot')){
-                    Utils::resolve($eagersClass)->boot();
-                }
-            }
         }
     }
 

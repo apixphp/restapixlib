@@ -123,9 +123,6 @@ class project extends console {
             $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Jobs');
             $list[]=$this->fileprocess->touch($project.'/V1/Optional/Jobs/index.html',null);
 
-            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Eagers');
-            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Eagers/index.html',null);
-
             $touchServiceBaseControllerParams['execution']='ServiceBaseController';
             $touchServiceBaseControllerParams['params']['orm']=$orm;
             $touchServiceBaseControllerParams['params']['projectName']=$project;
@@ -152,8 +149,6 @@ class project extends console {
             $serviceMiddleController['params']['projectName']=$project;
             $list[]=$this->fileprocess->touch($project.'/V1/ServiceMiddlewareController.php',$serviceMiddleController);
 
-            $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/StaticProvider');
-            $list[]=$this->fileprocess->touch($project.'/V1/Optional/StaticProvider/index.html',null);
             $list[]=$this->fileprocess->mkdir($project.'/V1/__Call');
             $list[]=$this->fileprocess->touch($project.'/V1/__Call/index.html',null);
             $list[]=$this->fileprocess->mkdir($project.'/V1/Config');

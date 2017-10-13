@@ -11,108 +11,110 @@ use Apix\Utils;
  */
 
 
-class source extends console {
+class Source extends console {
 
     public $fileprocess;
 
     public function __construct(){
+
+        parent::__construct();
         $this->fileprocess=$this->fileprocess();
         require("".staticPathModel::$binCommandsPath."/lib/getenv.php");
     }
 
 
     //service create command
-    public function bundle ($data){
+    public function create ($data){
 
-        //using : api source bundle projectName:ServiceName bundle:bundleName || src:bundleSrc || src:bundleSrc/bundleSrcFile
+        //using : api Source create projectName:ServiceName bundle:bundleName || src:bundleSrc || src:bundleSrcSrcFile
 
 
         foreach ($this->getParams($data) as $key=>$value){
             if($key==0){
 
                 foreach ($value as $project=>$service){
-                    $version=utils::getAppVersion($project);
+                    $project=ucfirst($project);
+                    $service=ucfirst($service);
+                    $version=ucfirst(utils::getAppVersion($project));
                     $list=[];
 
-                    if(!file_exists('./src/app/'.$project.'/'.$version.'/__call/'.$service.'/source')){
-                        $this->fileprocess->mkdir_path('./src/app/'.$project.'/'.$version.'/__call/'.$service.'/source/');
-                        $this->fileprocess->mkdir_path('./src/app/'.$project.'/'.$version.'/__call/'.$service.'/source/bundle');
-                        $this->fileprocess->touch_path('./src/app/'.$project.'/'.$version.'/__call/'.$service.'/source/bundle/index.html');
+                    if(!file_exists('./src/app/'.$project.'/'.$version.'/__Call/'.$service.'/Source')){
+                        $this->fileprocess->mkdir_path('./src/app/'.$project.'/'.$version.'/__Call/'.$service.'/Source/');
                     }
 
                     if(array_key_exists(2,$this->getParams($data)) && array_key_exists("src",$this->getParams($data)[2])){
 
                         $srcBundle=explode("/",$this->getParams($data)[2]['src']);
-                        if(!file_exists('./src/app/'.$project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/src/'.$srcBundle[0].'/'.$srcBundle[0].'.php')){
-                            $list[]=$this->mkdir($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/src/'.$srcBundle[0]);
+                        if(!file_exists('./src/app/'.$project.'/'.$version.'/__Call/'.$service.'/Source/'.$this->getParams($data)[1]['source'].'/src/'.ucfirst($srcBundle[0]).'/'.ucfirst($srcBundle[0]).'.php')){
+                            $list[]=$this->mkdir($project.'/'.$version.'/__Call/'.$service.'/Source/'.ucfirst($this->getParams($data)[1]['source']).'/Src/'.ucfirst($srcBundle[0]));
                         }
 
                         if(array_key_exists(1,$srcBundle)){
 
-                            $bundleParamsIndexSrc['execution']='services/sourceBundleSrcIndex';
+                            $bundleParamsIndexSrc['execution']='services/SourceBundleSrcIndex';
                             $bundleParamsIndexSrc['params']['projectName']=$project;
                             $bundleParamsIndexSrc['params']['serviceName']=$service;
-                            $bundleParamsIndexSrc['params']['bundleName']=$this->getParams($data)[1]['bundle'];
-                            $bundleParamsIndexSrc['params']['srcName']=$srcBundle[0];
-                            $bundleParamsIndexSrc['params']['className']=$srcBundle[1];
+                            $bundleParamsIndexSrc['params']['bundleName']=ucfirst($this->getParams($data)[1]['source']);
+                            $bundleParamsIndexSrc['params']['srcName']=ucfirst($srcBundle[0]);
+                            $bundleParamsIndexSrc['params']['className']=ucfirst($srcBundle[1]);
                             $bundleParamsIndexSrc['params']['version']=$version;
-                            $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/src/'.$srcBundle[0].'/'.$srcBundle[1].'.php',$bundleParamsIndexSrc);
+                            $list[]=$this->touch($project.'/'.$version.'/__Call/'.$service.'/Source/'.$this->getParams($data)[1]['source'].'/Src/'.ucfirst($srcBundle[0]).'/'.ucfirst($srcBundle[1]).'.php',$bundleParamsIndexSrc);
 
-                            $requestBundleFile='./src/app/'.$project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/index.php';
-                            $this->fileprocess->changeClass($requestBundleFile,['use src\app\mobi\v1\__call\stk\app;'=>'use src\app\mobi\v1\__call\stk\app;'.PHP_EOL.'use src\\app\\'.$project.'\\'.$version.'\\__call\\'.$service.'\\source\bundle\\'.$this->getParams($data)[1]['bundle'].'\\src\\'.$srcBundle[0].'\\'.$srcBundle[1].';'
+                            $requestBundleFile='./src/app/'.$project.'/'.$version.'/__Call/'.$service.'/Source/'.$this->getParams($data)[1]['source'].'/index.php';
+                            $this->fileprocess->changeClass($requestBundleFile,['use Src\App\\'.$project.'\\'.$version.'\__Call\\'.$service.'\App;'=>'use Src\App\\'.$project.'\\'.$version.'\__Call\\'.$service.'\App;'.PHP_EOL.'use Src\\App\\'.$project.'\\'.$version.'\\__Call\\'.$service.'\\Source\\'.ucfirst($this->getParams($data)[1]['source']).'\\Src\\'.ucfirst($srcBundle[0]).'\\'.ucfirst($srcBundle[1]).';'
                             ]);
 
                         }
                         else{
-                            $bundleParamsIndexSrc['execution']='services/sourceBundleSrcIndex';
+                            $bundleParamsIndexSrc['execution']='services/SourceBundleSrcIndex';
                             $bundleParamsIndexSrc['params']['projectName']=$project;
                             $bundleParamsIndexSrc['params']['serviceName']=$service;
-                            $bundleParamsIndexSrc['params']['bundleName']=$this->getParams($data)[1]['bundle'];
-                            $bundleParamsIndexSrc['params']['srcName']=$srcBundle[0];
-                            $bundleParamsIndexSrc['params']['className']=$srcBundle[0];
+                            $bundleParamsIndexSrc['params']['bundleName']=ucfirst($this->getParams($data)[1]['source']);
+                            $bundleParamsIndexSrc['params']['srcName']=ucfirst($srcBundle[0]);
+                            $bundleParamsIndexSrc['params']['className']=ucfirst($srcBundle[0]);
                             $bundleParamsIndexSrc['params']['version']=$version;
-                            $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/src/'.$srcBundle[0].'/'.$srcBundle[0].'.php',$bundleParamsIndexSrc);
+                            $list[]=$this->touch($project.'/'.$version.'/__Call/'.$service.'/Source/'.$this->getParams($data)[1]['source'].'/src/'.ucfirst($srcBundle[0]).'/'.ucfirst($srcBundle[0]).'.php',$bundleParamsIndexSrc);
 
-                            $requestBundleFile='./src/app/'.$project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/index.php';
-                            $this->fileprocess->changeClass($requestBundleFile,['use src\app\mobi\v1\__call\stk\app;'=>'use src\app\mobi\v1\__call\stk\app;'.PHP_EOL.'use src\\app\\'.$project.'\\'.$version.'\\__call\\'.$service.'\\source\bundle\\'.$this->getParams($data)[1]['bundle'].'\\src\\'.$srcBundle[0].'\\'.$srcBundle[0].';'
+                            $requestBundleFile='./src/app/'.$project.'/'.$version.'/__Call/'.$service.'/Source/'.ucfirst($this->getParams($data)[1]['source']).'/Index.php';
+                            $this->fileprocess->changeClass($requestBundleFile,['use Src\App\\'.$project.'\\'.$version.'\__Call\\'.$service.'\App;'=>'use Src\App\\'.$project.'\\'.$version.'\__Call\\'.$service.'\App;'.PHP_EOL.'use Src\\App\\'.$project.'\\'.$version.'\\__Call\\'.$service.'\\Source\\'.ucfirst($this->getParams($data)[1]['source']).'\\Src\\'.ucfirst($srcBundle[0]).'\\'.ucfirst($srcBundle[0]).';'
                             ]);
                         }
                     }
                     else{
-                        $list[]=$this->mkdir($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'');
-                        $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/index.html',null);
+                        $list[]=$this->mkdir($project.'/'.$version.'/__Call/'.$service.'/Source/'.ucfirst($this->getParams($data)[1]['source']).'');
 
-                        $list[]=$this->mkdir($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/src');
-                        $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/src/index.html',null);
+                        $list[]=$this->mkdir($project.'/'.$version.'/__Call/'.$service.'/Source/'.ucfirst($this->getParams($data)[1]['source']).'/Src');
+                        $list[]=$this->touch($project.'/'.$version.'/__Call/'.$service.'/Source/'.ucfirst($this->getParams($data)[1]['source']).'/Src/index.html',null);
 
-                        $bundleParamsIndex['execution']='services/sourceBundleIndex';
+                        $bundleParamsIndex['execution']='services/SourceBundleIndex';
                         $bundleParamsIndex['params']['projectName']=$project;
                         $bundleParamsIndex['params']['serviceName']=$service;
-                        $bundleParamsIndex['params']['bundleName']=$this->getParams($data)[1]['bundle'];
+                        $bundleParamsIndex['params']['bundleName']=ucfirst($this->getParams($data)[1]['source']);
                         $bundleParamsIndex['params']['version']=$version;
-                        $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/index.php',$bundleParamsIndex);
+                        $list[]=$this->touch($project.'/'.$version.'/__Call/'.$service.'/Source/'.ucfirst($this->getParams($data)[1]['source']).'/Index.php',$bundleParamsIndex);
 
-                        $bundleParamsInterface['execution']='services/sourceBundleInterface';
+                        $bundleParamsInterface['execution']='services/SourceBundleInterface';
                         $bundleParamsInterface['params']['projectName']=$project;
                         $bundleParamsInterface['params']['serviceName']=$service;
-                        $bundleParamsInterface['params']['bundleName']=$this->getParams($data)[1]['bundle'];
+                        $bundleParamsInterface['params']['bundleName']=ucfirst($this->getParams($data)[1]['source']);
                         $bundleParamsInterface['params']['version']=$version;
-                        $list[]=$this->touch($project.'/'.$version.'/__call/'.$service.'/source/bundle/'.$this->getParams($data)[1]['bundle'].'/'.$this->getParams($data)[1]['bundle'].'Interface.php',$bundleParamsInterface);
+                        $list[]=$this->touch($project.'/'.$version.'/__Call/'.$service.'/Source/'.$this->getParams($data)[1]['source'].'/'.ucfirst($this->getParams($data)[1]['source']).'Interface.php',$bundleParamsInterface);
 
 
                         $this->setAnnotation([
                             'project'=>$project,
                             'version'=>$version,
                             'service'=>$service,
-                            'bundle'=>$this->getParams($data)[1]['bundle']
+                            'bundle'=>ucfirst($this->getParams($data)[1]['source'])
                             ]);
 
                     }
 
 
-
                     return $this->fileProcessResult($list,function(){
-                        return 'bundle source has been created';
+                        echo $this->info('------------------------------------------------------------------------------');
+                        echo $this->classical('Source Successfully Has Been Created');
+                        echo $this->info('------------------------------------------------------------------------------');
                     });
                 }
             }
@@ -182,7 +184,6 @@ class source extends console {
     }
 
 
-
     public function setAnnotation($annotation=array()){
 
         utils::changeClass(root.'/src/app/'.$annotation['project'].'/'.$annotation['version'].'/serviceAnnotationsController.php',[
@@ -190,16 +191,16 @@ class source extends console {
             '//annotationController' => '
             
     /**
-     * @var $source'.ucfirst($annotation['bundle']).' \src\app\\'.$annotation['project'].'\\'.$annotation['version'].'\__call\\'.$annotation['service'].'\source\bundle\\'.$annotation['bundle'].'\index
+     * @var $source'.ucfirst($annotation['bundle']).' \src\app\\'.$annotation['project'].'\\'.$annotation['version'].'\__Call\\'.$annotation['service'].'\Source\\'.$annotation['bundle'].'\Index
      */
      public $source'.ucfirst($annotation['bundle']).';
      
      /**
-     * @return __call\\'.$annotation['service'].'\source\bundle\\'.$annotation['bundle'].'\index
+     * @return __Call\\'.$annotation['service'].'\Source\\'.$annotation['bundle'].'\Index
      */
      public function getSource'.ucfirst($annotation['bundle']).'(){
 
-         $this->source'.ucfirst($annotation['bundle']).'=$this->source->'.$annotation['bundle'].'();
+         $this->source'.ucfirst($annotation['bundle']).'=$this->source->'.strtolower($annotation['bundle']).'();
          return $this->source'.ucfirst($annotation['bundle']).';
      }
              

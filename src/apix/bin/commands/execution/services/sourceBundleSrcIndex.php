@@ -1,51 +1,20 @@
 <?php
-/*
- * This file is bundle part src of the __projectName__ service.
- *
- * every request can call one bundle
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace src\app\__projectName__\__version__\__call\__serviceName__\source\bundle\__bundleName__\src\__srcName__;
+namespace Src\App\__projectName__\__version__\__Call\__serviceName__\Source\__bundleName__\Src\__srcName__;
 
-use Log;
-use Src\Store\Services\appCollection as Collection;
-use src\app\__projectName__\__version__\__call\__serviceName__\app;
-
-/**
- * Represents a bundle index class.
- *
- * main call
- * return type array
- */
+use Src\App\__projectName__\__version__\__Call\__serviceName__\App;
 
 class __className__ extends app
 {
 
     /**
-     * Constructor.
-     *
-     * @param type dependency injection and function
-     */
-    public function __construct()
-    {
-
-        //get app extends
-        parent::__construct();
-    }
-
-    /**
      * for bundle src service
      * get method is main run.
-     *
-     * @return string|array|object
+     * @return mixed
      */
     public function get()
     {
-
         //return source
-        return "__projectName__ bundle __serviceName__ __bundleName__ __srcName__";
+        return ["__projectName__ bundle __serviceName__ __bundleName__ __srcName__"];
     }
 }
