@@ -1,21 +1,6 @@
 <?php
-/*
- * This file is repo interface of the __projectName__ repository.
- *
- * every request can call repository
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace src\app\__projectName__\v1\optional\repository\__bundleName__;
-
-/**
- * Represents a repository interface class.
- *
- * main call
- * return type array
- */
+namespace Src\App\__projectName__\__version__\Optional\Repository\__bundleName__;
 
 interface __bundleName__Interface
 {

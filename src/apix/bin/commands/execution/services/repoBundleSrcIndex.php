@@ -1,34 +1,18 @@
 <?php
-/*
- * This file is repo part src of the __projectName__ repository.
- *
- * every request can call repository
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace src\app\__projectName__\v1\optional\repository\__bundleName__\src\__srcName__;
+namespace Src\App\__projectName__\__version__\Optional\Repository\__bundleName__\Src\__srcName__;
 
-use Src\Store\Services\Httprequest as Request;
-use Src\Store\Services\appCollection as Collection;
-use src\app\__projectName__\v1\serviceBaseController as base;
-use Log;
+use Src\App\__projectName__\__version__\ServiceAnnotationsController;
+use Src\App\__projectName__\__version__\serviceBaseController as Base;
 
-/**
- * Represents a bundle index class.
- *
- * main call
- * return type array
- */
 
-class __className__ extends base {
+class __className__ extends Base {
 
+    //set annotations trait
+    use ServiceAnnotationsController;
 
     /**
      * Constructor.
-     *
-     * @param type dependency injection and function
      */
     public function __construct() {
 
@@ -36,16 +20,14 @@ class __className__ extends base {
         $this->branchInitialize();
     }
 
-
     /**
      * for repository src service
      * get method is main run.
-     *
-     * @return string|array|object
+     * @return mixed
      */
     public function get(){
 
         //return source
-        return "__projectName__ repository __bundleName__ __srcName__";
+        return ["__projectName__ repository __bundleName__ __srcName__"];
     }
 }
