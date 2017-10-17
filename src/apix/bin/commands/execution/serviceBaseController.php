@@ -141,8 +141,6 @@ class ServiceBaseController
             'request'           =>request,
             'version'           =>version,
             'token'             =>\app::checkToken(),
-            'user'              =>\app::getAppDefinition(),
-            'query'             =>$request->query(),
             'isSecure'          =>$request->isSecure()
 
         ];
