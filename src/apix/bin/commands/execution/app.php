@@ -19,19 +19,8 @@ class App
     {
         return [
 
-            'base'       =>'\\src\\app\\__projectName__\\v1\\serviceBaseController'
+            'base'       =>'\\Src\\App\\__projectName__\\V1\\ServiceBaseController'
         ];
-    }
-
-
-    /**
-     * @method staticProvider.
-     * class static call access for every service.
-     * @return array
-     */
-    public function staticProvider()
-    {
-        return [];
     }
 
     /**
@@ -52,8 +41,7 @@ class App
     public static function getAppClassAlias()
     {
         return [
-            'Adapter'           =>'src\app\__projectName__\v1\serviceAdapterController',
-            'Log'               =>'src\app\__projectName__\v1\serviceLogController'
+            'Log'               =>'Src\App\__projectName__\V1\ServiceLogController'
         ];
     }
 

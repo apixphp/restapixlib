@@ -34,7 +34,7 @@ class ServiceBaseController
     //throttle status
     public $throttle;
 
-    //nodelist
+    //node list
     public $nodes=[];
 
     //source
@@ -58,9 +58,6 @@ class ServiceBaseController
 
     /**
      * Constructor.
-     *
-     * @param type dependency injection and stk class
-     * request method : symfony component
      * main loader as construct method
      */
     public function __construct()
@@ -68,31 +65,6 @@ class ServiceBaseController
         $this->throttle=$this->throttle();
         $this->request=new Request();
     }
-
-    /**
-     * getExtensionsLoaded.
-     *
-     * get your extensions loaded for php system
-     */
-    public function getExtensionsLoaded()
-    {
-        return (new \Response('html'))->out(phpinfo());
-    }
-
-
-    /**
-     * Branch Inıtialize.
-     * source,main,query
-     */
-    public function branchInitialize()
-    {
-        $this->source=\branch::source();
-        $this->query=\branch::query();
-        $this->main=\branch::main();
-        $this->mongo=\branch::mongo();
-        $this->webservice=\branch::webservice();
-    }
-
 
     /**
      * localization features provide a convenient way to retrieve strings in various languages,
@@ -116,12 +88,36 @@ class ServiceBaseController
     }
 
     /**
-     * call_user_func,
+     * getExtensionsLoaded.
+     * get your extensions loaded for php system
+     */
+    public function getExtensionsLoaded()
+    {
+        return $this->response(phpinfo(),'html');
+    }
+
+    /**
+     * @param $data
+     * @param null $output
      * @return mixed
      */
-    public function call($data)
+    public function response($data, $output=null){
+
+        return (new \Response($output))->out($data);
+    }
+
+
+    /**
+     * Branch Inıtialize.
+     * source,main,query
+     */
+    public function branchInitialize()
     {
-        return call_user_func($data);
+        $this->source       =\branch::source();
+        $this->query        =\branch::query();
+        $this->main         =\branch::main();
+        $this->mongo        =\branch::mongo();
+        $this->webservice   =\branch::webservice();
     }
 
 
@@ -129,25 +125,25 @@ class ServiceBaseController
      * Get a unique fingerprint for the request / route / IP address.
      * if show paremeter is false,it returns md5 value
      * if show paremeter is true,it returns array values
-     *
-     * @return string
+     * @param $show boolean
+     * @return array
      */
     public function fingerPrint($show=false)
     {
         $request=new Request();
         $list=[
-            'ip'=>$request->getClientIp(),
-            'getHost'=>$request->getHost(),
-            'getBasePath'=>$request->getBasePath(),
-            'deviceToken'=>\app::deviceToken(),
-            'service'=>service,
-            'method'=>Utils::cleanActionMethod(method),
-            'request'=>request,
-            'version'=>version,
-            'token'=>\app::checkToken(),
-            'user'=>\app::getAppDefinition(),
-            'query'=>$request->query(),
-            'isSecure'=>$request->isSecure()
+            'ip'                =>$request->getClientIp(),
+            'getHost'           =>$request->getHost(),
+            'getBasePath'       =>$request->getBasePath(),
+            'deviceToken'       =>\app::deviceToken(),
+            'service'           =>service,
+            'method'            =>Utils::cleanActionMethod(method),
+            'request'           =>request,
+            'version'           =>version,
+            'token'             =>\app::checkToken(),
+            'user'              =>\app::getAppDefinition(),
+            'query'             =>$request->query(),
+            'isSecure'          =>$request->isSecure()
 
         ];
 
@@ -161,7 +157,7 @@ class ServiceBaseController
     /**
      * The EventDispatcher component provides tools that allow your application
      * components to communicate with each other by dispatching events and listening to them.
-     * @event param src/store/services/event
+     * event param src/store/services/event
      *
      * @return array
      */

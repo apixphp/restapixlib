@@ -33,6 +33,20 @@ trait ServiceAnnotationsController
     }
 
     /**
+     * @var $device \src\store\services\mobileDetect
+     */
+    public $device;
+
+    /**
+     * @return \src\store\services\mobileDetect
+     */
+    public function device(){
+
+        $this->device=app('device');
+        return $this->device;
+    }
+
+    /**
      * @var $collection \src\store\services\appCollection
      */
     public $collection;

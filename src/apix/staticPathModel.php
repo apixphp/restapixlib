@@ -9,6 +9,7 @@
  * return @array
  */
 namespace apix;
+use Apix\Utils;
 
 class staticPathModel {
 
@@ -182,7 +183,7 @@ class staticPathModel {
         $service=($service!==null) ? $service : service;
 
         $serviceConfNamespace='\\src\\app\\'.$app.'\\'.$version.'\\__call\\'.$service.'\serviceConf';
-        $serviceConfFile=utils::convertPathFromNamespace($serviceConfNamespace).'.php';
+        $serviceConfFile=Utils::convertPathFromNamespace($serviceConfNamespace).'.php';
 
         $serviceConfPath=[];
         if(file_exists($serviceConfFile)){
@@ -210,7 +211,7 @@ class staticPathModel {
         $service=($service!==null) ? $service : service;
 
         $serviceConfNamespace='\\src\\app\\'.$app.'\\'.$version.'\\servicePackageDevController';
-        $serviceConfFile=utils::convertPathFromNamespace($serviceConfNamespace).'.php';
+        $serviceConfFile=Utils::convertPathFromNamespace($serviceConfNamespace).'.php';
 
         $serviceConfPath=[];
         if(file_exists($serviceConfFile)){
@@ -271,7 +272,7 @@ class staticPathModel {
     public static function getKernelPath($project){
 
         $kernelPath='\\src\\app\\'.$project.'\\kernel\kernel';
-        return utils::resolve($kernelPath);
+        return Utils::resolve($kernelPath);
 
 
     }
@@ -279,7 +280,7 @@ class staticPathModel {
     public static function getKernelCommand($project,$namespace=false){
 
         $kernelCommandNamespace='\\src\\app\\'.$project.'\\kernel\commands';
-        $kernelCommandPath=utils::convertPathFromNamespace($kernelCommandNamespace);
+        $kernelCommandPath=Utils::convertPathFromNamespace($kernelCommandNamespace);
         if($namespace===false){
             return $kernelCommandPath;
         }
@@ -372,12 +373,12 @@ class staticPathModel {
     public static function getWebServiceConfig(){
 
         $configNameSpace='\\src\\app\\'.app.'\\'.version.'\\optional\\webServices\\config';
-        return utils::resolve($configNameSpace);
+        return Utils::resolve($configNameSpace);
 
     }
 
     public  static function getSystemKernel(){
-        return utils::resolve(self::$systemKernel);
+        return Utils::resolve(self::$systemKernel);
     }
 
     public  static function getResourchesPath(){

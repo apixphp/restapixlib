@@ -21,7 +21,7 @@ class Auth {
                 //default user guard
                 'default'=>[
                     'driver'=>'database',
-                    'model'=>\src\app\__projectName__\v1\model\sudb\user::class,
+                    'model'=>\Src\App\__projectName__\V1\Model\Sudb\User::class,
                     'credentials'=>[
                         'username'=>'usertest',
                         'password'=>'123456'
@@ -36,7 +36,7 @@ class Auth {
                 //admin user guard
                 'admin'=>[
                     'driver'=>'database',
-                    'model'=>\src\app\__projectName__\v1\model\sudb\user::class,
+                    'model'=>\Src\App\__projectName__\V1\Model\Sudb\User::class,
                     'credentials'=>[],
                     'registerMethod'=>'session',
                     'tokenField'=>'app_token',
