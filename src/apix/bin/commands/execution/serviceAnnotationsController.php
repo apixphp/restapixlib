@@ -2,6 +2,7 @@
 
 namespace Src\App\__projectName__\V1;
 
+use apix\utils;
 use Src\Store\Services\Str;
 
 /**
@@ -10,6 +11,17 @@ use Src\Store\Services\Str;
  */
 trait ServiceAnnotationsController
 {
+    /**
+     * @var $redis \Src\App\__projectName__\V1\ServiceToolsController
+     */
+    public $tool;
+
+    public function tool(){
+
+        $toolClass='\Src\App\__projectName__\V1\ServiceToolsController';
+        $this->tool=utils::resolve($toolClass);
+        return $this->tool;
+    }
 
     /**
      * @var $redis \src\store\services\redis
