@@ -2,8 +2,15 @@
 
 namespace Src\App\__projectName__\V1;
 
+use Src\Store\Services\Str;
+
+/**
+ * Trait ServiceAnnotationsController
+ * @package Src\App\__projectName__\V1
+ */
 trait ServiceAnnotationsController
 {
+
     /**
      * @var $redis \src\store\services\redis
      */
@@ -74,6 +81,36 @@ trait ServiceAnnotationsController
 
         $this->logger=new \Log($logType,$logFile);
         return $this->logger;
+    }
+
+    /**
+     * @param $name
+     * @param $arg
+     * @return mixed
+     */
+    public function __call($name, $arg){
+
+        //if $name starts with $needles for model
+        if(Str::startsWith($name,'model')){
+
+            //get model builder query
+            return $this->query->{Str::crop($name,'model')}();
+        }
+
+        //if $name starts with $needles for source
+        if(Str::startsWith($name,'source')){
+
+            //get source bundle
+            return $this->source->{Str::crop($name,'source')}();
+        }
+
+        //if $name starts with $needles for repo
+        if(Str::startsWith($name,'repo')){
+
+            //get repository
+            $repo=Str::crop($name,'repo');
+            return \Repo::$repo();
+        }
     }
 
     //annotationController

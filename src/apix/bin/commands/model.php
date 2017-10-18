@@ -311,25 +311,8 @@ class model extends console {
 
         utils::changeClass(root.'/src/app/'.$annotation['project'].'/'.$annotation['version'].'/serviceAnnotationsController.php',[
 
-            '//annotationController' => '
-            
-    /**
-     * @var $model'.ucfirst($annotation['file']).' \src\app\\'.$annotation['project'].'\\'.$annotation['version'].'\model\\'.$annotation['orm'].'\builder\\'.$annotation['file'].'Builder
-     */
-     public $model'.ucfirst($annotation['file']).';
-     
-     /**
-     * @return model\\'.$annotation['orm'].'\builder\\'.$annotation['file'].'Builder
-     */
-     public function getModel'.ucfirst($annotation['file']).'(){
-
-         $this->model'.ucfirst($annotation['file']).'=$this->query->'.$annotation['file'].'();
-         return $this->model'.ucfirst($annotation['file']).';
-     }
-             
-     //annotationController
-            
-            '
+            '* Trait ServiceAnnotationsController' => '* Trait ServiceAnnotationsController     
+ * @method \Src\App\\'.$annotation['project'].'\\'.$annotation['version'].'\Model\\'.ucfirst($annotation['orm']).'\Builder\\'.strtolower($annotation['file']).'Builder model'.ucfirst($annotation['file']).'  '
         ]);
 
     }

@@ -180,23 +180,8 @@ class repo extends Console {
 
         utils::changeClass(root.'/src/app/'.$annotation['project'].'/'.$annotation['version'].'/serviceAnnotationsController.php',[
 
-            '//annotationController' => '
-            
-    /**
-     * @var $repo'.ucfirst($annotation['repo']).' \src\app\\'.$annotation['project'].'\\'.$annotation['version'].'\Optional\Repository\\'.$annotation['repo'].'\Index
-     */
-     public $repo'.ucfirst($annotation['repo']).';
-     
-   
-     public function getRepo'.ucfirst($annotation['repo']).'(){
-
-         $this->repo'.ucfirst($annotation['repo']).'=\Repo::'.strtolower($annotation['repo']).'();
-         return $this->repo'.ucfirst($annotation['repo']).';
-     }
-             
-     //annotationController
-            
-            '
+            '* Trait ServiceAnnotationsController' => '* Trait ServiceAnnotationsController     
+ * @method \Src\App\\'.$annotation['project'].'\\'.$annotation['version'].'\Optional\\Repository\\'.strtolower($annotation['repo']).'\Index repo'.ucfirst($annotation['repo']).'  '
         ]);
 
     }

@@ -188,25 +188,8 @@ class Source extends console {
 
         utils::changeClass(root.'/src/app/'.$annotation['project'].'/'.$annotation['version'].'/serviceAnnotationsController.php',[
 
-            '//annotationController' => '
-            
-    /**
-     * @var $source'.ucfirst($annotation['bundle']).' \src\app\\'.$annotation['project'].'\\'.$annotation['version'].'\__Call\\'.$annotation['service'].'\Source\\'.$annotation['bundle'].'\Index
-     */
-     public $source'.ucfirst($annotation['bundle']).';
-     
-     /**
-     * @return __Call\\'.$annotation['service'].'\Source\\'.$annotation['bundle'].'\Index
-     */
-     public function getSource'.ucfirst($annotation['bundle']).'(){
-
-         $this->source'.ucfirst($annotation['bundle']).'=$this->source->'.strtolower($annotation['bundle']).'();
-         return $this->source'.ucfirst($annotation['bundle']).';
-     }
-             
-     //annotationController
-            
-            '
+            '* Trait ServiceAnnotationsController' => '* Trait ServiceAnnotationsController     
+ * @method \Src\App\\'.$annotation['project'].'\\'.$annotation['version'].'\__Call\\'.ucfirst($annotation['service']).'\Source\\'.strtolower($annotation['bundle']).'\\Index source'.ucfirst($annotation['bundle']).'  '
         ]);
 
     }
