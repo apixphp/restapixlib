@@ -54,6 +54,10 @@ class project extends console {
             $list[]=$this->fileprocess->mkdir($project.'/Kernel/Middleware');
             $list[]=$this->fileprocess->touch($project.'/Kernel/Middleware/Validator.php',$middlewareValidator);
 
+            $middlewareAuthenticate['execution']='project_middleware_authenticate';
+            $middlewareAuthenticate['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/Kernel/Middleware/Authenticate.php',$middlewareAuthenticate);
+
             $list[]=$this->fileprocess->mkdir($project.'/Kernel/Node');
 
             $node['execution']='project_node';

@@ -17,6 +17,7 @@ return [
      * array service:request:method | service:request | service
      */
     'validator'=>'all',
+    'authenticate'=>'all',
 
     /**
      * exclude
@@ -24,6 +25,7 @@ return [
      * * array service:request:method | service:request | service
      */
     'exclude'=>[
-        'validator'=>[]
+        'validator'=>[],
+        'authenticate'=>['login','logout']
     ]
 ];
