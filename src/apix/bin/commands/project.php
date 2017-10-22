@@ -167,10 +167,6 @@ class project extends console {
 
             $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions');
 
-            $touchprovisionindex['execution']='services/provision';
-            $touchprovisionindex['params']['projectName']=$project;
-            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Provisions/Index.php',$touchprovisionindex);
-
             $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions/Limitation');
 
             $touchprovisionLimitationaccess['execution']='services/accessRules';

@@ -1,6 +1,7 @@
 <?php
 
-namespace apix;
+namespace Apix;
+
 use Apix\BaseDefinitor as Definitor;
 use Symfony\Component\Yaml\Yaml;
 use Src\Store\Services\Httprequest as Request;
@@ -10,56 +11,56 @@ use Apix\StaticPathModel;
 class connection extends Definitor {
 
     /**
-     * @var container var
+     * @var $container
      * connection run
      * for service base controller
      */
     public $container;
 
     /**
-     * @var resolve var
+     * @var $resolve
      * connection run
      * for service base controller
      */
     public $resolve;
 
     /**
-     * @var instance var
+     * @var $_instance
      * connection run
      * for service base controller
      */
     private static $_instance=null;
 
     /**
-     * @var globalVars var
+     * @var $globalVars
      * connection run
      * for service base controller
      */
     private static $globalVars=null;
 
     /**
-     * @var service var
+     * @var $service
      * connection run
      * for service base controller
      */
     private static $service=null;
 
     /**
-     * @var serviceMethod var
+     * @var $serviceMethod
      * connection run
      * for service base controller
      */
     private static $serviceMethod=null;
 
     /**
-     * @var queryParams var
+     * @var $queryParams
      * connection run
      * for service base controller
      */
     private static $queryParams=null;
 
     /**
-     * @var getVersion var
+     * @var $getVersion
      * connection run
      * for service base controller
      */
@@ -129,13 +130,8 @@ class connection extends Definitor {
             $instance->getDeclarationApi();
 
 
-                //provision run
-                return $instance->provision(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
-                    return $instance->rateLimiterQuery(/**
-                     * @return mixed
-                     */
-                    function() use ($service,$serviceMethod,$getVersion,$instance) {
+                    return $instance->rateLimiterQuery(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
                         $instance->serviceMiddlewareRun();
 
@@ -247,7 +243,7 @@ class connection extends Definitor {
                     });
 
 
-                });
+
         });
     }
 
