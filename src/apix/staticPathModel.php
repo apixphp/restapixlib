@@ -307,6 +307,23 @@ class staticPathModel {
 
     }
 
+
+    public static function getOncePath($project=null,$namespace=false){
+
+        if(defined('app')){
+            if($namespace){
+                return '\\Src\\App\\'.app.'\\Kernel\\Once';
+            }
+            return root.'/Src/App/'.app.'/Kernel/Once';
+        }
+
+        if($namespace){
+            return '\\Src\\App\\'.$project.'\\Kernel\\Once';
+        }
+        return root.'/Src/App/'.$project.'/Kernel/Once';
+
+    }
+
     public static function serviceMiddleware(){
 
         $serviceMiddleware=root.'/src/app/'.app.'/'.version.'/serviceMiddlewareController.php';

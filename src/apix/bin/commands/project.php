@@ -61,6 +61,9 @@ class project extends console {
 
             $list[]=$this->fileprocess->mkdir($project.'/Kernel/Node');
 
+            $list[]=$this->fileprocess->mkdir($project.'/Kernel/Once');
+            $list[]=$this->fileprocess->touch($project.'/Kernel/Once/once.yaml',[]);
+
             $node['execution']='project_node';
             $node['params']['projectName']=null;
             $list[]=$this->fileprocess->touch($project.'/Kernel/Node/App.js',$node);

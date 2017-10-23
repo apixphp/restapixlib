@@ -309,7 +309,7 @@ class connection extends Definitor {
 
         //define project
         define("basePath",$basePath);
-        define("app",self::$service[0]);
+        define("app",ucfirst(self::$service[0]));
         self::$service[1]=(array_key_exists(1,self::$service)) ? self::$service[1] :null;
         define("service",self::$service[1]);
         define("version",self::$getVersion);
