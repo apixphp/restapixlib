@@ -387,6 +387,11 @@ class staticPathModel {
         return root.'/src/app/'.app.'/storage';
     }
 
+    public static function getEncryptFilePath(){
+
+        return root.'/encrypt.yaml';
+    }
+
     public static function getWebServiceConfig(){
 
         $configNameSpace='\\src\\app\\'.app.'\\'.version.'\\optional\\webServices\\config';

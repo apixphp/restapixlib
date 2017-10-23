@@ -8,7 +8,8 @@
  * appBootLoader
  * return @array
  */
-namespace apix;
+namespace Apix;
+
 use Apix\Utils;
 use Apix\StaticPathModel;
 
