@@ -31,6 +31,7 @@ class project extends console {
         $Composer=$this->ReadStdin('Do you want to use Composer in the your project? ["Y","N"]',null,'N');
         $orm=$this->ReadStdin('Which orm do you want to use in the your project? ["Sudb","Doctrine","Eloquent"]',null,'Sudb');
 
+
         $project=ucfirst($this->getProjectName($data));
 
         if($this->fileprocess->mkdir($project)){
@@ -167,6 +168,10 @@ class project extends console {
 
             $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions');
 
+            $touchprovisionindex['execution']='services/provision';
+            $touchprovisionindex['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Provisions/Index.php',$touchprovisionindex);
+
             $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions/Limitation');
 
             $touchprovisionLimitationaccess['execution']='services/accessRules';
@@ -243,7 +248,8 @@ class project extends console {
             }
 
 
-            if($orm=="Eloquent"){
+            if($orm=="eloquent"){
+
                 $list[]=$this->fileprocess->mkdir($project.'/V1/Model/Eloquent');
 
                 $list[]=$this->fileprocess->mkdir($project.'/V1/Model/Eloquent/Builder');

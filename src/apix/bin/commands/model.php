@@ -46,7 +46,7 @@ class model extends console {
 
                     $tablesYamlPath='./src/app/'.$project.'/'.$version.'/Model/Tables.yaml';
 
-                    if($baseModel==="Eloquent"){
+                    if($baseModel==="eloquent"){
 
                         $modelControlPath='./src/app/'.$project.'/'.$version.'/Model/Eloquent/'.ucfirst($getParams[1]['file']).'.php';
 
