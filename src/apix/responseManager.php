@@ -1,20 +1,25 @@
 <?php
-/*
- * This file is response method for every service
- * default : response data array
- * managed as webservice response method in main controller
- * return @array
- */
-namespace apix;
+namespace Apix;
+
 use Apix\Utils;
 use Apix\StaticPathModel;
 use Spatie\ArrayToXml\ArrayToXml;
 use Apix\ObjectLoader;
+use Symfony\Component\HttpFoundation\Request;
 
 class responseManager {
 
 
+    /**
+     * @var $definitor
+     */
     public $definitor;
+
+    /**
+     * @var $request
+     */
+    public $request;
+
     /**
      * get response Out construct.
      * booting resolve
@@ -28,6 +33,8 @@ class responseManager {
             $responseOutType=staticPathModel::getAppServiceBase()->response;
         }
         $this->definitor=$responseOutType;
+
+        $this->request=Request::createFromGlobals();
 
     }
 
@@ -54,9 +61,23 @@ class responseManager {
 
             return $this->getStatusDataEmpty($data,$msg,$developInfo,function() use($data,$msg,$developInfo){
 
+                $httpHeaders=['host','connection','cache-control','accept','upgrade-insecure-requests','user-agent',
+                    'accept-encoding','accept-language','cookie','postman-token','content-length','origin','content-type','clientToken'];
+                $list=[];
+                foreach ($this->request->headers->all() as $key=>$value) {
+                    if(!in_array($key,$httpHeaders)){
+                        $list[$key]=$value;
+                    }
+                }
+
                 $data=['success'=>(bool)true,'statusCode'=>200,
                         'responseTime'=>microtime(true)-time_start,
-                        'requestDate'=>date("Y-m-d H:i:s")]+['data'=>$data,'development'=>$developInfo];
+                        'requestDate'=>date("Y-m-d H:i:s")]+['data'=>$data,'development'=>$developInfo,'links'=>[
+                            'href'=>$this->request->getUri(),
+                            'client_get'=> $this->request->query->all(),
+                            'client_post'=>$this->request->request->all(),
+                            'client_headers'=>$list
+                    ]];
 
                 return $this->responseDefinitor($data);
             });
