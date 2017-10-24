@@ -55,6 +55,15 @@ class ServiceBaseController
     //symfony request
     public $request;
 
+    //http get object
+    public $get;
+
+    //http post object
+    public $post;
+
+    //http headers object
+    public $headers;
+
 
     /**
      * Constructor.
@@ -64,6 +73,9 @@ class ServiceBaseController
     {
         $this->throttle=$this->throttle();
         $this->request=new Request();
+        $this->get=$this->request->query();
+        $this->post=$this->request->input();
+        $this->headers=$this->request->getHeaders();
     }
 
     /**

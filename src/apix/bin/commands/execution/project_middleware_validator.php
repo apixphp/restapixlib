@@ -28,12 +28,9 @@ class Validator extends Base  {
      */
     public function getUrlPageControl(){
 
-        //request query
-        $query=$this->request->query();
-
         //check page on the url
-        if(isset($query['page'])){
-            if(!is_numeric($query['page'])){
+        if(isset($this->get['page'])){
+            if(!is_numeric($this->get['page'])){
                 throw new \InvalidArgumentException('page value on the url is not valid');
             }
         }
