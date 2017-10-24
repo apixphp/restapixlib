@@ -393,4 +393,29 @@ class utils {
         rmdir($path);
         return;
     }
+
+    public static function convertNameSpaceFromPath($path){
+
+        $withoutRoot=str_replace(root,'',$path);
+        $signNameSpace=str_replace('/','\\',$withoutRoot);
+        return str_replace('.php','',$signNameSpace);
+    }
+
+
+    public static function getGlobFile($path,$class=false,$extension='php'){
+
+        $list=[];
+        foreach (glob("".$path."/*.".$extension) as $file) {
+
+            if($class===false){
+                $list[]=$file;
+            }
+            else{
+                $list[]=self::convertNameSpaceFromPath($file);
+            }
+
+        }
+
+        return $list;
+    }
 }

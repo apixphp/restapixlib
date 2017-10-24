@@ -12,24 +12,12 @@ class __class__ extends Base {
 
     /**
      * Represents a once method.
-     * @method scriptBoot
+     * @method boot
      * return mixed
      */
-    public function scriptBoot(){
+    public function boot(){
 
         //make somethings
-    }
-
-
-    /**
-     * Represents a once method.
-     * @method commandBoot
-     * return array
-     */
-    public function commandBoot(){
-
-        //write php api command
-        return [];
     }
 
 

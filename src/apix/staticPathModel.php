@@ -392,6 +392,11 @@ class staticPathModel {
         return root.'/encrypt.yaml';
     }
 
+    public static function getOnceKernelPath(){
+
+        return root.'/src/app/'.app.'/Kernel/Once';
+    }
+
     public static function getWebServiceConfig(){
 
         $configNameSpace='\\src\\app\\'.app.'\\'.version.'\\optional\\webServices\\config';
