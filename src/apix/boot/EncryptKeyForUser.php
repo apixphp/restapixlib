@@ -24,16 +24,22 @@ class EncryptKeyForUser {
         if(!file_exists($file)){
 
             //exception catch blog for encrypt file
-            throw new \InvalidArgumentException('Encrypt error for application');
+            throw new \LogicException('Encrypt file error for application');
         }
 
         //get encrypt file path and encrypt object for parsing
-        $encryptFilePath    =file_get_contents($file);
-        $this->encrypt      =Yaml::parse($encryptFilePath);
+        $encryptFilePath    = file_get_contents($file);
+        $this->encrypt      = Yaml::parse($encryptFilePath);
 
     }
 
     public function boot(){
 
+        //check encrypt array for null type and key
+        if($this->encrypt===null OR !isset($this->encrypt['key'])){
+
+            //exception catch blog for encrypt file key
+            throw new \LogicException('Encrypt key error for application');
+        }
     }
 }

@@ -40,21 +40,19 @@ class OnceForKernel extends EncryptKeyForUser {
         if(!file_exists($this->file)){
 
             //exception catch blog for once yaml file
-            throw new \InvalidArgumentException('Once configuration error for application');
+            throw new \LogicException('Once configuration error for application');
         }
 
         //get once yaml file path and once yaml object for parsing
-        $onceFilePath       =file_get_contents($this->file);
-        $this->once         =Yaml::parse($onceFilePath);
+        $onceFilePath       = file_get_contents($this->file);
+        $this->once         = Yaml::parse($onceFilePath);
 
     }
 
     public function boot(){
 
-        if($this->once===null OR !isset($this->once[$this->encrypt['key']])){
-
-            $this->registerOnceProcess();
-        }
+        //process start
+        $this->registerOnceProcess();
     }
 
     /**
@@ -63,6 +61,7 @@ class OnceForKernel extends EncryptKeyForUser {
      */
     public function getOnceClasses(){
 
+        //get all kernel once file
         return Utils::getGlobFile(StaticPathModel::getOncePath(),'true');
     }
 
@@ -71,24 +70,36 @@ class OnceForKernel extends EncryptKeyForUser {
      */
     public function registerOnceProcess(){
 
+        //loop all once class
         foreach ($this->getOnceClasses() as $once){
 
-           $this->registerBoot($once,$this->onceList);
+            //for tracking once algorithm,set once key
+            //check once key to according to algoritm
+            $onceKey=$this->encrypt['key'].':'.md5($once);
+            if($this->once===null OR !in_array($onceKey,$this->once)){
+
+                //assign to array once key
+                //register boot
+                $this->onceList[]=$onceKey;
+                $this->registerBoot($once);
+            }
+
         }
     }
 
 
     /**
+     * @method registerBoot
      * @param $once
-     * @param $yamlList
      */
-    private function registerBoot($once, $yamlList){
+    private function registerBoot($once){
 
+        //check once key
         if(!isset($this->once[$this->encrypt['key']][$once])){
 
+            //once class boot
+            //write to yaml file
             Utils::resolve($once)->boot();
-
-            $this->onceList[$this->encrypt['key']][]=$once;
             Utils::dumpYaml($this->onceList,$this->file);
         }
     }
