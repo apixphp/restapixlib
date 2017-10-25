@@ -130,7 +130,6 @@ class connection extends Definitor {
 
 
                 //provision run
-                return $instance->provision(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
                     return $instance->rateLimiterQuery(/**
                      * @return mixed
@@ -247,7 +246,7 @@ class connection extends Definitor {
                     });
 
 
-                });
+
         });
     }
 
