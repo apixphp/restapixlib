@@ -62,11 +62,13 @@ class project extends console {
             $list[]=$this->fileprocess->mkdir($project.'/Kernel/Node');
 
             $list[]=$this->fileprocess->mkdir($project.'/Kernel/Once');
-            $list[]=$this->fileprocess->touch($project.'/Kernel/Once/once.yaml',[]);
+            $list[]=$this->fileprocess->touch($project.'/Kernel/Once/once.yaml',null);
 
             $node['execution']='project_node';
             $node['params']['projectName']=null;
             $list[]=$this->fileprocess->touch($project.'/Kernel/Node/App.js',$node);
+
+
 
             $list[]=$this->fileprocess->mkdir($project.'/Kernel/Stubs');
             $list[]=$this->fileprocess->touch($project.'/Kernel/Stubs/index.html',null);
@@ -171,9 +173,6 @@ class project extends console {
 
             $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions');
 
-            $touchprovisionindex['execution']='services/provision';
-            $touchprovisionindex['params']['projectName']=$project;
-            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Provisions/Index.php',$touchprovisionindex);
 
             $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions/Limitation');
 
@@ -184,9 +183,6 @@ class project extends console {
             $list[]=$this->fileprocess->mkdir($project.'/V1/Optional/Provisions/Limitation/Yaml');
             $list[]=$this->fileprocess->touch($project.'/V1/Optional/Provisions/Limitation/Yaml/index.html',null);
 
-            /*$touchprovisionobjectloader['execution']='services/objectloader';
-            $touchprovisionobjectloader['params']['projectName']=$project;
-            $list[]=$this->fileprocess->touch($project.'/V1/Optional/Provisions/objectloader.php',$touchprovisionobjectloader);*/
 
 
             $touchServiceApp['execution']='App';
