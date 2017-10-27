@@ -64,10 +64,12 @@ class Connection extends Definitor {
         return $instance->checkServiceUrlParamArray(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
             //kernel booting
-            $instance->booting($instance);
+            $instance->getAutoLoadsFromServices();
+            $instance->setErrorHandlerFormatter($instance);
 
             return $instance->rateLimiterQuery(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
+                $instance->booting($instance);
                 $instance->serviceMiddlewareRun();
 
                         //check package auto service and method

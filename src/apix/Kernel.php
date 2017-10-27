@@ -56,8 +56,6 @@ class Kernel {
          */
         $app=$app::getInstance();
 
-        $app->getAutoLoadsFromServices();
-        $app->setErrorHandlerFormatter($app);
         $app->checkForMaintenance($app);
         $app->bootStrap();
         $app->getDeclarationApi();
