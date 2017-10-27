@@ -1,80 +1,18 @@
 <?php
+namespace Apix;
 
-namespace apix;
-use Apix\BaseDefinitor as Definitor;
-use Symfony\Component\Yaml\Yaml;
 use Src\Store\Services\Httprequest as Request;
-use Apix\Utils;
-use Apix\StaticPathModel;
+use Apix\BaseDefinitor as Definitor;
 
-class connection extends Definitor {
-
-    /**
-     * @var container var
-     * connection run
-     * for service base controller
-     */
-    public $container;
+class Connection extends Definitor {
 
     /**
-     * @var resolve var
-     * connection run
-     * for service base controller
-     */
-    public $resolve;
-
-    /**
-     * @var instance var
-     * connection run
-     * for service base controller
-     */
-    private static $_instance=null;
-
-    /**
-     * @var globalVars var
-     * connection run
-     * for service base controller
-     */
-    private static $globalVars=null;
-
-    /**
-     * @var service var
-     * connection run
-     * for service base controller
-     */
-    private static $service=null;
-
-    /**
-     * @var serviceMethod var
-     * connection run
-     * for service base controller
-     */
-    private static $serviceMethod=null;
-
-    /**
-     * @var queryParams var
-     * connection run
-     * for service base controller
-     */
-    private static $queryParams=null;
-
-    /**
-     * @var getVersion var
-     * connection run
-     * for service base controller
-     */
-    private static $getVersion=null;
-
-
-    /**
-     * @internal param __construct $ method
-     * connection run pre loader
-     * for service base controller
+     * @method __construct
      */
     public function __construct(){
 
         /**
-         * @class getServiceNameAndMethodFromRequestUri
+         * getServiceNameAndMethodFromRequestUri
          * connection run getClassDependencyResolver
          * get service and file method from request uri
          * for service base controller
@@ -82,7 +20,7 @@ class connection extends Definitor {
         self::$service=$this->getServiceNameAndMethodFromRequestUri();
 
         /**
-         * @class getPureMethodNameFromService
+         * getPureMethodNameFromService
          * connection run getPureMethodNameFromService
          * get only method name from service
          * for service base controller
@@ -90,7 +28,7 @@ class connection extends Definitor {
         self::$serviceMethod=$this->getPureMethodNameFromService();
 
         /**
-         * @class getQueryParamsFromRoute
+         * getQueryParamsFromRoute
          * connection run getQueryParamsFromRoute
          * get query params from service
          * for service base controller
@@ -98,7 +36,7 @@ class connection extends Definitor {
         self::$queryParams=$this->getQueryParamsFromRoute();
 
         /**
-         * @class getVersionForProject
+         * getVersionForProject
          * connection run getVersionForProject
          * assign version number
          * for service base controller
@@ -108,12 +46,16 @@ class connection extends Definitor {
 
     /**
      * connect to api service (created service).
-     *
      * @return mixed
      */
     public static function run() {
 
-        //get instance
+        /**
+         * @var $instance \Apix\Connection
+         * @var $service
+         * @var $serviceMethod
+         * @var $getVersion
+         */
         $instance=self::getInstance();
         $service=self::$service;
         $serviceMethod=self::$serviceMethod;
@@ -121,29 +63,19 @@ class connection extends Definitor {
 
         return $instance->checkServiceUrlParamArray(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
-            //load services
-            $instance->getAutoLoadsFromServices();
-            $instance->setErrorHandlerFormatter($instance);
-            $instance->checkForMaintenance($instance);
-            $instance->bootStrap();
-            $instance->getDeclarationApi();
+            //kernel booting
+            $instance->booting($instance);
 
+            return $instance->rateLimiterQuery(function() use ($service,$serviceMethod,$getVersion,$instance) {
 
-                //provision run
-
-                    return $instance->rateLimiterQuery(/**
-                     * @return mixed
-                     */
-                    function() use ($service,$serviceMethod,$getVersion,$instance) {
-
-                        $instance->serviceMiddlewareRun();
+                $instance->serviceMiddlewareRun();
 
                         //check package auto service and method
-                        if($instance->checkPackageAuto($service)['status']){
-                            $packageAuto=utils::resolve($instance->checkPackageAuto($service)['class']);
-                            return $instance->responseOutRedirect($instance,$packageAuto->$serviceMethod(),true);
+                if($instance->checkPackageAuto($service)['status']){
+                    $packageAuto=utils::resolve($instance->checkPackageAuto($service)['class']);
+                    return $instance->responseOutRedirect($instance,$packageAuto->$serviceMethod(),true);
 
-                        }
+                }
 
                         //check package dev service and method
                         if($instance->checkPackageDev($service)['status']){
@@ -251,14 +183,11 @@ class connection extends Definitor {
     }
 
     /**
-     * get instance classes.
-     *
-     * outputs get instance.
-     *
      * @param string
-     * @return response instance runner
+     * @return mixed
      */
-    private function getVersionForProject(){
+    public function getVersionForProject(){
+
         //get version number from config
         $defaultVersionCheck=$this->getConfigVersionNumber(['serviceName'=>self::$service[0]]);
         return (array_key_exists("version",self::$queryParams)) ? self::$queryParams['version'] : $defaultVersionCheck;
@@ -273,7 +202,7 @@ class connection extends Definitor {
      * @param string
      * @return response autoloads runner
      */
-    private function getAutoLoadsFromServices(){
+    public function getAutoLoadsFromServices(){
 
         //get defines
         $this->getDefinitions();
@@ -301,7 +230,7 @@ class connection extends Definitor {
      * @param string
      * @return response define runner
      */
-    private function getDefinitions(){
+    public function getDefinitions(){
 
         $request=new request();
         $basePath=$request->getHost().''.$request->getBasePath();
@@ -331,7 +260,7 @@ class connection extends Definitor {
      * @param string
      * @return response instance runner
      */
-    private function checkServiceUrlParamArray($callback){
+    public function checkServiceUrlParamArray($callback){
         if(strlen(self::$service[0])==0){
             return $this->responseOut([],$this->getFixLog('projectPathError'));
         }
@@ -350,7 +279,7 @@ class connection extends Definitor {
      * @param string
      * @return response instance runner
      */
-    private static function getInstance(){
+    public static function getInstance(){
         if(self::$_instance==null){ self::$_instance=new self;}
         return self::$_instance;
 

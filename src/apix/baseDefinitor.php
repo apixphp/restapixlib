@@ -1,11 +1,6 @@
 <?php
-/*
- * This file is base definitor for connection  .
- * this is reference to connection run class
- * system main file
- */
+namespace Apix;
 
-namespace apix;
 use Apix\Utils;
 use Apix\StaticPathModel;
 use Apix\RateLimitQuery;
@@ -20,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * return type array
  */
 
-class BaseDefinitor  {
+class BaseDefinitor extends Kernel {
 
     public $request;
     protected $projectPath='src/app';

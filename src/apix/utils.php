@@ -1,6 +1,6 @@
 <?php
+namespace Apix;
 
-namespace apix;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Process\Process;
@@ -8,9 +8,21 @@ use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Apix\StaticPathModel;
 
-class utils {
+class Utils {
 
+    /**
+     * @var $extension
+     */
     public static $extension='.php';
+
+    /**
+     * @method container
+     * @return \DI\Container
+     */
+    public static function container(){
+
+        return \DI\ContainerBuilder::buildDevContainer();
+    }
 
     /**
      * Class resolve.
@@ -20,10 +32,16 @@ class utils {
      */
     public static function resolve($class=null){
         if($class!==null){
-            $container = \DI\ContainerBuilder::buildDevContainer();
+            $container = self::container();
             return $container->get($class);
         }
 
+    }
+
+
+    public static function callBind(){
+
+        $container = self::container();
     }
 
 
