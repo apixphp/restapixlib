@@ -39,9 +39,15 @@ class Utils {
     }
 
 
-    public static function callBind(){
+    /**
+     * @param $class
+     * @param array $param
+     * @return mixed
+     */
+    public static function makeBind($class, $param=array()){
 
         $container = self::container();
+        return $container->make($class,$param);
     }
 
 

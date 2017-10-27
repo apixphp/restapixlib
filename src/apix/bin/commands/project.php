@@ -146,6 +146,11 @@ class project extends console {
             $touchServiceToolsControllerParams['params']['projectName']=$project;
             $list[]=$this->fileprocess->touch($project.'/V1/ServiceToolsController.php',$touchServiceToolsControllerParams);
 
+            $touchServicePipelineControllerParams['execution']='ServicePipelineController';
+            $touchServicePipelineControllerParams['params']['projectName']=$project;
+            $list[]=$this->fileprocess->touch($project.'/V1/ServicePipelineController.php',$touchServicePipelineControllerParams);
+
+
             $touchServiceTokenControllerParams['execution']='serviceTokenController';
             $touchServiceTokenControllerParams['params']['projectName']=$project;
             $list[]=$this->fileprocess->touch($project.'/V1/serviceTokenController.php',$touchServiceTokenControllerParams);
