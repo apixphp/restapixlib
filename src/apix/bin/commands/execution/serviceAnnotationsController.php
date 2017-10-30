@@ -7,6 +7,7 @@ use Src\Store\Services\Str;
 
 /**
  * Trait ServiceAnnotationsController
+ * @method \Src\App\Mobi\V1\ServicePipelineController pipeline
  * @package Src\App\__projectName__\V1
  */
 trait ServiceAnnotationsController
@@ -122,6 +123,13 @@ trait ServiceAnnotationsController
             //get repository
             $repo=Str::crop($name,'repo');
             return \Repo::$repo();
+        }
+
+        //annotation for pipeline
+        if($name==="pipeline"){
+
+            //get pipeline service
+            return app('pipeline');
         }
     }
 

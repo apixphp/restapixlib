@@ -242,7 +242,7 @@ class Connection extends Definitor {
         define("app",ucfirst(self::$service[0]));
         self::$service[1]=(array_key_exists(1,self::$service)) ? self::$service[1] :null;
         define("service",self::$service[1]);
-        define("version",self::$getVersion);
+        define("version",ucfirst(self::$getVersion));
         define("method",self::$serviceMethod);
         define("application",root.'/'.src.'/'.app.'');
         define("api","\\src\\app\\".app."\\".version."\\");
