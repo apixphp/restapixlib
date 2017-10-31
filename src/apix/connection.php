@@ -308,8 +308,8 @@ class Connection extends Definitor {
         if(preg_match('@(.*?):@is',$errStr,$errArr)){
             $errType=trim(str_replace('Uncaught','',$errArr[1]));
         }
-
-        if(preg_match('@(.*?):(.*?)in@is',$errStr,$errStrRealArray)){
+       
+        if(preg_match('@(.*?):(.*?)in.\/@is',$errStr,$errStrRealArray)){
             $errStrReal=trim($errStrRealArray[2]);
         }
 
