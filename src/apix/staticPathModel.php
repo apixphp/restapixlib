@@ -176,6 +176,22 @@ class staticPathModel {
     }
 
 
+    public static function getAppServicePipeline($app=null,$version=null){
+
+        if(defined('app')){
+            $servicePipeline='\\Src\\App\\'.app.'\\'.version.'\ServicePipelineController';
+            return Utils::resolve($servicePipeline);
+        }
+        else{
+            $servicePipeline='\\src\\app\\'.$app.'\\'.$version.'\\ServicePipelineController';
+            return new $servicePipeline();
+        }
+        return null;
+
+
+    }
+
+
     public static function getServiceConf($app=null,$version=null,$service=null){
 
         $app=($app!==null) ? $app : app;

@@ -120,6 +120,17 @@ class ServiceBaseController
 
 
     /**
+     * @method getClass
+     * @return string
+     */
+    public function getClass(){
+
+        //get class name
+        return get_called_class();
+    }
+
+
+    /**
      * Branch Inıtialize.
      * source,main,query
      */
