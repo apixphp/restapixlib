@@ -260,14 +260,17 @@ class Connection extends Definitor {
      * outputs get instance.
      *
      * @param string
-     * @return response instance runner
+     * @return mixed
      */
     public function checkServiceUrlParamArray($callback){
+
         if(strlen(self::$service[0])==0){
-            return $this->responseOut([],$this->getFixLog('projectPathError'));
+
+            return $this->responseOutRedirect($this,$this->getFixLog('projectPathError'),false);
         }
         if(!file_exists(root . '/'.src.'/'.self::$service[0].'')){
-            return $this->responseOut([],$this->getFixLog('projectNo'));
+
+            return $this->responseOutRedirect($this,$this->getFixLog('projectNo'),false);
         }
         return call_user_func($callback);
     }
@@ -277,11 +280,10 @@ class Connection extends Definitor {
      * get instance classes.
      *
      * outputs get instance.
-     *
-     * @param string
-     * @return response instance runner
+     * @return mixed
      */
     public static function getInstance(){
+
         if(self::$_instance==null){ self::$_instance=new self;}
         return self::$_instance;
 
@@ -289,12 +291,11 @@ class Connection extends Definitor {
 
 
     /**
-     * get instance classes.
-     *
-     * outputs get instance.
-     *
-     * @param string
-     * @return response instance runner
+     * @param null $errNo
+     * @param null $errStr
+     * @param null $errFile
+     * @param null $errLine
+     * @param array $errContext
      */
     public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, array $errContext){
 
@@ -340,12 +341,7 @@ class Connection extends Definitor {
 
 
     /**
-     * get instance classes.
-     *
-     * outputs get instance.
-     *
-     * @param string
-     * @return response instance runner
+     * @method fatalErrorShutdownHandler
      */
     public function fatalErrorShutdownHandler(){
 
@@ -356,6 +352,9 @@ class Connection extends Definitor {
         }
     }
 
+    /**
+     * @method getDeclarationApi
+     */
     public function getDeclarationApi(){
         if(self::$service[1]=="doc"){
             header("Content-Type: text/html");

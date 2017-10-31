@@ -168,7 +168,10 @@ class staticPathModel {
         }
         else{
             $serviceBase='\\src\\app\\'.$app.'\\'.$version.'\\serviceBaseController';
-            return new $serviceBase();
+            if(class_exists($serviceBase)){
+                return new $serviceBase();
+            }
+
         }
         return null;
 
