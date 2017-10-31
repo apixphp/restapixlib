@@ -62,7 +62,7 @@ class Utils {
             $getAppVersionPath=root.'/'.src.'/'.$app.'/version.php';
             if(file_exists($getAppVersionPath)){
                 $getAppVersion=require($getAppVersionPath);
-                return $getAppVersion['version'];
+                return ucfirst($getAppVersion['version']);
             }
         }
         return null;
