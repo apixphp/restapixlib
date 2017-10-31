@@ -29,7 +29,7 @@ class staticPathModel {
     public static $appPath='src/store';
 
     /**
-     * @var param bootFile
+     * @var $appNamespace string
      * it is boot resolve
      * for service base controller
      */
