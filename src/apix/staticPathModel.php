@@ -33,7 +33,7 @@ class staticPathModel {
      * it is boot resolve
      * for service base controller
      */
-    public static $appNamespace='\\src\\app';
+    public static $appNamespace='\\Src\\App';
 
 
     /**
