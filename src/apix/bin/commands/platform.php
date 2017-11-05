@@ -26,15 +26,15 @@ class platform {
         //usage : api platform create project_name:service_name platform_dir:platform_file
         $paramdata=$this->getParams($data);
         foreach($paramdata[1] as $platform=>$file){
-            $platformdir=$platform;
-            $platformfile=$file;
+            $platformdir=ucfirst($platform);
+            $platformfile=ucfirst($file);
         }
 
         foreach ($this->getParams($data) as $key=>$value){
             if($key==0){
                 foreach ($value as $project=>$service){
-                    $version=require ('./src/app/'.$project.'/version.php');
-                    $version=(is_array($version) && array_key_exists('version',$version)) ? $version['version'] : 'v1';
+                    $version=ucfirst(Utils::getAppVersion($project));
+                    $service=ucfirst($service);
 
                     if(!file_exists(root.'/src/app/'.$project.'/'.$version.'/optional/platform/'.$platformdir.'')){
                         $this->mkdir_path(root.'/src/app/'.$project.'/'.$version.'/optional/platform/'.$platformdir.'');
@@ -45,11 +45,12 @@ class platform {
                     }
                     $list=[];
                     $platformServiceGetParams['execution']='services/platform';
-                    $platformServiceGetParams['params']['projectName']=$project;
+                    $platformServiceGetParams['params']['projectName']=ucfirst($project);
+                    $platformServiceGetParams['params']['version']=$version;
                     $platformServiceGetParams['params']['serviceName']=$service;
                     $platformServiceGetParams['params']['platformdir']=$platformdir;
                     $platformServiceGetParams['params']['platformfile']=$platformfile.'Service';
-                    $list[]=$this->touch($project.'/'.$version.'/optional/platform/'.$platformdir.'/'.$service.'/'.$platformfile.'Service.php',$platformServiceGetParams);
+                    $list[]=$this->touch($project.'/'.$version.'/Optional/Platform/'.$platformdir.'/'.$service.'/'.$platformfile.'Service.php',$platformServiceGetParams);
 
 
 
