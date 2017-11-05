@@ -22,7 +22,7 @@ class Authenticate extends Base  {
         if(auth()->persistent()===false){
 
             //exception show
-            throw new \LogicException('Auth permission error');
+            throw new \DomainException('Auth permission error');
         }
     }
 }

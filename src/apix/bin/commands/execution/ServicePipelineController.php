@@ -16,7 +16,10 @@ class ServicePipelineController extends Base
     public function pipeTest(){
 
         return [
-          //namespace
+
+            //list pipeline class
+            ['namespace'    =>'method'],
+            ['namespace2'   =>'method2']
         ];
     }
 }

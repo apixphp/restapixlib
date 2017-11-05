@@ -44,8 +44,10 @@ class responseManager {
      *
      * outputs get boot.
      *
-     * @param string
-     * @return response boot params runner
+     * @param $data
+     * @param null $msg
+     * @return mixed
+     * @internal param $string
      */
     public function responseManagerBoot($data,$msg=null){
 
@@ -70,7 +72,10 @@ class responseManager {
                     }
                 }
 
-                $data=['success'=>(bool)true,'statusCode'=>200,
+                //get status codes
+                $statusCodes=Utils::getConfig('statusCodes');
+
+                $data=['success'=>(bool)true,'statusCode'=>$statusCodes[request],
                         'responseTime'=>microtime(true)-time_start,
                         'requestDate'=>date("Y-m-d H:i:s")]+['data'=>$data,'development'=>$developInfo,'links'=>[
                             'href'=>$this->request->getUri(),

@@ -15,9 +15,7 @@ class staticPathModel {
 
 
     /**
-     * @var param bootFile
-     * it is boot resolve
-     * for service base controller
+     * @var $storePath string
      */
     public static $storePath='src/store';
 
@@ -29,11 +27,11 @@ class staticPathModel {
     public static $appPath='src/store';
 
     /**
-     * @var param bootFile
+     * @var $appNamespace string
      * it is boot resolve
      * for service base controller
      */
-    public static $appNamespace='\\src\\app';
+    public static $appNamespace='\\Src\\App';
 
 
     /**
@@ -168,7 +166,10 @@ class staticPathModel {
         }
         else{
             $serviceBase='\\src\\app\\'.$app.'\\'.$version.'\\serviceBaseController';
-            return new $serviceBase();
+            if(class_exists($serviceBase)){
+                return new $serviceBase();
+            }
+
         }
         return null;
 

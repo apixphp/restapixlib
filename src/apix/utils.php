@@ -62,7 +62,7 @@ class Utils {
             $getAppVersionPath=root.'/'.src.'/'.$app.'/version.php';
             if(file_exists($getAppVersionPath)){
                 $getAppVersion=require($getAppVersionPath);
-                return $getAppVersion['version'];
+                return ucfirst($getAppVersion['version']);
             }
         }
         return null;
@@ -441,5 +441,17 @@ class Utils {
         }
 
         return $list;
+    }
+
+
+    /**
+     * @method getConfig
+     * @param $file
+     * @return mixed
+     */
+    public static function getConfig($file=null){
+
+        $config=require(root.'/'.StaticPathModel::$storePath.'/config/'.$file.'.php');
+        return $config;
     }
 }
